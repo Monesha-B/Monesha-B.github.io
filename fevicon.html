@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M Logo</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .logo {
+    width: 100%;
+    height: 100%;
+  }
+
+  .m-line {
+    stroke: #333;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Dark theme support */
+  body.dark .m-line {
+    stroke: #e6e6e6;
+  }
+
+  /* First line draws LEFT to RIGHT */
+  .m-line.first {
+    stroke-dasharray: 350;
+    stroke-dashoffset: 350;
+    animation: drawMerged 12s ease-in-out infinite;
+  }
+
+  /* Second line draws RIGHT to LEFT */
+  .m-line.second {
+    stroke-dasharray: 350;
+    stroke-dashoffset: -350;
+    animation: drawMergedReverse 12s ease-in-out infinite;
+  }
+
+  @keyframes drawMerged {
+    0%   { stroke-dashoffset: 350; opacity: 0.3; }
+    25%  { stroke-dashoffset: 0; opacity: 1; }
+    60%  { stroke-dashoffset: 0; opacity: 1; }
+    75%  { stroke-dashoffset: 0; opacity: 0.3; }
+    85%  { stroke-dashoffset: 0; opacity: 0.1; }
+    90%  { stroke-dashoffset: 350; opacity: 0.1; }
+    92%  { stroke-dashoffset: 350; opacity: 0.3; }
+    100% { stroke-dashoffset: 350; opacity: 0.3; }
+  }
+
+  @keyframes drawMergedReverse {
+    0%   { stroke-dashoffset: -350; opacity: 0.3; }
+    25%  { stroke-dashoffset: 0; opacity: 1; }
+    60%  { stroke-dashoffset: 0; opacity: 1; }
+    75%  { stroke-dashoffset: 0; opacity: 0.3; }
+    85%  { stroke-dashoffset: 0; opacity: 0.1; }
+    90%  { stroke-dashoffset: -350; opacity: 0.1; }
+    92%  { stroke-dashoffset: -350; opacity: 0.3; }
+    100% { stroke-dashoffset: -350; opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+<svg class="logo" viewBox="0 0 100 100">
+  <path class="m-line first" d="M10 80 L30 20 L50 80 L70 20 L90 80"/>
+  <path class="m-line second" d="M10 80 L30 20 L50 80 L70 20 L90 80" 
+        transform="translate(3, 0)"/>
+</svg>
+
+<script>
+  // Check URL parameter for theme
+  const urlParams = new URLSearchParams(window.location.search);
+  const theme = urlParams.get('theme');
+  if (theme === 'dark') {
+    document.body.classList.add('dark');
+  }
+</script>
+</body>
+</html>
