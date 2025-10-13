@@ -1,0 +1,157 @@
+<!-- ==========================================
+     METHOD: Create SVG Favicon from fevicon.html
+     ========================================== -->
+
+<!-- STEP 1: Create favicon.svg file -->
+<!-- 
+  1. Create a new file: favicon.svg
+  2. Paste the code below
+  3. Save in your portfolio root folder
+-->
+
+<!-- favicon.svg - Animated M Logo for Browser Tab -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="32" height="32">
+  <style>
+    .m-line {
+      stroke: #333;
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .m-line.first {
+      stroke-dasharray: 350;
+      stroke-dashoffset: 350;
+      animation: drawMerged 12s ease-in-out infinite;
+    }
+
+    .m-line.second {
+      stroke-dasharray: 350;
+      stroke-dashoffset: -350;
+      animation: drawMergedReverse 12s ease-in-out infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes drawMerged {
+      0%   { stroke-dashoffset: 350; opacity: 0.3; }
+      25%  { stroke-dashoffset: 0; opacity: 1; }
+      60%  { stroke-dashoffset: 0; opacity: 1; }
+      75%  { stroke-dashoffset: 0; opacity: 0.3; }
+      85%  { stroke-dashoffset: 0; opacity: 0.1; }
+      90%  { stroke-dashoffset: 350; opacity: 0.1; }
+      92%  { stroke-dashoffset: 350; opacity: 0.3; }
+      100% { stroke-dashoffset: 350; opacity: 0.3; }
+    }
+
+    @keyframes drawMergedReverse {
+      0%   { stroke-dashoffset: -350; opacity: 0.3; }
+      25%  { stroke-dashoffset: 0; opacity: 1; }
+      60%  { stroke-dashoffset: 0; opacity: 1; }
+      75%  { stroke-dashoffset: 0; opacity: 0.3; }
+      85%  { stroke-dashoffset: 0; opacity: 0.1; }
+      90%  { stroke-dashoffset: -350; opacity: 0.1; }
+      92%  { stroke-dashoffset: -350; opacity: 0.3; }
+      100% { stroke-dashoffset: -350; opacity: 0.3; }
+    }
+    
+    /* Dark mode support via media query */
+    @media (prefers-color-scheme: dark) {
+      .m-line {
+        stroke: #e6e6e6;
+      }
+    }
+  </style>
+  
+  <!-- First M line - draws LEFT to RIGHT -->
+  <path class="m-line first" d="M10 80 L30 20 L50 80 L70 20 L90 80"/>
+  
+  <!-- Second M line - draws RIGHT to LEFT -->
+  <path class="m-line second" d="M10 80 L30 20 L50 80 L70 20 L90 80" transform="translate(3, 0)"/>
+</svg>
+
+
+<!-- ==========================================
+     STEP 2: Add to ALL HTML Files
+     ========================================== -->
+
+<!-- In the <head> section of EVERY HTML file, add: -->
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Page Title</title>
+  
+  <!-- ✅ ADD THIS LINE -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <link rel="stylesheet" href="style.css">
+  <!-- rest of your head content -->
+</head>
+
+
+<!-- ==========================================
+     COMPLETE EXAMPLE: index.html <head>
+     ========================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Monesha Balasambandam | Portfolio</title>
+  <meta content="Portfolio of Monesha Balasambandam – cloud, data, and full‑stack projects." name="description"/>
+  
+  <!-- ✅ Animated Favicon (same as fevicon.html) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <link href="style.css" rel="stylesheet"/>
+  <script src="favicon-animator.js"></script>
+</head>
+<body>
+  <!-- Your page content -->
+</body>
+</html>
+
+
+<!-- ==========================================
+     FILES TO UPDATE:
+     ========================================== -->
+
+<!--
+  1. Create favicon.svg (copy from top of this file)
+  
+  2. Add <link rel="icon" type="image/svg+xml" href="favicon.svg"> to:
+     ✅ index.html
+     ✅ projects.html
+     ✅ posts.html
+     ✅ chat.html
+     ✅ certifications.html
+     ✅ console.html
+-->
+
+
+<!-- ==========================================
+     WHAT YOU GET:
+     ========================================== -->
+
+<!--
+  ✨ Browser tab shows animated M logo
+  ✨ Exact same animation as your navbar logo
+  ✨ Draws from both directions
+  ✨ Changes color with system dark/light mode
+  ✨ Small file size (SVG)
+  ✨ Works in modern browsers
+  ✨ Professional look
+-->
+
+
+<!-- ==========================================
+     BROWSER COMPATIBILITY:
+     ========================================== -->
+
+<!--
+  ✅ Works in: Chrome, Edge, Firefox, Safari, Opera
+  ✅ Animated favicons work in most modern browsers
+  ⚠️ Some browsers may show static version (still looks good!)
+-->
