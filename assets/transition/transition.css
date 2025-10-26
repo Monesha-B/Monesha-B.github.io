@@ -1,0 +1,42 @@
+:root{
+  --enter: 520ms;
+  --exit: 360ms;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+
+/* Stronger specificity + GPU translate; beats other body rules */
+html body{
+  opacity: 0 !important;
+  transform: translate3d(0,24px,0) !important;
+  transition:
+    opacity var(--enter) var(--ease),
+    transform var(--enter) var(--ease) !important;
+  will-change: opacity, transform;
+}
+
+html body.page-ready{
+  opacity: 1 !important;
+  transform: translate3d(0,0,0) !important;
+}
+
+html body.page-exiting{
+  opacity: 0 !important;
+  transform: translate3d(0,-12px,0) !important;
+  transition-duration: var(--exit) !important;
+}
+
+/* In-view reveals (add data-reveal to elements you want) */
+[data-reveal]{
+  opacity: 0;
+  transform: translate3d(0,14px,0);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+  transition-delay: var(--delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-reveal].is-visible{
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+/* Group auto-stagger */
+[data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }

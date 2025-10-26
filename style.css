@@ -425,3 +425,40 @@ main.container {
     gap: 8px !important;
   }
 }
+
+ /* === Auto-theme the SVG outline heading === */
+  /* Use the page text color for the SVG strokes */
+  #proj-page .wm-svg{
+    color: var(--fg) !important;      /* follows your light/dark variables */
+  }
+  #proj-page .wm-svg text{
+    fill: none !important;
+  }
+  /* Tight double line, now driven by currentColor */
+  #proj-page .wm-svg .outer{
+    stroke: currentColor !important;
+    stroke-width: 5;
+    stroke-opacity: .20;              /* ~20% of text color */
+  }
+  #proj-page .wm-svg .inner{
+    stroke: currentColor !important;
+    stroke-width: 4.8;
+    stroke-opacity: .12;              /* ~12% of text color */
+  }
+
+  /* === Letters inside the circular icon (A/N/B/S etc.) === */
+  #proj-page .ico{
+    color: var(--fg) !important;      /* keep readable in dark */
+    background: var(--pill) !important;
+    border: 1px solid var(--border) !important;  /* subtle edge in dark */
+  }
+
+  /* If your theme toggle sets a data attribute, this keeps it in sync too */
+  body[data-theme="dark"] #proj-page .wm-svg{ color: var(--fg) !important; }
+  body[data-theme="dark"] #proj-page .ico{
+    color: var(--fg) !important;
+    background: var(--pill) !important;
+    border-color: var(--border) !important;
+  }
+
+

@@ -4,9 +4,103 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Monesha Balasambandam | Portfolio</title>
-<meta content="Portfolio of Monesha Balasambandam – cloud, data, and full‑stack projects." name="description"/>
+<meta content="Portfolio of Monesha Balasambandam – cloud, data, and full–stack projects." name="description"/>
 <link href="style.css" rel="stylesheet"/>
 <link rel="icon" type="image/svg+xml" href="fevicon.svg">
+<!-- Page enter: slide up + fade in (copy this whole block into <head>) -->
+<script>
+  // Ensure first paint starts hidden & slightly down
+  document.documentElement.classList.add('pt-init');
+</script>
+<style>
+  /* Initial hidden state before anything else loads */
+  html.pt-init body{
+    opacity:0;
+    transform:translate3d(0,24px,0);
+  }
+
+  /* Page transition settings */
+  :root{
+    --enter:520ms;
+    --exit:360ms;
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  html body{
+    opacity:0;
+    transform:translate3d(0,24px,0);
+    transition:
+      opacity var(--enter) var(--ease),
+      transform var(--enter) var(--ease);
+    will-change: opacity, transform;
+  }
+  html body.page-ready{
+    opacity:1;
+    transform:translate3d(0,0,0);
+  }
+  html body.page-exiting{
+    opacity:0;
+    transform:translate3d(0,-12px,0);
+    transition-duration:var(--exit);
+  }
+
+  /* Optional: make any element fade+slide when it scrolls into view */
+  [data-reveal]{opacity:0;transform:translate3d(0,14px,0);
+    transition:opacity 600ms var(--ease),transform 600ms var(--ease);
+    transition-delay:var(--delay,0ms)}
+  [data-reveal].is-visible{opacity:1;transform:none}
+  [data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }
+</style>
+<script>
+  // Robust page-enter (double rAF so the transition always triggers)
+  (function(){
+    function onReady(fn){
+      if(document.readyState==="loading"){
+        document.addEventListener("DOMContentLoaded",fn,{once:true});
+      } else fn();
+    }
+    onReady(function(){
+      // start from initial state, then animate in
+      document.body.classList.remove("page-ready","page-exiting");
+      void getComputedStyle(document.body).transform;   // force reflow
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        document.body.classList.add("page-ready");
+        document.documentElement.classList.remove("pt-init");
+      }));
+
+      // Exit animation on same-site links
+      document.addEventListener("click",function(e){
+        const a = e.target.closest && e.target.closest("a");
+        if(!a) return;
+        if(a.target==="_blank"||a.hasAttribute("download")||
+           e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+        const href=a.getAttribute("href");
+        if(!href||href.startsWith("#")||href.startsWith("mailto:")||href.startsWith("tel:")) return;
+        let to; try{to=new URL(href,location.href);}catch{ return; }
+        if(to.origin!==location.origin) return; // external
+        if(to.pathname===location.pathname && to.hash) return; // same-page anchor
+        e.preventDefault();
+        document.body.classList.add("page-exiting");
+        setTimeout(()=>{ location.href=to.href; }, 360); // match --exit
+      });
+
+      // Optional: reveal-on-scroll
+      if("IntersectionObserver" in window){
+        const io=new IntersectionObserver((entries,obs)=>{
+          entries.forEach(en=>{
+            if(en.isIntersecting){ en.target.classList.add("is-visible"); obs.unobserve(en.target); }
+          });
+        },{threshold:0.12, rootMargin:"0px 0px -10% 0px"});
+        document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
+        document.querySelectorAll("[data-reveal-group]").forEach(g=>{
+          Array.from(g.children).filter(el=>el.hasAttribute("data-reveal"))
+            .forEach((el,i)=>el.style.setProperty("--i", i));
+        });
+      }
+    });
+  })();
+</script>
+
+
 </head>
 <body>
   <!-- Theme transition overlay -->
@@ -41,7 +135,7 @@
   <main class="container">
     <section class="section" id="about">
       <h2>About</h2>
-      <p>I'm an MS in Information Systems grad who enjoys building pragmatic products—secure APIs, clean UIs, and dependable pipelines. Outside class, I ship side‑projects and tinker with sensors/automation.</p>
+      <p>I'm an MS in Information Systems grad who enjoys building pragmatic products–secure APIs, clean UIs, and dependable pipelines. Outside class, I ship side–projects and tinker with sensors/automation.</p>
       
       <div class="globe-block">
         <div class="globe-container">
@@ -55,18 +149,7 @@
     <section class="section" id="intro">
       <h1>Hi, I'm Monesha Balasambandam</h1>
       <h2>Information Systems · Full-Stack & Cloud</h2>
-      <p>I design reliable, human-centered software across the stack—convert requirements into shipped features with clear docs, tests, and dashboards.</p>
-
-      <div class="badges">
-        <span class="pill">JavaScript</span>
-        <span class="pill">React</span>
-        <span class="pill">Node</span>
-        <span class="pill">SQL</span>
-        <span class="pill">AWS</span>
-        <span class="pill">Docker</span>
-        <span class="pill">GitHub</span>
-        <span class="pill">CI/CD</span>
-      </div>
+      <p>I design reliable, human-centered software across the stack–convert requirements into shipped features with clear docs, tests, and dashboards.</p>
     </section>
 
     <hr/>

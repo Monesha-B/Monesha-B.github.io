@@ -7,6 +7,149 @@
   <title>Blog | Monesha</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/svg+xml" href="fevicon.svg">
+
+  <!-- Page enter: slide up + fade in -->
+  <script>document.documentElement.classList.add('pt-init');</script>
+  <style>
+    /* Initial hidden state before anything else loads */
+    html.pt-init body{ opacity:0; transform:translate3d(0,24px,0); }
+
+    /* Page transition settings */
+    :root{ --enter:520ms; --exit:360ms; --ease:cubic-bezier(.2,.8,.2,1); }
+    html body{
+      opacity:0; transform:translate3d(0,24px,0);
+      transition: opacity var(--enter) var(--ease), transform var(--enter) var(--ease);
+      will-change: opacity, transform;
+    }
+    html body.page-ready{ opacity:1; transform:translate3d(0,0,0); }
+    html body.page-exiting{ opacity:0; transform:translate3d(0,-12px,0); transition-duration:var(--exit); }
+
+    /* Header anchors the under-line menu */
+    .site-header{ position:relative; }
+
+    /* === Under-header hamburger + vertical list (inherits site font & color) === */
+    .ham-wrap{
+      position:absolute;
+      top:100%;
+      margin-top:0.2cm;                   /* exact 0.2 cm below the line */
+      left:calc(var(--ham-left, 0px) + 0.2cm); /* horizontally aligned under logo with 0.2 cm nudge */
+      z-index:50;
+
+      display:inline-grid;
+      grid-template-rows:auto auto;       /* icon on top, list below */
+      justify-items:start;
+      row-gap:8px;                        /* SPACE between hamburger and menu */
+    }
+
+    /* Icon: thin, light; all bars start same left; top/bottom longer */
+    .ham-btn{
+      width:26px; height:22px; padding:0; border:0; background:transparent;
+      display:grid; justify-items:start; align-items:center;
+      color:inherit;                       /* same color as page text */
+      opacity:.55;                         /* light until hover */
+      cursor:pointer; transition:opacity .18s var(--ease);
+    }
+    .ham-wrap:hover .ham-btn{ opacity:1; }
+    .ham-btn span{ width:16px; height:1.2px; margin:2px 0; border-radius:1px; background:currentColor; }
+    .ham-btn span:nth-child(1),
+    .ham-btn span:nth-child(3){ width:20px; }
+
+    /* Slim text list UNDER the icon — same font & color as site */
+    .ham-pop{
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+      opacity:0; transform:translateY(0px) translateX(-16px) !important;
+      pointer-events:none;
+      transition:opacity .18s var(--ease), transform .18s var(--ease);
+    }
+
+    /* LIGHT THEME - Default State (Light Gray) */
+    .ham-pop a{
+      font: inherit;
+      font-size: 0.8rem;                               /* ← SMALLER font size */
+      color: #b8b8b8 !important;                      /* LIGHT GRAY default */
+      opacity: 1;
+      text-decoration:none;
+      padding-bottom:3px;
+      border-bottom:1px solid #b8b8b8 !important;    /* LIGHT GRAY underline */
+      transition:color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
+    }
+
+    /* LIGHT THEME - Hover State (Slightly Darker Gray) */
+    .ham-pop a:hover, .ham-pop a:focus{
+      color: #6a6a6a !important;                      /* BIT DARKER GRAY on hover */
+      outline:none; 
+      transform:translateX(1px);
+      border-bottom-color: #6a6a6a !important;       /* BIT DARKER GRAY underline on hover */
+    }
+
+    /* DARK THEME - Default State (Light Gray) */
+    :root.dark .ham-pop a{
+      color: #a0a0a0 !important;                      /* LIGHT GRAY in dark mode */
+      border-bottom-color: #a0a0a0 !important;        /* LIGHT GRAY underline in dark mode */
+    }
+
+    /* DARK THEME - Hover State (Slightly Darker Gray) */
+    :root.dark .ham-pop a:hover, 
+    :root.dark .ham-pop a:focus{
+      color: #d0d0d0 !important;                      /* BIT LIGHTER GRAY on hover in dark mode */
+      border-bottom-color: #d0d0d0 !important;        /* BIT LIGHTER GRAY underline on hover in dark mode */
+    }
+
+    /* Open the list on hover or keyboard focus */
+    .ham-wrap:hover .ham-pop,
+    .ham-wrap:focus-within .ham-pop{
+      opacity:1; transform:none; pointer-events:auto;
+    }
+  </style>
+
+  <script>
+    (function(){
+      function onReady(fn){
+        if(document.readyState==="loading"){
+          document.addEventListener("DOMContentLoaded",fn,{once:true});
+        } else fn();
+      }
+      onReady(function(){
+        // page enter
+        document.body.classList.remove("page-ready","page-exiting");
+        void getComputedStyle(document.body).transform;
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          document.body.classList.add("page-ready");
+          document.documentElement.classList.remove("pt-init");
+        }));
+
+        // Exit animation on same-site links
+        document.addEventListener("click",function(e){
+          const a = e.target.closest && e.target.closest("a");
+          if(!a) return;
+          if(a.target==="_blank"||a.hasAttribute("download")||
+             e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+          const href=a.getAttribute("href");
+          if(!href||href.startsWith("#")||href.startsWith("mailto:")||href.startsWith("tel:")) return;
+          let to; try{to=new URL(href,location.href);}catch{ return; }
+          if(to.origin!==location.origin) return;
+          if(to.pathname===location.pathname && to.hash) return;
+          e.preventDefault();
+          document.body.classList.add("page-exiting");
+          setTimeout(()=>{ location.href=to.href; }, 360);
+        });
+
+        // Align the stack precisely under the left edge of the logo
+        function placeHamburger(){
+          const header = document.querySelector('.site-header');
+          const logo   = header && header.querySelector('.logo-link');
+          if(!header || !logo) return;
+          const left = Math.max(0,
+            Math.round(logo.getBoundingClientRect().left - header.getBoundingClientRect().left)
+          );
+          document.documentElement.style.setProperty('--ham-left', left + 'px');
+        }
+        placeHamburger();
+        window.addEventListener('resize', placeHamburger);
+        window.addEventListener('load', placeHamburger);
+      });
+    })();
+  </script>
 </head>
 <body>
 <header class="site-header">
@@ -14,8 +157,8 @@
   <a href="index.html" class="logo-link" aria-label="Home">
     <iframe src="fevicon.html" title="Animated M Logo" loading="eager"></iframe>
   </a>
-  
-  <!-- RIGHT: Navigation -->
+
+  <!-- RIGHT: Navigation (unchanged) -->
   <nav class="nav-right">
     <a href="projects.html" class="nav-link">Projects</a>
     <a href="posts.html" class="nav-link">Blog</a>
@@ -23,13 +166,23 @@
     <a href="https://github.com/Monesha-B/" class="icon-link" aria-label="GitHub">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
     </a>
-    <a href="https://www.linkedin.com/in/moneshab" class="icon-link" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM14.5 9c-2.4 0-4 1.3-4 3.3V21h4v-6.3c0-1 .7-1.7 1.9-1.7 1.2 0 1.6.7 1.6 1.7V21h4v-6.9C22 10.8 20.3 9 17.9 9c-1.6 0-2.7.7-3.4 1.6V9h-4z"/></svg>
-    </a>
     <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
   </nav>
+
+  <!-- Icon + lightweight vertical list under the header line & logo -->
+  <div class="ham-wrap">
+    <button class="ham-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="ham-pop" aria-label="Quick links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="experience.html">Experience</a>
+      <a href="posts.html">Blog</a>
+      <a href="chat.html">Chat</a>
+      <a href="achievements.html">Achievements</a>
+    </nav>
+  </div>
 </header>
 
 <main class="container">
@@ -41,6 +194,11 @@
 <footer class="container footer">
   <div>2021–Present © Monesha Balasambandam</div>
 </footer>
-  <script src="script.js"></script>
+
+<script src="script.js"></script>
+<script>
+  // page-enter helper
+  document.addEventListener("DOMContentLoaded",()=>document.body.classList.add("page-ready"));
+</script>
 </body>
 </html>
