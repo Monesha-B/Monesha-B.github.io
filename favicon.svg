@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="geometricPrecision">
+  <title>Site Favicon – M Outline</title>
+  <style>
+    .m {
+      fill: none;
+      stroke: #333;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @media (prefers-color-scheme: dark) {
+      .m { stroke: #f2f2f2; }
+    }
+  </style>
+  <!-- Crisp geometric "M" outline -->
+  <path class="m" d="M10 50 L22 14 L32 42 L42 14 L54 50"/>
+</svg>
