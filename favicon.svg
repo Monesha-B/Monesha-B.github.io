@@ -1,17 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="geometricPrecision">
-  <title>Site Favicon – M Outline</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <style>
-    .m {
-      fill: none;
+    .m-line {
       stroke: #333;
-      stroke-width: 2;
+      stroke-width: 3;
+      fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+
+    .m-line.first {
+      opacity: 1;
+    }
+
+    .m-line.second {
+      stroke: #999;
+      opacity: 0.6;
+    }
+    
+    /* Dark mode support */
     @media (prefers-color-scheme: dark) {
-      .m { stroke: #f2f2f2; }
+      .m-line {
+        stroke: #e6e6e6;
+      }
+      .m-line.second {
+        stroke: #888;
+      }
     }
   </style>
-  <!-- Crisp geometric "M" outline -->
-  <path class="m" d="M10 50 L22 14 L32 42 L42 14 L54 50"/>
+  
+  <!-- Transparent background (no rect element) -->
+  
+  <!-- First M line (dark) -->
+  <path class="m-line first" d="M30 160 L70 40 L110 160 L150 40 L190 160"/>
+  
+  <!-- Second M line (light, offset for double-line effect) -->
+  <path class="m-line second" d="M30 160 L70 40 L110 160 L150 40 L190 160" transform="translate(6, 0)"/>
 </svg>
