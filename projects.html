@@ -21,6 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet"/>
 
   <style>
+    
     /* ---------- Page tokens ---------- */
     #proj-page{
       --bg:#fff; --fg:#111; --muted:#666a6f;
@@ -31,9 +32,10 @@
       --wm-stroke:#b6b6b6; /* gray outline for headings */
       background:var(--bg); color:var(--fg);
     }
-    @media (prefers-color-scheme:dark){
-      #proj-page{ --bg:#0b0b0f; --fg:#fff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
-    }
+    :root.dark #proj-page{
+  --bg:#0b0b0f; --fg:#fff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6;
+}
+
 
     /* ---------- Header / intro ---------- */
     #proj-page h1{margin:0 0 6px; text-align:center; font-weight:800; font-size:clamp(28px,3vw,36px); line-height:1.1}

@@ -10,7 +10,14 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
 
-<!-- Page enter: slide up + fade in (copy this whole block into <head>) -->
+<!-- If JS is disabled (or fails early), ensure page shows -->
+<noscript>
+  <style>
+    html.pt-init body{opacity:1!important;transform:none!important}
+  </style>
+</noscript>
+
+<!-- Page enter: slide up + fade in -->
 <script>
   // Ensure first paint starts hidden & slightly down
   document.documentElement.classList.add('pt-init');
@@ -52,6 +59,35 @@
     transition-delay:var(--delay,0ms)}
   [data-reveal].is-visible{opacity:1;transform:none}
   [data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }
+
+  /* ===== About / Summary (grayscale) ===== */
+  .summary{ max-width:880px; margin:0 auto; padding:clamp(24px,6vw,56px) 16px; }
+  .summary h1{ margin:0 0 .25rem; line-height:1.1; color:var(--text); }
+  .summary .sub{ margin:.1rem 0 1rem; font-size:1rem; font-weight:700; letter-spacing:.02em; color:var(--muted,#8A8A90); }
+  .summary .lead{ color:var(--muted,#8A8A90); font-size:clamp(16px,2.2vw,18px); line-height:1.65; margin:0 0 1rem; }
+  .summary .inline-cta a{ color:#8A8A90; text-decoration-color:#BDBDC3; }
+  .summary .inline-cta a:hover{ color:#5A5A60; text-decoration-color:#5A5A60; }
+  :root.dark .summary .inline-cta a{ color:#BFC1C7; text-decoration-color:#8A8A90; }
+  :root.dark .summary .inline-cta a:hover{ color:#E6E6E6; text-decoration-color:#E6E6E6; }
+  .summary .summary-rule{ border:0; height:1px; background:var(--border,#2A2A2F); margin:1rem 0; opacity:.6; }
+
+  /* CTA buttons — dark gray boxes (no blue) */
+  .cta-row{ display:flex; gap:.75rem; flex-wrap:wrap; margin:.75rem 0 1.25rem; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:.60rem 1rem; border-radius:10px; font-weight:600; text-decoration:none;
+    transition: background .2s, border-color .2s, transform .12s;
+  }
+  :root:not(.dark) .btn{ background:#C7C7CC; border:1px solid #B3B3B9; color:var(--text); }
+  :root.dark .btn{ background:#1F1F23; border:1px solid #2A2A2F; color:var(--text); }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:focus-visible{ outline:2px solid #5A5A5A; outline-offset:2px; }
+
+  /* Social links in gray to match site */
+  #socials a:link, #socials a:visited{ color:#8A8A90; text-decoration-color:#BDBDC3; }
+  #socials a:hover, #socials a:active{ color:#5A5A60; text-decoration-color:#5A5A60; }
+  :root.dark #socials a:link, :root.dark #socials a:visited{ color:#BFC1C7; text-decoration-color:#8A8A90; }
+  :root.dark #socials a:hover, :root.dark #socials a:active{ color:#E6E6E6; text-decoration-color:#E6E6E6; }
 </style>
 <script>
   // Robust page-enter (double rAF so the transition always triggers)
@@ -86,11 +122,14 @@
         setTimeout(()=>{ location.href=to.href; }, 360); // match --exit
       });
 
-      // Optional: reveal-on-scroll
+      // Reveal-on-scroll (fixed typo: classList.add)
       if("IntersectionObserver" in window){
         const io=new IntersectionObserver((entries,obs)=>{
           entries.forEach(en=>{
-            if(en.isIntersecting){ en.target.classList.add("is-visible"); obs.unobserve(en.target); }
+            if(en.isIntersecting){
+              en.target.classList.add("is-visible");
+              obs.unobserve(en.target);
+            }
           });
         },{threshold:0.12, rootMargin:"0px 0px -10% 0px"});
         document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
@@ -102,8 +141,6 @@
     });
   })();
 </script>
-
-
 </head>
 <body>
   <!-- Theme transition overlay -->
@@ -111,23 +148,24 @@
     <div id="theme-circle"></div>
   </div>
 
-  <!-- ✅ NEW HEADER WITH FEVICON.HTML EMBEDDED -->
+  <!-- Header with favicon.html embedded -->
   <header class="site-header">
-    <!-- LEFT: fevicon.html as iframe -->
     <a href="index.html" class="logo-link" aria-label="Home">
       <iframe src="fevicon.html" title="Animated M Logo" loading="eager"></iframe>
     </a>
-    
-    <!-- RIGHT: Navigation -->
     <nav class="nav-right">
       <a href="projects.html" class="nav-link">Projects</a>
       <a href="posts.html" class="nav-link">Blog</a>
       <a href="chat.html" class="nav-link">Chat</a>
       <a href="https://github.com/Monesha-B/" class="icon-link" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+          <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/>
+        </svg>
       </a>
       <a href="https://www.linkedin.com/in/moneshab" class="icon-link" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM14.5 9c-2.4 0-4 1.3-4 3.3V21h4v-6.3c0-1 .7-1.7 1.9-1.7 1.2 0 1.6.7 1.6 1.7V21h4v-6.9C22 10.8 20.3 9 17.9 9c-1.6 0-2.7.7-3.4 1.6V9h-4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+          <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM14.5 9c-2.4 0-4 1.3-4 3.3V21h4v-6.3c0-1 .7-1.7 1.9-1.7 1.2 0 1.6.7 1.6 1.7V21h4v-6.9C22 10.8 20.3 9 17.9 9c-1.6 0-2.7.7-3.4 1.6V9h-4z"/>
+        </svg>
       </a>
       <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -136,10 +174,37 @@
   </header>
 
   <main class="container">
-    <section class="section" id="about">
-      <h2>About</h2>
-      <p>I'm an MS in Information Systems grad who enjoys building pragmatic products–secure APIs, clean UIs, and dependable pipelines. Outside class, I ship side–projects and tinker with sensors/automation.</p>
-      
+    <!-- ===== About / Summary ===== -->
+    <section id="about" class="summary" aria-labelledby="about-title">
+      <h1 id="about-title">Hi, I’m Monesha 👋</h1>
+      <h2 class="sub">Information Systems · AI/ML · DevOps</h2>
+
+      <p class="lead">
+        I build clean, reliable systems and practical AI—intuitive to use, straightforward to trust.
+      </p>
+
+      <p>
+        Working across teams taught me how to translate messy requirements into calm, predictable releases.
+        I value clarity, sensible defaults, and shipping without friction.
+      </p>
+
+      <p>
+        I learn by building from scratch—then rebuilding end-to-end to understand every layer. Full-stack systems,
+        scalable infrastructure, and practical AI that actually works. Pursuing graduate studies in AI/ML to deepen
+        my foundation; my experience shipping real products keeps me grounded in what matters. If I can rebuild it,
+        I understand it—and I'll ship it better next time.
+      </p>
+
+      <p class="inline-cta">
+        <a href="projects.html">View My Work</a> · <a href="chat.html">Get In Touch</a>
+      </p>
+
+      <hr class="summary-rule" />
+      <p class="mini">Give the sphere a spin and check out my skills!</p>
+    </section>
+
+    <!-- Globe block -->
+    <section class="section" id="skills-globe" data-reveal>
       <div class="globe-block">
         <div class="globe-container">
           <iframe src="assets/globe/index.html" title="Interactive 3D globe" loading="lazy" referrerpolicy="no-referrer"></iframe>
@@ -149,15 +214,8 @@
 
     <hr/>
 
-    <section class="section" id="intro">
-      <h1>Hi, I'm Monesha Balasambandam</h1>
-      <h2>Information Systems · Full-Stack & Cloud</h2>
-      <p>I design reliable, human-centered software across the stack–convert requirements into shipped features with clear docs, tests, and dashboards.</p>
-    </section>
-
-    <hr/>
-
-    <section class="section" id="socials">
+    <!-- Socials -->
+    <section class="section" id="socials" data-reveal>
       <h2>Find me on</h2>
       <p>
         <a href="https://github.com/Monesha-B" rel="noopener" target="_blank">GitHub</a> ·
@@ -172,18 +230,5 @@
   </footer>
 
   <script src="script.js"></script>
-  <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/68ec06fc7ca7de194f1f56b7/1j7cvmj40';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 </body>
 </html>

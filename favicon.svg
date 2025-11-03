@@ -1,38 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <style>
     .m-line {
-      stroke: #333;
-      stroke-width: 3;
+      stroke-width: 7.5;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
     .m-line.first {
+      stroke: #dc2626;
       opacity: 1;
     }
 
     .m-line.second {
-      stroke: #999;
-      opacity: 0.6;
-    }
-    
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      .m-line {
-        stroke: #e6e6e6;
-      }
-      .m-line.second {
-        stroke: #888;
-      }
+      stroke: #7f1d1d;
+      opacity: 0.7;
     }
   </style>
   
-  <!-- Transparent background (no rect element) -->
+  <!-- First M line (Bright Red) -->
+  <path class="m-line first" d="M10 170 L50 30 L90 170 L130 30 L170 170"/>
   
-  <!-- First M line (dark) -->
-  <path class="m-line first" d="M30 160 L70 40 L110 160 L150 40 L190 160"/>
-  
-  <!-- Second M line (light, offset for double-line effect) -->
-  <path class="m-line second" d="M30 160 L70 40 L110 160 L150 40 L190 160" transform="translate(6, 0)"/>
+  <!-- Second M line (Burgundy/Maroon, larger offset for bigger gaps) -->
+  <path class="m-line second" d="M10 170 L50 30 L90 170 L130 30 L170 170" transform="translate(16, 0)"/>
 </svg>

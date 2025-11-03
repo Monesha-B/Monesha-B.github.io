@@ -1,15 +1,9 @@
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body { 
-  margin: 0; 
-  padding: 0; 
+html, body {
   height: 100%;
   width: 100%;
-  background: transparent !important;
+  background: transparent !important; /* lets parent page color show */
 }
 
 #globe {
@@ -25,7 +19,6 @@ canvas {
   width: 100% !important;
   height: 100% !important;
   margin: 0 auto !important;
-  padding: 0 !important;
   border: none;
   box-shadow: none;
 }

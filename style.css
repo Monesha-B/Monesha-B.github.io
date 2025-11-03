@@ -460,5 +460,229 @@ main.container {
     background: var(--pill) !important;
     border-color: var(--border) !important;
   }
+/* ----- Make all "cd .." breadcrumbs gray (light + dark) ----- */
+/* Most pages put the cd link inside .mini (or .crumb) */
+.mini a,
+.crumb a {
+  color: #8A8A90 !important;                 /* light gray */
+  text-decoration-color: #BDBDC3 !important;
+}
+.mini a:hover,
+.crumb a:hover {
+  color: #5A5A60 !important;                 /* slightly darker on hover */
+  text-decoration-color: #5A5A60 !important;
+}
 
+/* Console page uses an id for its "cd .." */
+#cmd-cd-up {
+  color: #8A8A90 !important;
+  text-decoration-color: #BDBDC3 !important;
+}
+#cmd-cd-up:hover {
+  color: #5A5A60 !important;
+  text-decoration-color: #5A5A60 !important;
+}
 
+/* Dark theme variants */
+:root.dark .mini a,
+:root.dark .crumb a,
+:root.dark #cmd-cd-up {
+  color: #BFC1C7 !important;                 /* light gray on dark */
+  text-decoration-color: #8A8A90 !important;
+}
+:root.dark .mini a:hover,
+:root.dark .crumb a:hover,
+:root.dark #cmd-cd-up:hover {
+  color: #E6E6E6 !important;                 /* brighter on hover */
+  text-decoration-color: #E6E6E6 !important;
+}
+/* ============================
+   APPEND-ONLY GRAYSCALE PATCH
+   (drop this at the END)
+   ============================ */
+
+/* 1) Neutral tokens (override any earlier blue values) */
+:root{
+  --brand: #5A5A60;     /* neutral accent */
+  --link:  #8A8A90;     /* gray links */
+  --nav-text:  #666666;
+  --nav-hover: #1a1a1a; /* darker gray hover */
+}
+:root.dark{
+  --brand: #9AA0A6;     /* neutral accent (dark) */
+  --link:  #BFC1C7;     /* light gray links (dark) */
+  --nav-text:  #a8a8a8;
+  --nav-hover: #e6e6e6; /* lighter gray hover (dark) */
+}
+
+/* 2) Make sure nav hover uses the neutral hover (not brand/blue) */
+.nav-right .nav-link:hover,
+.nav-right .icon-link:hover{
+  color: var(--nav-hover) !important;
+}
+
+/* 3) Ensure all inline links inherit the gray token */
+a:link, a:visited{
+  color: var(--link) !important;
+}
+a:hover, a:active{
+  color: var(--nav-hover) !important;
+  text-decoration-color: currentColor !important;
+}
+
+/* 4) “cd ..” breadcrumbs stay gray everywhere */
+.mini a, .crumb a, #cmd-cd-up{
+  color: #8A8A90 !important;
+  text-decoration-color: #BDBDC3 !important;
+}
+.mini a:hover, .crumb a:hover, #cmd-cd-up:hover{
+  color: #5A5A60 !important;
+  text-decoration-color: #5A5A60 !important;
+}
+:root.dark .mini a, :root.dark .crumb a, :root.dark #cmd-cd-up{
+  color: #BFC1C7 !important;
+  text-decoration-color: #8A8A90 !important;
+}
+:root.dark .mini a:hover, :root.dark .crumb a:hover, :root.dark #cmd-cd-up:hover{
+  color: #E6E6E6 !important;
+  text-decoration-color: #E6E6E6 !important;
+}
+
+/* 5) Chat page — darker gray boxes for BOTH buttons (scoped) */
+body.chat-page .cta-row a{
+  background:#C7C7CC; border-color:#B3B3B9; color:var(--text) !important;
+}
+:root.dark body.chat-page .cta-row a{
+  background:#1F1F23; border-color:#2A2A2F; color:var(--text) !important;
+}
+
+/* 6) (Optional) Projects/Experience dark-mode consistency
+   If any page still flips based on OS instead of your toggle,
+   force their dark variables via the toggle class. Safe to keep. */
+:root.dark #proj-page{ --bg:#0b0b0f; --fg:#ffffff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
+:root.dark #exp-page{  --bg:#0b0b0f; --fg:#ffffff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
+/* === APPEND: Bigger Globe on Index === */
+#skills-globe .globe-block,
+#about .globe-block{
+  justify-content:center !important;
+}
+
+#skills-globe .globe-container,
+#about .globe-container{
+  /* Wide + tall, but responsive */
+  width: min(1200px, 96vw) !important;
+  height: clamp(520px, 62vw, 760px) !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 900px){
+  #skills-globe .globe-container,
+  #about .globe-container{
+    height: clamp(440px, 80vw, 640px) !important;
+    width: 96vw !important;
+  }
+}
+
+@media (max-width: 560px){
+  #skills-globe .globe-container,
+  #about .globe-container{
+    height: clamp(380px, 95vw, 520px) !important;
+  }
+}
+  /* === GLOBE: centered + comfortable size === */
+#skills-globe .globe-block,
+#about .globe-block{
+  display: grid !important;
+  place-items: center !important;   /* perfectly centers the iframe */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#skills-globe .globe-container,
+#about .globe-container{
+  width: min(980px, 94vw) !important;
+  height: 520px !important;         /* desktop size */
+  margin: 0 auto !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+@media (max-width: 900px){
+  #skills-globe .globe-container,
+  #about .globe-container{
+    height: 440px !important;       /* laptop/tablet */
+  }
+}
+@media (max-width: 560px){
+  #skills-globe .globe-container,
+  #about .globe-container{
+    height: 360px !important;       /* mobile */
+  }
+}
+/* === PROJECTS: remove black rectangle in dark mode === */
+#proj-page,
+#proj-page .wm-svg,
+#proj-page canvas{
+  background: transparent !important;
+}
+
+/* Some SVGs draw a solid rect behind the outline text — force it away */
+#proj-page .wm-svg rect,
+#proj-page .wm-svg .bg,
+#proj-page .wm-svg [fill="#000"],
+#proj-page .wm-svg [fill="#000000"],
+#proj-page .wm-svg [fill="black"]{
+  fill: transparent !important;
+}
+
+/* Safe defaults for variables some selectors use */
+:root{ --fg: var(--text); --pill: var(--card); }
+:root.dark{ --fg: var(--text); --pill: var(--card); }
+/* === Scroll Reveal (raise-up) === */
+:root {
+  --reveal-duration: 760ms;
+  --reveal-ease: cubic-bezier(.2,.8,.2,1);
+  --reveal-translate: 18px;     /* how far it lifts up from */
+  --reveal-stagger: 90ms;        /* delay between siblings */
+}
+
+/* Hidden state */
+.reveal,
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-translate), 0);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity, transform;
+}
+
+/* Visible state */
+.reveal.is-visible,
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+/* Optional group staggering: children get increasing delays */
+[data-reveal-group] > * {
+  --i: 0; /* script will set this per-child */
+  transition-delay: calc(var(--i) * var(--reveal-stagger));
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  [data-reveal],
+  [data-reveal-group] > * {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+  
