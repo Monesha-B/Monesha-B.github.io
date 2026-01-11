@@ -80,6 +80,75 @@
   .verify-link:hover {
     text-decoration: none;
   }
+
+  /* Header anchors the under-line menu */
+  .site-header{ position:relative; }
+
+  /* === Under-header hamburger + vertical list === */
+  .ham-wrap{
+    position:absolute;
+    top:100%;
+    margin-top:0.2cm;
+    left:calc(var(--ham-left, 0px) + 0.2cm);
+    z-index:50;
+    display:inline-grid;
+    grid-template-rows:auto auto;
+    justify-items:start;
+    row-gap:8px;
+  }
+
+  .ham-btn{
+    width:26px; height:22px; padding:0; border:0; background:transparent;
+    display:grid; justify-items:start; align-items:center;
+    color:inherit;
+    opacity:.55;
+    cursor:pointer; transition:opacity .18s var(--ease);
+  }
+  .ham-wrap:hover .ham-btn{ opacity:1; }
+  .ham-btn span{ width:16px; height:1.2px; margin:2px 0; border-radius:1px; background:currentColor; }
+  .ham-btn span:nth-child(1),
+  .ham-btn span:nth-child(3){ width:20px; }
+
+  .ham-pop{
+    display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+    opacity:0; transform:translateY(0px) translateX(-16px) !important;
+    pointer-events:none;
+    transition:opacity .18s var(--ease), transform .18s var(--ease);
+  }
+
+  .ham-pop a{
+    font: inherit;
+    font-size: 0.8rem;
+    color: #b8b8b8 !important;
+    opacity: 1;
+    text-decoration:none;
+    padding-bottom:3px;
+    border-bottom:1px solid #b8b8b8 !important;
+    transition:color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
+  }
+
+  .ham-pop a:hover, .ham-pop a:focus{
+    color: #6a6a6a !important;
+    outline:none; 
+    transform:translateX(1px);
+    border-bottom-color: #6a6a6a !important;
+  }
+
+  :root.dark .ham-pop a{
+    color: #a0a0a0 !important;
+    border-bottom-color: #a0a0a0 !important;
+  }
+
+  :root.dark .ham-pop a:hover, 
+  :root.dark .ham-pop a:focus{
+    color: #d0d0d0 !important;
+    border-bottom-color: #d0d0d0 !important;
+  }
+
+  .ham-wrap:hover .ham-pop,
+  .ham-wrap:focus-within .ham-pop{
+    opacity:1; transform:none; pointer-events:auto;
+  }
 </style>
 <script>
   (function(){
@@ -123,6 +192,20 @@
             .forEach((el,i)=>el.style.setProperty("--i", i));
         });
       }
+
+      // Align the hamburger under the logo
+      function placeHamburger(){
+        const header = document.querySelector('.site-header');
+        const logo   = header && header.querySelector('.logo-link');
+        if(!header || !logo) return;
+        const left = Math.max(0,
+          Math.round(logo.getBoundingClientRect().left - header.getBoundingClientRect().left)
+        );
+        document.documentElement.style.setProperty('--ham-left', left + 'px');
+      }
+      placeHamburger();
+      window.addEventListener('resize', placeHamburger);
+      window.addEventListener('load', placeHamburger);
     });
   })();
 </script>
@@ -149,6 +232,21 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
   </nav>
+
+  <div class="ham-wrap">
+    <button class="ham-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="ham-pop" aria-label="Quick links">
+      
+      
+      <a href="experience.html">Experience</a>
+      
+      
+      <a href="achievements.html">Achievements</a>
+      
+      
+      <a href="certifications.html">Certifications</a>
+    </nav>
+  </div>
 </header>
 
 <main class="container">
@@ -196,5 +294,22 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+  // Align the hamburger under the logo
+  document.addEventListener("DOMContentLoaded", function(){
+    function placeHamburger(){
+      const header = document.querySelector('.site-header');
+      const logo   = header && header.querySelector('.logo-link');
+      if(!header || !logo) return;
+      const left = Math.max(0,
+        Math.round(logo.getBoundingClientRect().left - header.getBoundingClientRect().left)
+      );
+      document.documentElement.style.setProperty('--ham-left', left + 'px');
+    }
+    placeHamburger();
+    window.addEventListener('resize', placeHamburger);
+    window.addEventListener('load', placeHamburger);
+  });
+</script>
 </body>
 </html>
