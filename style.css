@@ -685,4 +685,121 @@ body.chat-page .cta-row a{
   }
 }
 
-  
+ /* === Scroll reveal (fade + raise up, slow) === */
+:root{
+  --reveal-ease: cubic-bezier(.2,.8,.2,1);
+  --reveal-dur: 700ms;         /* slower */
+  --reveal-shift: 18px;        /* how much it lifts up */
+}
+
+/* hidden state */
+[data-reveal], .reveal{
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-shift), 0);
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    transform var(--reveal-dur) var(--reveal-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* visible state */
+.is-visible{
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+/* Stagger children inside a group: auto 90ms steps via --i from JS */
+[data-reveal-group] > [data-reveal]{ --reveal-delay: calc(var(--i, 0) * 90ms); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  [data-reveal], .reveal{
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+ 
+/* === Achievements page: remove the dark rounded rectangle(s) === */
+main#ach-page,
+main#ach-page.container,
+main#ach-page section,
+main#ach-page .svg-section {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+/* BUT allow gallery-wrap, slider, and info-card to keep their borders/backgrounds */
+main#ach-page .gallery-wrap,
+main#ach-page .slider {
+  background: initial !important;
+  border: initial !important;
+  border-radius: initial !important;
+  box-shadow: initial !important;
+}
+
+/* Some themes draw the “card” with pseudo-elements */
+main#ach-page::before,
+main#ach-page::after,
+main#ach-page section::before,
+main#ach-page section::after,
+main#ach-page .svg-section::before,
+main#ach-page .svg-section::after,
+main#ach-page .gallery-wrap::before,
+main#ach-page .gallery-wrap::after,
+main#ach-page .slider::before,
+main#ach-page .slider::after,
+main#ach-page .info-card::before,
+main#ach-page .info-card::after {
+  content: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Keep prev/next buttons visible */
+main#ach-page .slider button.nav {
+  background: var(--bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+/* --- Globe iframe: fill area, never show scrollbars --- */
+#skills-globe { padding: 0; }
+
+.globe-block { margin: 0; }
+
+.globe-container {
+  position: relative;
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  overflow: hidden;            /* hide any inner overflow */
+}
+
+/* Control the iframe’s size here (the globe will fit inside it) */
+.globe-container iframe {
+  display: block;
+  width: 100%;
+  height: clamp(540px, 78svh, 900px);   /* pick your preferred range */
+  border: 0;
+  overflow: hidden;                      /* prevent iframe scrollbars */
+}
+
+/* Prevent accidental horizontal scroll on the page */
+html, body { overflow-x: hidden; }
+/* Globe full-bleed, no internal scroll */
+#globe {
+  position: relative;
+  width: 100%;
+  height: 100vh;          /* fills the viewport */
+  overflow: hidden;
+}
+#globe canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+

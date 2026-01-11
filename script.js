@@ -209,4 +209,3 @@ function updateFeviconTheme(isDark) {
     if (feviconIframe.src !== newSrc) feviconIframe.src = newSrc;
   }
 }
-

@@ -1,24 +1,39 @@
+/* The globe page should never scroll */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   height: 100%;
-  width: 100%;
-  background: transparent !important; /* lets parent page color show */
+  overflow: hidden;          /* <-- no scrollbars inside iframe */
+  background: transparent;
 }
 
+/* The container fills the iframe completely */
 #globe {
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible;
+  width: 100%;
+  height: 100%;              /* <-- follow the iframe height */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
-  margin: 0 auto !important;
-  border: none;
-  box-shadow: none;
+  border: 0;
+}
+html, body { height: 100%; overflow: hidden; background: transparent; }
+#globe { width: 100%; height: 100%; overflow: hidden; }
+canvas { width: 100% !important; height: 100% !important; display: block; }
+/* Globe full-bleed, no internal scroll */
+#globe {
+  position: relative;
+  width: 100%;
+  height: 100vh;          /* fills the viewport */
+  overflow: hidden;
+}
+#globe canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }

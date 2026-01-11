@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+  /* nudge hamburger to the right by 16px */
+  .ham-wrap { left: calc(var(--ham-left, 0px) + 32px) !important; }
+</style>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content="Professional experience of Monesha Balasambandam"/>
   <title>Experience | Monesha</title>
 
-  <!-- Base site CSS + favicon (same as other pages) -->
+  <!-- Base site CSS + favicon -->
   <link rel="stylesheet" href="style.css"/>
-
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
 
-
-  <!-- (Optional) page transitions (keep if used sitewide) -->
+  <!-- (Optional) page transitions -->
   <link rel="stylesheet" href="assets/transition/transitions.css"/>
   <script defer src="assets/transition/transitions.js"></script>
 
-  <!-- Robotics heading font (same as Projects) -->
+  <!-- Robotics heading font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet"/>
 
   <style>
@@ -25,14 +27,19 @@
     #exp-page{
       --bg:#fff; --fg:#111; --muted:#666a6f;
       --pill:#f6f6f7; --border:#e8e8e8;
-      --wm-size: clamp(32px, 6.5vw, 60px);
-      --wm-gap: 12px;
-      --content-indent: 24px;
-      --wm-stroke:#b6b6b6; /* gray outline for headings */
+      --wm-size:clamp(32px,6.5vw,60px);
+      --wm-gap:12px;
+      --content-indent:24px;
+      --wm-stroke:#b6b6b6;
+      --card: transparent !important; /* ensure no panel color on this page */
       background:var(--bg); color:var(--fg);
     }
     @media (prefers-color-scheme:dark){
-      #exp-page{ --bg:#0b0b0f; --fg:#fff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
+      #exp-page{
+        --bg:#0b0b0f; --fg:#fff; --muted:#cfcfd3;
+        --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6;
+        --card: transparent !important;
+      }
     }
 
     /* ---------- Header / intro ---------- */
@@ -44,7 +51,7 @@
     .svg-section{position:relative; padding-top:calc(var(--wm-size) + var(--wm-gap)); margin:24px 0 16px}
     .svg-section > :not(.wm-wrap){margin-left:var(--content-indent)!important}
     .wm-wrap{position:absolute; left:0; top:0; pointer-events:none; user-select:none; width:auto; height:var(--wm-size); display:block}
-    .wm-svg{width:auto; height:100%; display:block; color:var(--muted); overflow:visible} /* prevent clipping */
+    .wm-svg{width:auto; height:100%; display:block; color:var(--muted); overflow:visible}
     .wm-svg text{
       fill:none; stroke:var(--wm-stroke); stroke-width:2.2;
       stroke-linecap:butt; stroke-linejoin:miter;
@@ -53,31 +60,57 @@
       font-size:clamp(50px, 9.8vw, 90px); letter-spacing:.06em; word-spacing:.12em;
     }
 
-    /* ---------- Remove rounded rectangles (cards) on THIS PAGE ---------- */
-    #exp-page .card,
-    #exp-page .card::before,
-    #exp-page .card::after {
-      background:transparent !important;
-      border:0 !important;
-      box-shadow:none !important;
-      border-radius:0 !important;
-      padding:0 !important;
+    /* ======================================================
+       REMOVE THE DARK RECTANGLE (this page, all themes)
+       ====================================================== */
+    #exp-page,
+    #exp-page > *,
+    #exp-page section,
+    #exp-page .svg-section,
+    #exp-page article.card,
+    #exp-page article.card::before,
+    #exp-page article.card::after{
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      outline: 0 !important;
     }
-    #exp-page .card{ margin:0 0 18px !important }
+    #exp-page .card + .card{ margin-top: 18px; }
 
     /* ---------- Card contents (layout) ---------- */
     .card{display:grid; grid-template-columns:auto 1fr; gap:10px}
-    .ico{width:30px; height:30px; border-radius:999px; display:grid; place-items:center;
-         font-weight:700; color:var(--fg); background:var(--pill); border:1px solid var(--border); font-size:13px}
-    .eyebrow{display:inline-block; margin-bottom:3px; font-weight:600; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+
+    /* round icon pill */
+    #exp-page .ico{
+      width:30px; height:30px; border-radius:999px; display:grid; place-items:center;
+      font-weight:700; font-size:13px; color:#111;
+      background:#f6f6f7; border:1px solid #e8e8e8;
+    }
+    /* dark-pref fallback (system dark) */
+    @media (prefers-color-scheme:dark){
+      #exp-page .ico{
+        background:rgba(255,255,255,.08);
+        border:1px solid #2a2c34;
+        color:#e6e6e6;
+      }
+    }
+    /* dark override when site toggles html.dark */
+    html.dark #exp-page .ico{
+      background:rgba(255,255,255,.08) !important;
+      border:1px solid #2a2c34 !important;
+      color:#e6e6e6 !important;
+    }
+
+    /* darker grey for eyebrow (role labels) */
+    html:not(.dark) #exp-page .eyebrow{ color:#4b4f56 !important; opacity:.95 }
+    html.dark #exp-page .eyebrow{ color:#b7bcc3 !important }
+
+    .eyebrow{display:inline-block; margin-bottom:3px; font-weight:600; font-size:10px; letter-spacing:.12em; text-transform:uppercase}
     h3{margin:0 0 4px; font-weight:700; font-size:clamp(17px,1.8vw,20px); line-height:1.15}
     .muted{margin:0 6px 6px 0; color:var(--muted); font-size:14px; line-height:1.4; display:inline-block}
 
     /* ---------- Left-align the bottom "cd .." ---------- */
-    #exp-page .mini.crumb{
-      text-align:left !important;
-      margin-left:var(--content-indent);
-    }
+    #exp-page .mini.crumb{ text-align:left !important; margin-left:var(--content-indent) }
 
     @media (max-width:768px){
       #exp-page{--wm-size:38px; --wm-gap:10px; --content-indent:16px}
@@ -85,16 +118,108 @@
       .card{gap:8px}
     }
   </style>
+  <style id="exp-ico-gray-black">
+  /* Experience page icon pill: gray circle, black letter */
+  #exp-page .ico{
+    background:#e0e0e0 !important;   /* gray fill */
+    border:1px solid #cfcfcf !important;
+    color:#000 !important;            /* black K / I */
+    font-weight:800;                   /* bolder letter */
+  }
+  /* keep same look in dark mode too */
+  html.dark #exp-page .ico{
+    background:#e0e0e0 !important;
+    border:1px solid #bdbdbd !important;
+    color:#000 !important;
+  }
+</style>
+
+
+  <style>
+/* === Under-header hamburger + vertical list (inherits site font & color) === */
+    .ham-wrap{
+      position:absolute;
+      top:100%;
+      margin-top:0.2cm;                   /* exact 0.2 cm below the line */
+      left:calc(var(--ham-left, 0px) + 0.2cm); /* horizontally aligned under logo with 0.2 cm nudge */
+      z-index:50;
+
+      display:inline-grid;
+      grid-template-rows:auto auto;       /* icon on top, list below */
+      justify-items:start;
+      row-gap:8px;                        /* SPACE between hamburger and menu */
+    }
+
+    /* Icon: thin, light; all bars start same left; top/bottom longer */
+    .ham-btn{
+      width:26px; height:22px; padding:0; border:0; background:transparent;
+      display:grid; justify-items:start; align-items:center;
+      color:inherit;                       /* same color as page text */
+      opacity:.55;                         /* light until hover */
+      cursor:pointer; transition:opacity .18s var(--ease);
+    }
+    .ham-wrap:hover .ham-btn{ opacity:1; }
+    .ham-btn span{ width:16px; height:1.2px; margin:2px 0; border-radius:1px; background:currentColor; }
+    .ham-btn span:nth-child(1),
+    .ham-btn span:nth-child(3){ width:20px; }
+
+    /* Slim text list UNDER the icon — same font & color as site */
+    .ham-pop{
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+      opacity:0; transform:translateY(0px) translateX(-16px) !important;
+      pointer-events:none;
+      transition:opacity .18s var(--ease), transform .18s var(--ease);
+    }
+
+    /* LIGHT THEME - Default State (Light Gray) */
+    .ham-pop a{
+      font: inherit;
+      font-size: 0.8rem;                               /* ← SMALLER font size */
+      color: #b8b8b8 !important;                      /* LIGHT GRAY default */
+      opacity: 1;
+      text-decoration:none;
+      padding-bottom:3px;
+      border-bottom:1px solid #b8b8b8 !important;    /* LIGHT GRAY underline */
+      transition:color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
+    }
+
+    /* LIGHT THEME - Hover State (Slightly Darker Gray) */
+    .ham-pop a:hover, .ham-pop a:focus{
+      color: #6a6a6a !important;                      /* BIT DARKER GRAY on hover */
+      outline:none; 
+      transform:translateX(1px);
+      border-bottom-color: #6a6a6a !important;       /* BIT DARKER GRAY underline on hover */
+    }
+
+    /* DARK THEME - Default State (Light Gray) */
+    :root.dark .ham-pop a{
+      color: #a0a0a0 !important;                      /* LIGHT GRAY in dark mode */
+      border-bottom-color: #a0a0a0 !important;        /* LIGHT GRAY underline in dark mode */
+    }
+
+    /* DARK THEME - Hover State (Slightly Darker Gray) */
+    :root.dark .ham-pop a:hover, 
+    :root.dark .ham-pop a:focus{
+      color: #d0d0d0 !important;                      /* BIT LIGHTER GRAY on hover in dark mode */
+      border-bottom-color: #d0d0d0 !important;        /* BIT LIGHTER GRAY underline on hover in dark mode */
+    }
+
+    /* Open the list on hover or keyboard focus */
+    .ham-wrap:hover .ham-pop,
+    .ham-wrap:focus-within .ham-pop{
+      opacity:1; transform:none; pointer-events:auto;
+    }
+  </style>
 </head>
 <body>
-  <!-- Header (same as other pages) -->
+  <!-- Header -->
   <header class="site-header">
     <a class="logo-link" aria-label="Home" href="index.html">
       <iframe src="fevicon.html" title="Animated M Logo" loading="eager" style="border:0;outline:0;background:transparent"></iframe>
     </a>
     <nav class="nav-right">
       <a class="nav-link" href="projects.html">Projects</a>
-      <a class="nav-link" href="experience.html">Experience</a>
+      
       <a class="nav-link" href="posts.html">Blog</a>
       <a class="nav-link" href="chat.html">Chat</a>
       <a class="icon-link" aria-label="GitHub" href="https://github.com/Monesha-B/">
@@ -107,6 +232,19 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
     </nav>
+
+  <div class="ham-wrap">
+    <button class="ham-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="ham-pop" aria-label="Quick links">
+      
+      
+      <a href="experience.html">Experience</a>
+      
+      <a href="certifications.html">Certifications</a>
+      <a href="achievements.html">Achievements</a>
+    </nav>
+  </div>
+    
   </header>
 
   <main id="exp-page" class="container">
@@ -126,8 +264,8 @@
       <article class="card">
         <div class="ico">K</div>
         <div>
-          <span class="eyebrow">System Engineer — Kyndryl</span>
-          <h3>Data Protection & Recovery for Lloyds Banking Group (UK)</h3>
+          <h3>System Engineer — Kyndryl</h3>
+<span class="eyebrow">Lloyds Banking Group (UK)</span>
           <p class="muted">Sep 2021 – Aug 2024 · Bangalore, India</p>
           <p class="muted">Offshore technical POC for mission-critical Windows/UNIX estates; drove Sev-1/Sev-2 incident resolution with root-cause prevention. Built automated SQL & file-system backup workflows in Veritas NetBackup and delivered reporting/dashboards to strengthen ops visibility and audits. Partnered across infra/product/client teams on DR exercises and security hardening.</p>
         </div>
@@ -137,8 +275,8 @@
       <article class="card">
         <div class="ico">I</div>
         <div>
-          <span class="eyebrow">Associate Technical Engineer — IBM</span>
-          <h3>Backup Operations for Lloyds Banking Group (UK)</h3>
+          <h3>Associate Technical Engineer — IBM</h3>
+<span class="eyebrow">Lloyds Banking Group (UK)</span>
           <p class="muted">Nov 2020 – Aug 2021 · Bangalore, India</p>
           <p class="muted">Monitored and maintained ~4,000 servers on NetBackup, ensured SLAs and rapid recoveries for regulated workloads. Triaged high-priority incidents, authored runbooks to improve MTTR, and collaborated with security/DB/app teams to keep releases stable and customer-focused.</p>
         </div>
@@ -152,6 +290,7 @@
     <div>2021–Present © Monesha Balasambandam</div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Ensure latest script loads and isn't deferred by Cloudflare -->
+  <script src="script.js?v=24" data-cfasync="false"></script>
 </body>
 </html>

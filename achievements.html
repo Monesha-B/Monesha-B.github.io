@@ -1,603 +1,536 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  /* nudge hamburger to the right by 16px */
+  .ham-wrap { left: calc(var(--ham-left, 0px) + 32px) !important; }
+</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Achievements | Monesha</title>
-  <meta name="description" content="Academic achievements, awards, and recognitions - State and District level honors.">
-  
+  <meta name="description" content="Achievements and recognitions of Monesha Balasambandam"/>
+
+  <!-- Base site CSS + favicons -->
+  <link rel="stylesheet" href="style.css?v=2"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
 
-  <link rel="stylesheet" href="style.css">
-<!-- Page enter: slide up + fade in (copy this whole block into <head>) -->
-<script>
-  // Ensure first paint starts hidden & slightly down
-  document.documentElement.classList.add('pt-init');
-</script>
-<style>
-  /* Initial hidden state before anything else loads */
-  html.pt-init body{
-    opacity:0;
-    transform:translate3d(0,24px,0);
-  }
+  <!-- (Optional) page transitions to match site -->
+  <link rel="stylesheet" href="assets/transition/transitions.css"/>
+  <script defer src="assets/transition/transitions.js"></script>
 
-  /* Page transition settings */
-  :root{
-    --enter:520ms;
-    --exit:360ms;
-    --ease:cubic-bezier(.2,.8,.2,1);
-  }
-  html body{
-    opacity:0;
-    transform:translate3d(0,24px,0);
-    transition:
-      opacity var(--enter) var(--ease),
-      transform var(--enter) var(--ease);
-    will-change: opacity, transform;
-  }
-  html body.page-ready{
-    opacity:1;
-    transform:translate3d(0,0,0);
-  }
-  html body.page-exiting{
-    opacity:0;
-    transform:translate3d(0,-12px,0);
-    transition-duration:var(--exit);
-  }
-
-  /* Optional: make any element fade+slide when it scrolls into view */
-  [data-reveal]{opacity:0;transform:translate3d(0,14px,0);
-    transition:opacity 600ms var(--ease),transform 600ms var(--ease);
-    transition-delay:var(--delay,0ms)}
-  [data-reveal].is-visible{opacity:1;transform:none}
-  [data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }
-</style>
-<script>
-  // Robust page-enter (double rAF so the transition always triggers)
-  (function(){
-    function onReady(fn){
-      if(document.readyState==="loading"){
-        document.addEventListener("DOMContentLoaded",fn,{once:true});
-      } else fn();
-    }
-    onReady(function(){
-      // start from initial state, then animate in
-      document.body.classList.remove("page-ready","page-exiting");
-      void getComputedStyle(document.body).transform;   // force reflow
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        document.body.classList.add("page-ready");
-        document.documentElement.classList.remove("pt-init");
-      }));
-
-      // Exit animation on same-site links
-      document.addEventListener("click",function(e){
-        const a = e.target.closest && e.target.closest("a");
-        if(!a) return;
-        if(a.target==="_blank"||a.hasAttribute("download")||
-           e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
-        const href=a.getAttribute("href");
-        if(!href||href.startsWith("#")||href.startsWith("mailto:")||href.startsWith("tel:")) return;
-        let to; try{to=new URL(href,location.href);}catch{ return; }
-        if(to.origin!==location.origin) return; // external
-        if(to.pathname===location.pathname && to.hash) return; // same-page anchor
-        e.preventDefault();
-        document.body.classList.add("page-exiting");
-        setTimeout(()=>{ location.href=to.href; }, 360); // match --exit
-      });
-
-      // Optional: reveal-on-scroll
-      if("IntersectionObserver" in window){
-        const io=new IntersectionObserver((entries,obs)=>{
-          entries.forEach(en=>{
-            if(en.isIntersecting){ en.target.classList.add("is-visible"); obs.unobserve(en.target); }
-          });
-        },{threshold:0.12, rootMargin:"0px 0px -10% 0px"});
-        document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
-        document.querySelectorAll("[data-reveal-group]").forEach(g=>{
-          Array.from(g.children).filter(el=>el.hasAttribute("data-reveal"))
-            .forEach((el,i)=>el.style.setProperty("--i", i));
-        });
-      }
-    });
-  })();
-</script>
-
+  <!-- Watermark font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet"/>
 
   <style>
-    .card-stack-container {
-      position: relative;
-      width: 100%;
-      height: 550px;
-      margin: 40px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* ===== Page tokens (match Projects / Experience) ===== */
+    #ach-page{
+      --bg:#fff; --fg:#111; --muted:#666a6f;
+      --pill:#f6f6f7; --border:#e8e8e8;
+      --wm-size: clamp(32px, 6.5vw, 60px);
+      --wm-gap: 12px;
+      --content-indent: 24px;
+      --wm-stroke:#b6b6b6;
+      background:var(--bg); color:var(--fg);
     }
-    
-    .achievement-card {
-      position: absolute;
-      width: 350px;
-      height: 480px;
-      background: white;
-      border-radius: 4px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      padding: 15px 15px 25px 15px;
+    @media (prefers-color-scheme:dark){
+      #ach-page{ --bg:#0b0b0f; --fg:#fff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
     }
-    
-    :root.dark .achievement-card {
-      background: #f5f5f5;
+    #ach-page h1{margin:0 0 6px; text-align:center; font-weight:800; font-size:clamp(28px,3vw,36px)}
+    #ach-page .mini{opacity:.9; text-align:center}
+    #ach-page hr{border:0; border-top:1px solid var(--border); max-width:100px; margin:10px auto 18px}
+
+    .svg-section{position:relative; padding-top:calc(var(--wm-size) + var(--wm-gap)); margin:24px 0 16px}
+    .svg-section > :not(.wm-wrap){margin-left:var(--content-indent)!important}
+    .wm-wrap{position:absolute; left:60px; top:0; pointer-events:none; user-select:none; width:auto; height:var(--wm-size)}
+    .wm-svg{height:100%; display:block; overflow:visible}
+    .wm-svg text{
+      fill:none; stroke:var(--wm-stroke); stroke-width:2.2;
+      font-family:'Orbitron','Oxanium','Rajdhani','Russo One',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-weight:700; text-transform:uppercase; font-size:clamp(50px,9.8vw,90px); letter-spacing:.06em;
     }
-    
-    .achievement-card.center {
-      z-index: 10;
-      transform: translateX(0) scale(1) rotate(0deg);
+
+    /* ===== Two-column layout: swirl slider + synced text ===== */
+    .gallery-wrap{
+      display:grid !important; 
+      gap:18px !important;
+      grid-template-columns: 1.8fr 1fr !important;  /* Left wider: ~64%, right ~36% */
+      align-items:start !important;
+      margin: 6px var(--content-indent) 0 !important;
+      background: transparent !important;
+      border: 0 !important;
     }
-    
-    .achievement-card.left-1 {
-      z-index: 8;
-      transform: translateX(-120px) scale(0.92) rotate(-4deg);
-      opacity: 0.4;
+    @media (max-width: 920px){ .gallery-wrap{ grid-template-columns: 1fr !important; } }
+
+    /* ===== Swirl Parallax Slider (left) ===== */
+    .slider{
+      position:relative !important; 
+      overflow:hidden !important;
+      border:1px solid var(--border) !important; 
+      border-radius:18px !important;
+      background:transparent !important; 
+      touch-action:pan-y !important;
+      height: clamp(400px, 50vh, 600px) !important;  /* Responsive: 50% of viewport height */
+      min-height: 350px !important;  /* Minimum for small screens */
+      isolation:isolate !important; /* keep masks contained */
     }
-    
-    .achievement-card.right-1 {
-      z-index: 8;
-      transform: translateX(120px) scale(0.92) rotate(4deg);
-      opacity: 0.4;
+    .slides{ position:relative; height:100%; }
+    .slide{
+      position:absolute; inset:0; overflow:hidden; background:var(--bg);
+      opacity:0; transform:scale(1.02);
+      transition: opacity .55s cubic-bezier(.2,.8,.2,1), transform .55s cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform;
     }
-    
-    .achievement-card.hidden {
-      transform: translateX(0) scale(0.7);
-      opacity: 0;
-      z-index: 1;
+    .slide.is-current{ opacity:1; transform:none; z-index:1; }
+    .layer{
+      position:absolute; inset:0; background-size:contain; background-position:center;
+      background-repeat:no-repeat;
+      transform:translateX(0); will-change:transform; /* parallax layer */
     }
-    
-    .achievement-card.center:hover {
-      transform: translateX(0) scale(1.05) rotate(0deg);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      z-index: 15;
+    /* The top image we reveal with a swirl mask */
+    .reveal .img{
+      position:absolute; inset:0;
+      background-size:contain; background-position:center;
+      background-repeat:no-repeat;
+      transform:scale(1) rotate(0deg);
+      will-change:transform;
+      /* Fallback: simple fade if masks unsupported */
+      opacity:0; animation: fadeIn .65s ease forwards;
     }
-    
-    .achievement-card.popup {
-      transform: translateX(0) scale(1.15) rotate(0deg) !important;
-      z-index: 20 !important;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6) !important;
-      opacity: 1 !important;
+    @keyframes fadeIn { to { opacity:1; transform:none; } }
+
+    /* Swirl mask (supported in modern Chromium/WebKit) */
+    @supports (-webkit-mask-image: radial-gradient(#000,transparent)) {
+      .reveal .img{
+        opacity:1;
+        animation: swirlIn .9s cubic-bezier(.2,.8,.2,1) forwards;
+        /* two-layer mask: expanding circle ∩ rotating conic stripes */
+        -webkit-mask-image:
+          radial-gradient(circle at 50% 50%, #000 0 0, transparent 0), /* animated size */
+          repeating-conic-gradient(from 0turn, #000 0 12deg, transparent 12deg 24deg); /* animated angle */
+        -webkit-mask-size: 8% 8%, 100% 100%;
+        -webkit-mask-position: center, center;
+        -webkit-mask-repeat: no-repeat, no-repeat;
+        /* intersect the two masks */
+        -webkit-mask-composite: source-in;
+      }
+      @keyframes swirlIn{
+        0%   { -webkit-mask-size: 8% 8%, 100% 100%;  -webkit-mask-image:
+                 radial-gradient(circle at 50% 50%, #000 0 0, transparent 0),
+                 repeating-conic-gradient(from 0turn, #000 0 12deg, transparent 12deg 24deg);
+               transform:scale(1) rotate(0deg); }
+        60%  { -webkit-mask-size: 120% 120%, 100% 100%; -webkit-mask-image:
+                 radial-gradient(circle at 50% 50%, #000 0 120%, transparent 120% 121%),
+                 repeating-conic-gradient(from .8turn, #000 0 12deg, transparent 12deg 24deg); }
+        100% { -webkit-mask-size: 200% 200%, 100% 100%; -webkit-mask-image:
+                 radial-gradient(circle at 50% 50%, #000 0 200%, transparent 200% 201%),
+                 repeating-conic-gradient(from 1.25turn, #000 0 12deg, transparent 12deg 24deg);
+               transform:none; }
+      }
     }
-    
-    .achievement-card.swiping {
-      transition: none;
-      cursor: grabbing;
+
+    /* Tiny caption chip inside image (optional) */
+    .chip{
+      position:absolute; left:12px; bottom:12px; padding:6px 10px; font-size:13px; color:var(--fg);
+      background:color-mix(in oklab, var(--bg) 70%, transparent);
+      border:1px solid var(--border); border-radius:999px; backdrop-filter:blur(4px);
+      pointer-events:none;
     }
-    
-    .achievement-card.swiped-left {
-      transform: translateX(-800px) rotate(-30deg) !important;
-      opacity: 0 !important;
-      transition: all 0.5s ease !important;
+
+    /* Controls + dots */
+    .slider button.nav{
+      position:absolute; top:50%; transform:translateY(-50%); width:40px; height:40px;
+      border:1px solid var(--border); border-radius:999px; background:var(--bg); color:var(--fg);
+      display:grid; place-items:center; cursor:pointer; opacity:.95; z-index:3;
     }
-    
-    .achievement-card.swiped-right {
-      transform: translateX(800px) rotate(30deg) !important;
-      opacity: 0 !important;
-      transition: all 0.5s ease !important;
+    .slider .prev{left:10px} .slider .next{right:10px}
+    .dots{position:absolute; left:50%; bottom:10px; transform:translateX(-50%); display:flex; gap:8px; z-index:3}
+    .dot{width:8px; height:8px; border-radius:999px; border:1px solid var(--border); background:transparent}
+    .dot.is-active{background:var(--fg)}
+
+    /* ===== Synced text (right) ===== */
+    .info-card{
+      border:1px solid var(--border); border-radius:18px;
+      padding:16px 16px 18px; background:transparent;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;  /* Vertically center the content */
+      height:100%;  /* Match the slider height */
     }
-    
-    .card-image {
-      width: 100%;
-      height: 320px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-      color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
+    .ico{
+      width:30px; height:30px; border-radius:999px; display:grid; place-items:center;
+      background:#e0e0e0!important; border:1px solid #cfcfcf!important; color:#000!important;
+      font-weight:800; font-size:13px; margin-bottom:10px;
     }
-    
-    .card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .eyebrow{display:inline-block; margin-bottom:6px; font-weight:600; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+    .title{margin:0 0 8px; font-weight:800; font-size:clamp(18px,2vw,22px)}
+    .desc{margin:0; color:var(--muted); font-size:15px; line-height:1.5}
+    .info-card.pop{ animation: infoPop .45s cubic-bezier(.2,.8,.2,1); }
+    @keyframes infoPop{ 0%{opacity:0; transform:translateY(8px) scale(.98);} 100%{opacity:1; transform:none;} }
+
+    /* A11y */
+    @media (prefers-reduced-motion: reduce){
+      .slide, .reveal .img{ transition:none; animation:none }
+      .info-card.pop{ animation:none }
     }
-    
-    .placeholder-photo {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    
-    .placeholder-photo .icon {
-      font-size: 4rem;
-      margin-bottom: 10px;
-    }
-    
-    .placeholder-photo .text {
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
-    
-    .card-content {
-      padding: 20px 10px 0 10px;
-      flex: 1;
-      background: white;
-      text-align: center;
-    }
-    
-    :root.dark .card-content {
-      background: #f5f5f5;
-    }
-    
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #333;
-      margin: 0 0 8px 0;
-      font-family: 'Comic Sans MS', 'Marker Felt', cursive, sans-serif;
-    }
-    
-    .card-description {
-      color: #666;
-      line-height: 1.4;
-      margin: 0;
-      font-size: 0.85rem;
+    #ach-page .mini.crumb{ text-align:left !important; margin-left:var(--content-indent) }
+
+    /* ===== Lightbox Modal ===== */
+    .lightbox {
       display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
     }
-    
-    .achievement-card.popup .card-description {
-      display: block;
-      margin-top: 10px;
+    .lightbox.active {
+      display: flex;
     }
-    
-    .card-counter {
-      text-align: center;
-      color: #999;
-      font-size: 0.8rem;
-      margin-top: 10px;
-      font-weight: 500;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
     }
-    
-    .swipe-hint {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 4rem;
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-      z-index: 100;
+  </style>
+  
+
+  <style>
+/* === Under-header hamburger + vertical list (inherits site font & color) === */
+    .ham-wrap{
+      position:absolute;
+      top:100%;
+      margin-top:0.2cm;                   /* exact 0.2 cm below the line */
+      left:calc(var(--ham-left, 0px) + 0.2cm); /* horizontally aligned under logo with 0.2 cm nudge */
+      z-index:50;
+
+      display:inline-grid;
+      grid-template-rows:auto auto;       /* icon on top, list below */
+      justify-items:start;
+      row-gap:8px;                        /* SPACE between hamburger and menu */
     }
-    
-    .swipe-hint.left {
-      left: 50px;
-      color: #f48771;
+
+    /* Icon: thin, light; all bars start same left; top/bottom longer */
+    .ham-btn{
+      width:26px; height:22px; padding:0; border:0; background:transparent;
+      display:grid; justify-items:start; align-items:center;
+      color:inherit;                       /* same color as page text */
+      opacity:.55;                         /* light until hover */
+      cursor:pointer; transition:opacity .18s var(--ease);
     }
-    
-    .swipe-hint.right {
-      right: 50px;
-      color: #4ec9b0;
+    .ham-wrap:hover .ham-btn{ opacity:1; }
+    .ham-btn span{ width:16px; height:1.2px; margin:2px 0; border-radius:1px; background:currentColor; }
+    .ham-btn span:nth-child(1),
+    .ham-btn span:nth-child(3){ width:20px; }
+
+    /* Slim text list UNDER the icon — same font & color as site */
+    .ham-pop{
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+      opacity:0; transform:translateY(0px) translateX(-16px) !important;
+      pointer-events:none;
+      transition:opacity .18s var(--ease), transform .18s var(--ease);
     }
-    
-    .swipe-hint.show {
-      opacity: 0.8;
+
+    /* LIGHT THEME - Default State (Light Gray) */
+    .ham-pop a{
+      font: inherit;
+      font-size: 0.8rem;                               /* ← SMALLER font size */
+      color: #b8b8b8 !important;                      /* LIGHT GRAY default */
+      opacity: 1;
+      text-decoration:none;
+      padding-bottom:3px;
+      border-bottom:1px solid #b8b8b8 !important;    /* LIGHT GRAY underline */
+      transition:color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
     }
-    
-    .upload-instructions {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 30px 0;
+
+    /* LIGHT THEME - Hover State (Slightly Darker Gray) */
+    .ham-pop a:hover, .ham-pop a:focus{
+      color: #6a6a6a !important;                      /* BIT DARKER GRAY on hover */
+      outline:none; 
+      transform:translateX(1px);
+      border-bottom-color: #6a6a6a !important;       /* BIT DARKER GRAY underline on hover */
     }
-    
-    .upload-instructions h3 {
-      color: var(--text);
-      margin: 0 0 15px 0;
-      font-size: 1.2rem;
+
+    /* DARK THEME - Default State (Light Gray) */
+    :root.dark .ham-pop a{
+      color: #a0a0a0 !important;                      /* LIGHT GRAY in dark mode */
+      border-bottom-color: #a0a0a0 !important;        /* LIGHT GRAY underline in dark mode */
     }
-    
-    .upload-instructions p {
-      color: var(--muted);
-      margin: 8px 0;
-      line-height: 1.6;
+
+    /* DARK THEME - Hover State (Slightly Darker Gray) */
+    :root.dark .ham-pop a:hover, 
+    :root.dark .ham-pop a:focus{
+      color: #d0d0d0 !important;                      /* BIT LIGHTER GRAY on hover in dark mode */
+      border-bottom-color: #d0d0d0 !important;        /* BIT LIGHTER GRAY underline on hover in dark mode */
     }
-    
-    .upload-instructions code {
-      background: var(--bg);
-      color: var(--brand);
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
-    
-    @media (max-width: 768px) {
-      .achievement-card {
-        width: 280px;
-        height: 400px;
-      }
-      
-      .card-image {
-        height: 260px;
-        font-size: 4rem;
-      }
-      
-      .achievement-card.left-1 {
-        transform: translateX(-100px) scale(0.88) rotate(-5deg);
-        opacity: 0.4;
-      }
-      
-      .achievement-card.right-1 {
-        transform: translateX(100px) scale(0.88) rotate(5deg);
-        opacity: 0.4;
-      }
+
+    /* Open the list on hover or keyboard focus */
+    .ham-wrap:hover .ham-pop,
+    .ham-wrap:focus-within .ham-pop{
+      opacity:1; transform:none; pointer-events:auto;
     }
   </style>
 </head>
 <body>
-<header class="site-header">
-  <a href="index.html" class="logo-link" aria-label="Home">
-    <iframe src="fevicon.html" title="Animated M Logo" loading="eager"></iframe>
+  <!-- Header -->
+  <header class="site-header">
+    <a class="logo-link" aria-label="Home" href="index.html">
+      <iframe src="fevicon.html" title="Animated M Logo" loading="eager" style="border:0;outline:0;background:transparent"></iframe>
+    </a>
+    <nav class="nav-right">
+  <a class="nav-link" href="projects.html">Projects</a>
+  
+  <a class="nav-link" href="posts.html">Blog</a>
+  <a class="nav-link" href="chat.html">Chat</a>
+
+  <a class="icon-link" aria-label="GitHub" href="https://github.com/Monesha-B/">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.1-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.64 1.65.22 2.87.11 3.17.77.83 1.24 1.9 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
   </a>
-  
-  <nav class="nav-right">
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="posts.html" class="nav-link">Blog</a>
-    <a href="chat.html" class="nav-link">Chat</a>
-    <a href="https://github.com/Monesha-B/" class="icon-link" aria-label="GitHub">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.10.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
-    </a>
-    <a href="https://www.linkedin.com/in/moneshab" class="icon-link" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM14.5 9c-2.4 0-4 1.3-4 3.3V21h4v-6.3c0-1 .7-1.7 1.9-1.7 1.2 0 1.6.7 1.6 1.7V21h4v-6.9C22 10.8 20.3 9 17.9 9c-1.6 0-2.7.7-3.4 1.6V9h-4z"/></svg>
-    </a>
-    <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-  </nav>
-</header>
+  <a class="icon-link" aria-label="LinkedIn" href="https://www.linkedin.com/in/moneshab">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5.001zM3 9h4v12H3V9zM9.97 9h3.8v1.6h.05c.53-1.01 1.83-2.08 3.77-2.08 4.03 0 4.78 2.65 4.78 6.1V21h-3.96v-5.38c0-1.28-.02-2.93-1.79-2.93-1.8 0-2.07 1.4-2.07 2.84V21H9.97V9z"/></svg>
+  </a>
+  <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</nav>
 
-<main class="container">
-  <h1>Achievements & Awards</h1>
-  <p class="mini">Academic excellence and recognitions • Swipe cards to browse</p>
-  <hr>
-
-  <div class="card-stack-container" id="cardContainer">
-    <div class="swipe-hint left" id="hintLeft">👈</div>
-    <div class="swipe-hint right" id="hintRight">👉</div>
+  <div class="ham-wrap">
+    <button class="ham-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="ham-pop" aria-label="Quick links">
+      
+      
+      <a href="experience.html">Experience</a>
+      
+      <a href="certifications.html">Certifications</a>
+      <a href="achievements.html">Achievements</a>
+    </nav>
   </div>
 
-  <div class="upload-instructions">
-    <h3>📸 Adding Your Achievement Photos</h3>
-    <p>To add your award certificates and photos:</p>
-    <p>1. Create folder: <code>assets/achievements/</code></p>
-    <p>2. Add images: <code>state-rank.jpg</code>, <code>district-rank.jpg</code>, <code>chief-minister-award.jpg</code>, etc.</p>
-    <p>3. Update the image paths in the achievements array below</p>
-    <p>4. Upload to GitHub and your photos will appear in the Polaroid cards!</p>
+  </header>
+
+  <main id="ach-page" class="container">
+    <h1>Achievements</h1>
+    <p class="mini">State and District recognitions I'm proud of.</p>
+    <hr/>
+
+    <section class="svg-section" aria-label="Achievements Gallery">
+      <div class="wm-wrap" aria-hidden="true">
+        <svg class="wm-svg" viewBox="0 0 1600 120" preserveAspectRatio="xMinYMid meet">
+          <text x="0" y="88">Gallery</text>
+        </svg>
+      </div>
+
+      <div class="gallery-wrap">
+        <!-- Swirl parallax slider -->
+        <div class="slider" id="slider" role="region" aria-label="Achievement photos">
+          <div class="slides" id="slides"></div>
+          <button class="nav prev" aria-label="Previous slide" id="prev">‹</button>
+          <button class="nav next" aria-label="Next slide" id="next">›</button>
+          <div class="dots" id="dots" aria-hidden="true"></div>
+        </div>
+
+        <!-- Synced text -->
+        <aside class="info-card" id="info" aria-live="polite">
+          <div class="ico" id="ico">S</div>
+          <span class="eyebrow" id="eyebrow">Academic Excellence</span>
+          <h3 class="title" id="title">State Rank — 3rd Place</h3>
+          <p class="desc" id="desc">Recognized at a state-level ceremony for 10th-grade performance.</p>
+        </aside>
+      </div>
+    </section>
+
+    <p class="mini crumb">&gt; <a href="index.html">cd ..</a></p>
+  </main>
+
+  <!-- Lightbox for image popup -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" alt="Achievement photo">
   </div>
 
-  <p class="mini">> <a href="index.html">cd ..</a></p>
-</main>
+  <footer class="container footer">
+    <div>2021–Present © Monesha Balasambandam</div>
+  </footer>
 
-<footer class="container footer">
-  <div>2021–Present © Monesha Balasambandam</div>
-</footer>
+  <script src="script.js"></script>
+  <script>
+    // Each picture gets its own text (no stacking)
+    const slidesData = [
+      {
+        img:'/Users/monesha/Monesha-B.github.io/images/k.jpg',
+        chip:'State Ceremony', ico:'S', eyebrow:'Academic Excellence',
+        title:'State Rank — 3rd Place',
+        desc:'Recognized at a state-level ceremony for 10th-grade performance.'
+      },
+      {
+        img:'/Users/monesha/Monesha-B.github.io/images/R.jpg',
+        chip:'Congratulatory Letter', ico:'L', eyebrow:'Recognition Letter',
+        title:'Ramco Cements — CEO Congratulatory Letter',
+        desc:'Formal acknowledgment of State & District ranks.'
+      },
+      {
+        img:'/Users/monesha/Monesha-B.github.io/images/j.jpg',
+        chip:'District Ceremony', ico:'D', eyebrow:'Academic Excellence',
+        title:'District Rank — 2nd Place',
+        desc:'Honored at a district-level event for top results.'
+      },
+    ];
 
-<script src="script.js"></script>
-<script>
-  const achievements = [
-    {
-      emoji: '🏆',
-      title: 'State Rank - 3rd Place',
-      description: '99.7% score in 10th grade. Medals and cash awards from Chief Minister of Tamil Nadu, Dina Thanthi, Ramco Cements Ltd., Adithanar Educational Trust, and Rotary Club.',
-      image: 'assets/achievements/state-rank-certificate.jpg'
-    },
-    {
-      emoji: '🥈',
-      title: 'District Rank - 2nd Place',
-      description: 'District level academic excellence. Featured in regional newspapers and Ramco Cement magazines for academic achievement.',
-      image: 'assets/achievements/district-certificate.jpg'
-    },
-    {
-      emoji: '🎖️',
-      title: 'Chief Minister Award',
-      description: 'Medal and cash award presented by the Chief Minister of Tamil Nadu for outstanding academic performance.',
-      image: 'assets/achievements/chief-minister-award.jpg'
-    },
-    {
-      emoji: '📰',
-      title: 'Newspaper Feature',
-      description: 'Featured in Dina Thanthi and other regional newspapers highlighting academic excellence and inspiring students.',
-      image: 'assets/achievements/newspaper-feature.jpg'
-    },
-    {
-      emoji: '📖',
-      title: 'Magazine Publication',
-      description: 'Featured article in Ramco Cement company magazine showcasing student achievements and community impact.',
-      image: 'assets/achievements/ramco-magazine.jpg'
-    }
-  ];
-  
-  let cards = [];
-  let activeIndex = 0;
-  let isDragging = false;
-  let startX = 0;
-  let currentX = 0;
-  let isPopup = false;
-  
-  function initCards() {
-    const container = document.getElementById('cardContainer');
-    
-    achievements.forEach((achievement, index) => {
-      const card = document.createElement('div');
-      card.className = 'achievement-card';
-      
-      // Check if image exists, otherwise use placeholder
-      const imageContent = `
-        <div class="placeholder-photo">
-          <div class="icon">${achievement.emoji}</div>
-          <div class="text">Add your photo here</div>
-        </div>
-      `;
-      
-      card.innerHTML = `
-        <div class="card-image">
-          ${imageContent}
-        </div>
-        <div class="card-content">
-          <h3 class="card-title">${achievement.title}</h3>
-          <p class="card-description">${achievement.description}</p>
-          <div class="card-counter">${index + 1} of ${achievements.length}</div>
-        </div>
-      `;
-      
-      card.addEventListener('mousedown', (e) => startDrag(e, card));
-      card.addEventListener('touchstart', (e) => startDrag(e, card));
-      card.addEventListener('click', (e) => handleClick(e, card));
-      
-      container.appendChild(card);
-      cards.push(card);
-    });
-    
-    updateCardPositions();
-  }
-  
-  function updateCardPositions() {
-    cards.forEach((card, index) => {
-      card.classList.remove('center', 'left-1', 'right-1', 'hidden', 'popup');
-      
-      const relativeIndex = (index - activeIndex + cards.length) % cards.length;
-      
-      if (relativeIndex === 0) {
-        card.classList.add('center');
-      } else if (relativeIndex === cards.length - 1) {
-        card.classList.add('left-1');
-      } else if (relativeIndex === 1) {
-        card.classList.add('right-1');
-      } else {
-        card.classList.add('hidden');
+    (function(){
+      const track = document.getElementById('slides');
+      const dotsEl= document.getElementById('dots');
+      const prev  = document.getElementById('prev');
+      const next  = document.getElementById('next');
+
+      const info  = {
+        wrap:document.getElementById('info'),
+        ico: document.getElementById('ico'),
+        eyebrow: document.getElementById('eyebrow'),
+        title: document.getElementById('title'),
+        desc: document.getElementById('desc'),
+      };
+
+      // Build slides
+      slidesData.forEach((s,i)=>{
+        const slide = document.createElement('figure');
+        slide.className = 'slide' + (i===0 ? ' is-current' : '');
+        slide.innerHTML = `
+          <div class="layer bg" style="background-image:url('${s.img}')"></div>
+          <div class="layer img"  style="background-image:url('${s.img}')"></div>
+          <div class="chip">${s.chip||''}</div>
+        `;
+        track.appendChild(slide);
+
+        const dot=document.createElement('button');
+        dot.className='dot'; dot.type='button';
+        dot.addEventListener('click',()=>go(i));
+        dotsEl.appendChild(dot);
+      });
+
+      let idx=0, dragging=false, startX=0, dragPx=0;
+      const slides = Array.from(track.children);
+
+      function setInfo(i){
+        const s=slidesData[i];
+        info.wrap.classList.remove('pop'); void info.wrap.offsetWidth; // restart anim
+        info.ico.textContent=s.ico||'';
+        info.eyebrow.textContent=s.eyebrow||'';
+        info.title.textContent=s.title||'';
+        info.desc.textContent=s.desc||'';
+        info.wrap.classList.add('pop');
       }
-    });
-  }
-  
-  function handleClick(e, card) {
-    if (isDragging || !card.classList.contains('center')) return;
-    
-    e.stopPropagation();
-    
-    if (isPopup) {
-      card.classList.remove('popup');
-      isPopup = false;
-    } else {
-      card.classList.add('popup');
-      isPopup = true;
-    }
-  }
-  
-  function startDrag(e, card) {
-    if (!card.classList.contains('center')) return;
-    if (isPopup) {
-      card.classList.remove('popup');
-      isPopup = false;
-      return;
-    }
-    
-    isDragging = true;
-    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-    card.classList.add('swiping');
-    
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('mouseup', endDrag);
-    document.addEventListener('touchend', endDrag);
-  }
-  
-  function drag(e) {
-    if (!isDragging) return;
-    
-    e.preventDefault();
-    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-    const diff = currentX - startX;
-    const rotation = diff / 15;
-    
-    const centerCard = cards[activeIndex];
-    centerCard.style.transform = `translateX(${diff}px) rotate(${rotation}deg) scale(1)`;
-    
-    if (diff < -80) {
-      document.getElementById('hintLeft').classList.add('show');
-      document.getElementById('hintRight').classList.remove('show');
-    } else if (diff > 80) {
-      document.getElementById('hintRight').classList.add('show');
-      document.getElementById('hintLeft').classList.remove('show');
-    } else {
-      document.getElementById('hintLeft').classList.remove('show');
-      document.getElementById('hintRight').classList.remove('show');
-    }
-  }
-  
-  function endDrag(e) {
-    if (!isDragging) return;
-    
-    isDragging = false;
-    const diff = currentX - startX;
-    
-    document.removeEventListener('mousemove', drag);
-    document.removeEventListener('touchmove', drag);
-    document.removeEventListener('mouseup', endDrag);
-    document.removeEventListener('touchend', endDrag);
-    
-    document.getElementById('hintLeft').classList.remove('show');
-    document.getElementById('hintRight').classList.remove('show');
-    
-    const centerCard = cards[activeIndex];
-    
-    if (diff < -120) {
-      swipeCard('left');
-    } else if (diff > 120) {
-      swipeCard('right');
-    } else {
-      centerCard.classList.remove('swiping');
-      centerCard.style.transform = '';
-      updateCardPositions();
-    }
-  }
-  
-  function swipeCard(direction) {
-    const centerCard = cards[activeIndex];
-    centerCard.classList.remove('swiping');
-    centerCard.classList.add(direction === 'left' ? 'swiped-left' : 'swiped-right');
-    
-    setTimeout(() => {
-      centerCard.classList.remove('swiped-left', 'swiped-right');
-      centerCard.style.transform = '';
-      
-      if (direction === 'left') {
-        activeIndex = (activeIndex + 1) % cards.length;
-      } else {
-        activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+
+      function updateDots(){
+        Array.from(dotsEl.children).forEach((d,k)=>d.classList.toggle('is-active',k===idx));
       }
+
+      function parallax(){
+        const w=track.clientWidth;
+        slides.forEach((sl,k)=>{
+          const offset = (k-idx)*w + (sl===slides[idx]? dragPx: 0);
+          sl.querySelector('.bg').style.transform = `translateX(${offset* -0.12}px)`; // subtle depth
+        });
+      }
+
+      function go(n){
+        if(n===idx) return;
+        const cur = slides[idx];
+        const nxt = slides[(n+slides.length)%slides.length];
+        // prepare next above with swirl reveal
+        nxt.style.zIndex=2;
+        nxt.classList.add('reveal');
+        nxt.style.opacity=1;
+        nxt.style.transform='none';
+        // ensure only next animates the top .img
+        const imgLayer = nxt.querySelector('.img');
+        // after animation, finalize states
+        const done = ()=> {
+          nxt.classList.remove('reveal');
+          cur.classList.remove('is-current');
+          nxt.classList.add('is-current');
+          nxt.style.zIndex='';
+          imgLayer.removeEventListener('animationend', done);
+          idx=(n+slides.length)%slides.length;
+          updateDots(); parallax(); setInfo(idx);
+        };
+        imgLayer.addEventListener('animationend', done, {once:true});
+      }
+
+      // init
+      updateDots(); parallax(); setInfo(0);
+
+      // controls
+      prev.addEventListener('click', ()=>go(idx-1));
+      next.addEventListener('click', ()=>go(idx+1));
+
+      // keyboard
+      document.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft') go(idx-1);
+        if(e.key==='ArrowRight') go(idx+1);
+      });
+
+      // drag/swipe (on current only)
+      track.addEventListener('pointerdown', (e)=>{
+        dragging=true; startX=e.clientX; dragPx=0; track.setPointerCapture(e.pointerId);
+      });
+      track.addEventListener('pointermove', (e)=>{
+        if(!dragging) return;
+        dragPx = e.clientX - startX;
+        const cur = slides[idx];
+        cur.style.transform = `translateX(${dragPx}px)`;
+        parallax();
+      }, {passive:false});
+      function endDrag(){
+        if(!dragging) return; dragging=false;
+        const threshold = track.clientWidth * 0.18;
+        const cur = slides[idx];
+        cur.style.transform='';
+        if (dragPx < -threshold) go(idx+1);
+        else if (dragPx > threshold) go(idx-1);
+        dragPx=0; parallax();
+      }
+      track.addEventListener('pointerup', endDrag);
+      track.addEventListener('pointercancel', endDrag);
+      window.addEventListener('resize', parallax);
+
+      // Double-click to open image in lightbox
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
       
-      updateCardPositions();
-    }, 500);
-  }
-  
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.achievement-card') && isPopup) {
-      cards.forEach(card => card.classList.remove('popup'));
-      isPopup = false;
-    }
-  });
-  
-  initCards();
-</script>
+      track.addEventListener('dblclick', (e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Get current image URL
+        const currentSlide = slides[idx];
+        const bgLayer = currentSlide.querySelector('.bg');
+        const bgImage = bgLayer.style.backgroundImage;
+        const imgUrl = bgImage.slice(5, -2); // Extract URL from url("...")
+        
+        // Open lightbox
+        lightboxImg.src = imgUrl;
+        lightbox.classList.add('active');
+      });
+
+      // Close lightbox on double-click or single click
+      lightbox.addEventListener('dblclick', ()=>{
+        lightbox.classList.remove('active');
+      });
+      
+      lightbox.addEventListener('click', ()=>{
+        lightbox.classList.remove('active');
+      });
+
+      // ESC key to close lightbox
+      document.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          lightbox.classList.remove('active');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

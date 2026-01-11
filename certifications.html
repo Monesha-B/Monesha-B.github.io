@@ -9,19 +9,15 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
 
-<!-- Page enter: slide up + fade in (copy this whole block into <head>) -->
 <script>
-  // Ensure first paint starts hidden & slightly down
   document.documentElement.classList.add('pt-init');
 </script>
 <style>
-  /* Initial hidden state before anything else loads */
   html.pt-init body{
     opacity:0;
     transform:translate3d(0,24px,0);
   }
 
-  /* Page transition settings */
   :root{
     --enter:520ms;
     --exit:360ms;
@@ -45,15 +41,47 @@
     transition-duration:var(--exit);
   }
 
-  /* Optional: make any element fade+slide when it scrolls into view */
   [data-reveal]{opacity:0;transform:translate3d(0,14px,0);
     transition:opacity 600ms var(--ease),transform 600ms var(--ease);
     transition-delay:var(--delay,0ms)}
   [data-reveal].is-visible{opacity:1;transform:none}
   [data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }
+
+  /* Certificate card */
+  .cert-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cert-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+  :root.dark .cert-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  }
+  .cert-image {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .verify-link {
+    color: var(--link) !important;
+    text-decoration: underline;
+    font-size: 0.9rem;
+  }
+  .verify-link:hover {
+    text-decoration: none;
+  }
 </style>
 <script>
-  // Robust page-enter (double rAF so the transition always triggers)
   (function(){
     function onReady(fn){
       if(document.readyState==="loading"){
@@ -61,15 +89,13 @@
       } else fn();
     }
     onReady(function(){
-      // start from initial state, then animate in
       document.body.classList.remove("page-ready","page-exiting");
-      void getComputedStyle(document.body).transform;   // force reflow
+      void getComputedStyle(document.body).transform;
       requestAnimationFrame(()=>requestAnimationFrame(()=>{
         document.body.classList.add("page-ready");
         document.documentElement.classList.remove("pt-init");
       }));
 
-      // Exit animation on same-site links
       document.addEventListener("click",function(e){
         const a = e.target.closest && e.target.closest("a");
         if(!a) return;
@@ -78,14 +104,13 @@
         const href=a.getAttribute("href");
         if(!href||href.startsWith("#")||href.startsWith("mailto:")||href.startsWith("tel:")) return;
         let to; try{to=new URL(href,location.href);}catch{ return; }
-        if(to.origin!==location.origin) return; // external
-        if(to.pathname===location.pathname && to.hash) return; // same-page anchor
+        if(to.origin!==location.origin) return;
+        if(to.pathname===location.pathname && to.hash) return;
         e.preventDefault();
         document.body.classList.add("page-exiting");
-        setTimeout(()=>{ location.href=to.href; }, 360); // match --exit
+        setTimeout(()=>{ location.href=to.href; }, 360);
       });
 
-      // Optional: reveal-on-scroll
       if("IntersectionObserver" in window){
         const io=new IntersectionObserver((entries,obs)=>{
           entries.forEach(en=>{
@@ -102,17 +127,14 @@
   })();
 </script>
 
-
-  <meta name="description" content="Microsoft Azure certifications earned by Monesha – AZ-900, AI-900, DP-900.">
+  <meta name="description" content="Professional certifications in cloud computing, AI, data science, and enterprise design.">
 </head>
 <body>
 <header class="site-header">
-  <!-- LEFT: fevicon.html as iframe -->
   <a href="index.html" class="logo-link" aria-label="Home">
     <iframe src="fevicon.html" title="Animated M Logo" loading="eager"></iframe>
   </a>
   
-  <!-- RIGHT: Navigation -->
   <nav class="nav-right">
     <a href="projects.html" class="nav-link">Projects</a>
     <a href="posts.html" class="nav-link">Blog</a>
@@ -131,46 +153,38 @@
 
 <main class="container">
   <h1>Certifications</h1>
-  <p class="mini">Microsoft Azure credentials demonstrating cloud expertise.</p>
+  <p class="mini">Professional credentials in cloud computing, AI, data science, and enterprise design.</p>
   <hr>
 
   <section class="grid">
-    <article class="card proj">
-      <h3>AZ-900: Azure Fundamentals</h3>
-      <p>Foundational knowledge of cloud services and how Azure implements them. Covers core Azure services, security, privacy, compliance, trust, Azure pricing, and support.</p>
-      <div class="badges">
-        <span class="pill">Azure</span>
-        <span class="pill">Cloud Computing</span>
-        <span class="pill">Core Services</span>
-      </div>
-      <p class="mini">Microsoft · Earned 2024</p>
-      <p><a href="https://learn.microsoft.com/en-us/users/moneshab-1234/credentials" rel="noopener" target="_blank">View Credential</a></p>
+    <article class="cert-card">
+      <img src="images/Azure_Data.png" alt="Azure Data Fundamentals" class="cert-image">
+      <a href="https://www.credly.com/badges/a9e88a9f-325e-4aef-a7f8-1be982c2cfbd" class="verify-link" target="_blank" rel="noopener">Verify Credential</a>
     </article>
 
-    <article class="card proj">
-      <h3>AI-900: Azure AI Fundamentals</h3>
-      <p>Fundamentals of machine learning and artificial intelligence on Azure. Covers AI workloads, machine learning principles, computer vision, natural language processing, and conversational AI.</p>
-      <div class="badges">
-        <span class="pill">Azure AI</span>
-        <span class="pill">Machine Learning</span>
-        <span class="pill">NLP</span>
-        <span class="pill">Computer Vision</span>
-      </div>
-      <p class="mini">Microsoft · Earned 2024</p>
-      <p><a href="https://learn.microsoft.com/en-us/users/moneshab-1234/credentials" rel="noopener" target="_blank">View Credential</a></p>
+    <article class="cert-card">
+      <img src="images/Azure_AI.png" alt="Azure AI Fundamentals" class="cert-image">
+      <a href="https://www.credly.com/badges/36cf9bb7-e7ca-4a7b-b2da-db857939f985" class="verify-link" target="_blank" rel="noopener">Verify Credential</a>
     </article>
 
-    <article class="card proj">
-      <h3>DP-900: Azure Data Fundamentals</h3>
-      <p>Core data concepts and how they're implemented using Microsoft Azure data services. Covers relational and non-relational data, analytics workloads, and data processing on Azure.</p>
-      <div class="badges">
-        <span class="pill">Azure Data</span>
-        <span class="pill">SQL</span>
-        <span class="pill">NoSQL</span>
-        <span class="pill">Analytics</span>
-      </div>
-      <p class="mini">Microsoft · Earned 2024</p>
-      <p><a href="https://learn.microsoft.com/en-us/users/moneshab-1234/credentials" rel="noopener" target="_blank">View Credential</a></p>
+    <article class="cert-card">
+      <img src="images/Azure_Fund.png" alt="Azure Fundamentals" class="cert-image">
+      <a href="https://www.credly.com/badges/81e75695-b179-4249-a494-5a3bd82d4316" class="verify-link" target="_blank" rel="noopener">Verify Credential</a>
+    </article>
+
+    <article class="cert-card">
+      <img src="images/Data_Science.png" alt="Data Science Foundations" class="cert-image">
+      <a href="https://www.credly.com/badges/d62378d8-22e1-465b-a433-a330553763d2" class="verify-link" target="_blank" rel="noopener">Verify Credential</a>
+    </article>
+
+    <article class="cert-card">
+      <img src="images/Enterprise.png" alt="Enterprise Design Thinking" class="cert-image">
+      <a href="https://www.credly.com/badges/750323c4-0f0d-41d3-a94b-cab1c240141f" class="verify-link" target="_blank" rel="noopener">Verify Credential</a>
+    </article>
+
+    <article class="cert-card">
+      <img src="images/Blockchain.png" alt="IBM Blockchain Essentials" class="cert-image">
+      <a href="https://www.credly.com/badges/531f88d8-0804-4269-be17-b03167adf00e" class="verify-link" target="_blank" rel="noopener">Verify Credential</a>
     </article>
   </section>
 
@@ -180,6 +194,7 @@
 <footer class="container footer">
   <div>2021–Present © Monesha Balasambandam</div>
 </footer>
+
 <script src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Monesha Balasambandam | Portfolio</title>
@@ -53,9 +55,9 @@
     transition-duration:var(--exit);
   }
 
-  /* Optional: make any element fade+slide when it scrolls into view */
+  /* Reveal-on-scroll */
   [data-reveal]{opacity:0;transform:translate3d(0,14px,0);
-    transition:opacity 600ms var(--ease),transform 600ms var(--ease);
+    transition:opacity 640ms var(--ease),transform 640ms var(--ease);
     transition-delay:var(--delay,0ms)}
   [data-reveal].is-visible{opacity:1;transform:none}
   [data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }
@@ -71,7 +73,7 @@
   :root.dark .summary .inline-cta a:hover{ color:#E6E6E6; text-decoration-color:#E6E6E6; }
   .summary .summary-rule{ border:0; height:1px; background:var(--border,#2A2A2F); margin:1rem 0; opacity:.6; }
 
-  /* CTA buttons — dark gray boxes (no blue) */
+  /* CTA buttons – dark gray boxes (no blue) */
   .cta-row{ display:flex; gap:.75rem; flex-wrap:wrap; margin:.75rem 0 1.25rem; }
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
@@ -88,9 +90,78 @@
   #socials a:hover, #socials a:active{ color:#5A5A60; text-decoration-color:#5A5A60; }
   :root.dark #socials a:link, :root.dark #socials a:visited{ color:#BFC1C7; text-decoration-color:#8A8A90; }
   :root.dark #socials a:hover, :root.dark #socials a:active{ color:#E6E6E6; text-decoration-color:#E6E6E6; }
+
+  /* Header anchors the under-line menu */
+  .site-header{ position:relative; }
+
+  /* === Under-header hamburger + vertical list === */
+  .ham-wrap{
+    position:absolute;
+    top:100%;
+    margin-top:0.2cm;
+    left:calc(var(--ham-left, 0px) + 0.2cm);
+    z-index:50;
+    display:inline-grid;
+    grid-template-rows:auto auto;
+    justify-items:start;
+    row-gap:8px;
+  }
+
+  .ham-btn{
+    width:26px; height:22px; padding:0; border:0; background:transparent;
+    display:grid; justify-items:start; align-items:center;
+    color:inherit;
+    opacity:.55;
+    cursor:pointer; transition:opacity .18s var(--ease);
+  }
+  .ham-wrap:hover .ham-btn{ opacity:1; }
+  .ham-btn span{ width:16px; height:1.2px; margin:2px 0; border-radius:1px; background:currentColor; }
+  .ham-btn span:nth-child(1),
+  .ham-btn span:nth-child(3){ width:20px; }
+
+  .ham-pop{
+    display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+    opacity:0; transform:translateY(0px) translateX(-16px) !important;
+    pointer-events:none;
+    transition:opacity .18s var(--ease), transform .18s var(--ease);
+  }
+
+  .ham-pop a{
+    font: inherit;
+    font-size: 0.8rem;
+    color: #b8b8b8 !important;
+    opacity: 1;
+    text-decoration:none;
+    padding-bottom:3px;
+    border-bottom:1px solid #b8b8b8 !important;
+    transition:color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
+  }
+
+  .ham-pop a:hover, .ham-pop a:focus{
+    color: #6a6a6a !important;
+    outline:none; 
+    transform:translateX(1px);
+    border-bottom-color: #6a6a6a !important;
+  }
+
+  :root.dark .ham-pop a{
+    color: #a0a0a0 !important;
+    border-bottom-color: #a0a0a0 !important;
+  }
+
+  :root.dark .ham-pop a:hover, 
+  :root.dark .ham-pop a:focus{
+    color: #d0d0d0 !important;
+    border-bottom-color: #d0d0d0 !important;
+  }
+
+  .ham-wrap:hover .ham-pop,
+  .ham-wrap:focus-within .ham-pop{
+    opacity:1; transform:none; pointer-events:auto;
+  }
 </style>
 <script>
-  // Robust page-enter (double rAF so the transition always triggers)
+  // Robust page-enter + reveal (double rAF so the transition always triggers)
   (function(){
     function onReady(fn){
       if(document.readyState==="loading"){
@@ -122,7 +193,7 @@
         setTimeout(()=>{ location.href=to.href; }, 360); // match --exit
       });
 
-      // Reveal-on-scroll (fixed typo: classList.add)
+      // Reveal-on-scroll
       if("IntersectionObserver" in window){
         const io=new IntersectionObserver((entries,obs)=>{
           entries.forEach(en=>{
@@ -138,6 +209,20 @@
             .forEach((el,i)=>el.style.setProperty("--i", i));
         });
       }
+
+      // Align the hamburger under the logo
+      function placeHamburger(){
+        const header = document.querySelector('.site-header');
+        const logo   = header && header.querySelector('.logo-link');
+        if(!header || !logo) return;
+        const left = Math.max(0,
+          Math.round(logo.getBoundingClientRect().left - header.getBoundingClientRect().left)
+        );
+        document.documentElement.style.setProperty('--ham-left', left + 'px');
+      }
+      placeHamburger();
+      window.addEventListener('resize', placeHamburger);
+      window.addEventListener('load', placeHamburger);
     });
   })();
 </script>
@@ -171,36 +256,51 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
     </nav>
+
+    <div class="ham-wrap">
+      <button class="ham-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="ham-pop" aria-label="Quick links">
+        
+        
+        <a href="experience.html">Experience</a>
+        
+        
+        <a href="achievements.html">Achievements</a>
+        
+        
+        <a href="certifications.html">Certifications</a>
+      </nav>
+    </div>
   </header>
 
   <main class="container">
-    <!-- ===== About / Summary ===== -->
-    <section id="about" class="summary" aria-labelledby="about-title">
-      <h1 id="about-title">Hi, I’m Monesha 👋</h1>
-      <h2 class="sub">Information Systems · AI/ML · DevOps</h2>
+    <!-- ===== About / Summary (with staggered reveal) ===== -->
+    <section id="about" class="summary" aria-labelledby="about-title" data-reveal-group>
+      <h1 id="about-title" data-reveal>Hi, I'm Monesha 👋</h1>
+      <h2 class="sub" data-reveal>Information Systems · AI/ML · DevOps</h2>
 
-      <p class="lead">
+      <p class="lead" data-reveal>
         I build clean, reliable systems and practical AI—intuitive to use, straightforward to trust.
       </p>
 
-      <p>
+      <p data-reveal>
         Working across teams taught me how to translate messy requirements into calm, predictable releases.
         I value clarity, sensible defaults, and shipping without friction.
       </p>
 
-      <p>
+      <p data-reveal>
         I learn by building from scratch—then rebuilding end-to-end to understand every layer. Full-stack systems,
         scalable infrastructure, and practical AI that actually works. Pursuing graduate studies in AI/ML to deepen
         my foundation; my experience shipping real products keeps me grounded in what matters. If I can rebuild it,
         I understand it—and I'll ship it better next time.
       </p>
 
-      <p class="inline-cta">
+      <p class="inline-cta" data-reveal>
         <a href="projects.html">View My Work</a> · <a href="chat.html">Get In Touch</a>
       </p>
 
-      <hr class="summary-rule" />
-      <p class="mini">Give the sphere a spin and check out my skills!</p>
+      <hr class="summary-rule" data-reveal />
+      <p class="mini" data-reveal>Give the sphere a spin and check out my skills!</p>
     </section>
 
     <!-- Globe block -->
@@ -220,7 +320,13 @@
       <p>
         <a href="https://github.com/Monesha-B" rel="noopener" target="_blank">GitHub</a> ·
         <a href="https://www.linkedin.com/in/moneshab" rel="noopener" target="_blank">LinkedIn</a> ·
-        <a href="mailto:balasambandam.m@northeastern.edu?cc=moneshab041@email.com">Email me</a>
+        <a class="btn email-me"
+   href="mailto:balasambandam.m@northeastern.edu?cc=moneshab041@gmail.com"
+   target="_blank" rel="noopener noreferrer">
+  Email me
+</a>
+
+
       </p>
     </section>
   </main>
@@ -230,5 +336,6 @@
   </footer>
 
   <script src="script.js"></script>
+  
 </body>
 </html>
