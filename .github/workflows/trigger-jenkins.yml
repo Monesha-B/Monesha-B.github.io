@@ -1,0 +1,16 @@
+name: Trigger Jenkins
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Jenkins
+        run: |
+          curl -X POST \
+            http://JENKINS_URL/job/deploy-static-website/build?token=Monesha_Portfolio_S3 \
+            --user JENKINS_USERNAME:JENKINS_API_TOKEN
