@@ -803,3 +803,294 @@ html, body { overflow-x: hidden; }
   display: block;
 }
 
+
+/* ============================================
+   NAVBAR UPDATES - Clean minimal style
+   ============================================ */
+
+/* Remove navbar bottom border */
+.site-header {
+  border-bottom: none !important;
+}
+
+/* Clean text links - no underlines, perfect sizing */
+.nav-link {
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  text-decoration: none !important;
+}
+
+/* Ensure active page doesn't have underline */
+.nav-link.active,
+.nav-link:active,
+.nav-link:focus {
+  text-decoration: none !important;
+  outline: none;
+}
+
+/* Icon links */
+.icon-link {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  text-decoration: none !important;
+}
+
+.icon-link:hover {
+  opacity: 1;
+  text-decoration: none !important;
+}
+
+/* Mobile navbar - show icons only */
+@media (max-width: 768px) {
+  .nav-link {
+    font-size: 0 !important;
+    width: 32px;
+    height: 32px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .nav-link::before {
+    font-size: 18px !important;
+    position: absolute;
+  }
+  
+  /* Projects icon */
+  .nav-link[href="projects.html"]::before,
+  .nav-link[href="/projects"]::before,
+  .nav-link[href="./projects.html"]::before {
+    content: "📁";
+  }
+  
+  /* Blog icon */
+  .nav-link[href="posts.html"]::before,
+  .nav-link[href="/posts"]::before,
+  .nav-link[href="./posts.html"]::before {
+    content: "📝";
+  }
+  
+  /* Chat icon */
+  .nav-link[href="chat.html"]::before,
+  .nav-link[href="/chat"]::before,
+  .nav-link[href="./chat.html"]::before {
+    content: "💬";
+  }
+  
+  /* Keep icon links visible */
+  .icon-link {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ============================================
+   NAVBAR ALIGNMENT FIX - Replace in style.css
+   ============================================ */
+
+/* Fix navbar alignment */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: none !important;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Text links - perfectly aligned */
+.nav-link {
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  text-decoration: none !important;
+}
+
+/* Icon links - same height as text */
+.icon-link {
+  opacity: 0.6 !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.icon-link:hover {
+  opacity: 1 !important;
+  transform: translateY(-1px);
+}
+
+.icon-link svg {
+  width: 20px !important;
+  height: 20px !important;
+  display: block;
+}
+
+/* Theme toggle button - sun in light mode, moon in dark mode */
+.theme-toggle {
+  opacity: 0.6 !important;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px;
+  height: 32px;
+}
+
+.theme-toggle:hover {
+  opacity: 1 !important;
+  transform: translateY(-1px);
+}
+
+.theme-toggle svg {
+  width: 20px !important;
+  height: 20px !important;
+  display: block;
+}
+
+/* Show sun icon in light mode, moon in dark mode */
+.theme-toggle svg {
+  display: none;
+}
+
+:root:not(.dark) .theme-toggle svg:first-child {
+  display: block;
+}
+
+:root.dark .theme-toggle svg:last-child {
+  display: block;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 12px 16px;
+  }
+  
+  .nav-right {
+    gap: 10px;
+  }
+  
+  .nav-link {
+    font-size: 0 !important;
+    width: 32px;
+    height: 32px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .nav-link::before {
+    font-size: 18px !important;
+    position: absolute;
+  }
+  
+  .nav-link[href="projects.html"]::before,
+  .nav-link[href="/projects"]::before,
+  .nav-link[href="./projects.html"]::before {
+    content: "📁";
+  }
+  
+  .nav-link[href="posts.html"]::before,
+  .nav-link[href="/posts"]::before,
+  .nav-link[href="./posts.html"]::before {
+    content: "📝";
+  }
+  
+  .nav-link[href="chat.html"]::before,
+  .nav-link[href="/chat"]::before,
+  .nav-link[href="./chat.html"]::before {
+    content: "💬";
+  }
+}
+
+
+/* ... all your existing CSS above ... */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 12px 16px;
+  }
+  
+  .nav-right {
+    gap: 12px;
+  }
+  
+  .nav-link {
+    font-size: 0 !important;
+    width: 32px;
+    height: 32px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .nav-link::before {
+    font-size: 18px !important;
+    position: absolute;
+  }
+  
+  .nav-link[href="projects.html"]::before,
+  .nav-link[href="/projects"]::before,
+  .nav-link[href="./projects.html"]::before {
+    content: "📁";
+  }
+  
+  .nav-link[href="posts.html"]::before,
+  .nav-link[href="/posts"]::before,
+  .nav-link[href="./posts.html"]::before {
+    content: "📝";
+  }
+  
+  .nav-link[href="chat.html"]::before,
+  .nav-link[href="/chat"]::before,
+  .nav-link[href="./chat.html"]::before {
+    content: "💬";
+  }
+}
+
+/* Fix icon spacing - reduce gap */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px !important;  /* Reduced from 12px to 8px */
+}
+
+/* Keep text links slightly more spaced */
+.nav-link {
+  margin-right: 4px;
+}

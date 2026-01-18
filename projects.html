@@ -6,90 +6,67 @@
   <meta name="description" content="Selected software projects, case studies, and links to source code."/>
   <title>Projects | Monesha</title>
 
-  <!-- Base site CSS + favicon -->
   <link rel="stylesheet" href="style.css"/>
-
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
-
-
-  <!-- (Optional) page transitions -->
   <link rel="stylesheet" href="assets/transition/transitions.css"/>
   <script defer src="assets/transition/transitions.js"></script>
-
-  <!-- Robotics heading font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet"/>
 
   <style>
-    
-    /* ---------- Page tokens ---------- */
-    #proj-page{
-      --bg:#fff; --fg:#111; --muted:#666a6f;
-      --pill:#f6f6f7; --border:#e8e8e8;
-      --wm-size: clamp(32px, 6.5vw, 60px);
-      --wm-gap: 12px;
-      --content-indent: 24px;
-      --wm-stroke:#b6b6b6; /* gray outline for headings */
-      background:var(--bg); color:var(--fg);
-    }
-    :root.dark #proj-page{
-  --bg:#0b0b0f; --fg:#fff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6;
-}
-
-
-    /* ---------- Header / intro ---------- */
-    #proj-page h1{margin:0 0 6px; text-align:center; font-weight:800; font-size:clamp(28px,3vw,36px); line-height:1.1}
-    #proj-page .mini{opacity:.9; text-align:center}
-    #proj-page hr{border:0; border-top:1px solid var(--border); max-width:100px; margin:10px auto 18px}
-
-    /* ---------- Section watermarks ---------- */
-    .svg-section{position:relative; padding-top:calc(var(--wm-size) + var(--wm-gap)); margin:24px 0 16px}
-    .svg-section > :not(.wm-wrap){margin-left:var(--content-indent)!important}
-    .wm-wrap{position:absolute; left:0; top:0; pointer-events:none; user-select:none; width:auto; height:var(--wm-size); display:block}
-    .wm-svg{width:auto; height:100%; display:block; color:var(--muted); overflow:visible} /* prevent clipping */
-    .wm-svg text{
-      fill:none; stroke:var(--wm-stroke); stroke-width:2.2;
-      stroke-linecap:butt; stroke-linejoin:miter;
-      font-family:'Orbitron','Oxanium','Rajdhani','Russo One',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      font-weight:700; text-transform:uppercase; font-kerning:none;
-      font-size:clamp(50px, 9.8vw, 90px); letter-spacing:.06em; word-spacing:.12em;
-    }
-
-    /* ---------- Remove rounded rectangles (cards) on THIS PAGE only ---------- */
-    #proj-page .card,
-    #proj-page .card::before,
-    #proj-page .card::after {
-      background:transparent !important;
-      border:0 !important;
-      box-shadow:none !important;
-      border-radius:0 !important;
-      padding:0 !important;
-    }
-    #proj-page .card{ margin:0 0 18px !important }
-
-    /* ---------- Card contents (layout) ---------- */
-    .card{display:grid; grid-template-columns:auto 1fr; gap:10px}
-    .ico{width:30px; height:30px; border-radius:999px; display:grid; place-items:center;
-         font-weight:700; color:var(--fg); background:var(--pill); border:1px solid var(--border); font-size:13px}
-    .eyebrow{display:inline-block; margin-bottom:3px; font-weight:600; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
-    h3{margin:0 0 4px; font-weight:700; font-size:clamp(17px,1.8vw,20px); line-height:1.15}
-    .muted{margin:0 0 6px; color:var(--muted); font-size:14px; line-height:1.4}
-
-    /* ---------- Left-align the bottom "cd .." ---------- */
-    #proj-page .mini.crumb{
-      text-align:left !important;
-      margin-left:var(--content-indent);
-    }
-
-    @media (max-width:768px){
-      #proj-page{--wm-size:38px; --wm-gap:10px; --content-indent:16px}
-      .wm-svg text{font-size:clamp(44px,14vw,84px); stroke-width:2.1; letter-spacing:.065em; word-spacing:.14em}
-      .card{gap:8px}
-    }
+    #proj-page{--bg:#fff;--fg:#111;--muted:#666a6f;--pill:#f6f6f7;--border:#e8e8e8;--wm-size:clamp(32px,6.5vw,60px);--wm-gap:12px;--content-indent:24px;--wm-stroke:#b6b6b6;--folder-gray:#8b8b8b;--folder-shadow:rgba(0,0,0,0.12);background:var(--bg);color:var(--fg)}
+    :root.dark #proj-page{--bg:#0b0b0f;--fg:#fff;--muted:#cfcfd3;--pill:transparent;--border:#2a2c34;--wm-stroke:#9aa0a6;--folder-gray:#6b6b6b;--folder-shadow:rgba(255,255,255,0.08)}
+    .site-header{border-bottom:none!important}
+    .nav-link{text-decoration:none!important;font-size:14px!important;font-weight:400!important;opacity:0.7;transition:opacity 0.2s ease}
+    .nav-link:hover{opacity:1;text-decoration:none!important}
+    .icon-link{opacity:0.7;transition:opacity 0.2s ease}
+    .icon-link:hover{opacity:1}
+    #proj-page h1{margin:0 0 6px;text-align:center;font-weight:800;font-size:clamp(28px,3vw,36px);line-height:1.1}
+    #proj-page .mini{opacity:.9;text-align:center}
+    #proj-page hr{border:0;border-top:1px solid var(--border);max-width:100px;margin:10px auto 18px}
+    .svg-section{position:relative;padding-top:calc(var(--wm-size) + var(--wm-gap));margin:24px 0 16px}
+    .svg-section>:not(.wm-wrap){margin-left:var(--content-indent)!important}
+    .wm-wrap{position:absolute;left:0;top:0;pointer-events:none;user-select:none;width:auto;height:var(--wm-size);display:block}
+    .wm-svg{width:auto;height:100%;display:block;color:var(--muted);overflow:visible}
+    .wm-svg text{fill:none;stroke:var(--wm-stroke);stroke-width:2.2;stroke-linecap:butt;stroke-linejoin:miter;font-family:'Orbitron','Oxanium','Rajdhani','Russo One',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:700;text-transform:uppercase;font-kerning:none;font-size:clamp(50px,9.8vw,90px);letter-spacing:.06em;word-spacing:.12em}
+    #proj-page .card,#proj-page .card::before,#proj-page .card::after{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
+    #proj-page .card{margin:0 0 18px!important}
+    .card{display:grid;grid-template-columns:auto 1fr;gap:10px}
+    .ico{width:30px;height:30px;border-radius:999px;display:grid;place-items:center;font-weight:700;color:var(--fg);background:var(--pill);border:1px solid var(--border);font-size:13px}
+    .eyebrow{display:inline-block;margin-bottom:3px;font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    h3{margin:0 0 4px;font-weight:700;font-size:clamp(17px,1.8vw,20px);line-height:1.15}
+    .muted{margin:0 0 6px;color:var(--muted);font-size:14px;line-height:1.4}
+    .cd-links{display:flex;gap:10px;margin-top:6px;margin-bottom:6px}
+    .cd-links a{font-size:12px;color:var(--muted);text-decoration:none;padding:3px 8px;border:1px solid var(--border);border-radius:4px;transition:all 0.2s ease}
+    .cd-links a:hover{color:var(--fg);border-color:var(--fg)}
+    .folder-container{margin-left:var(--content-indent);margin-bottom:16px;cursor:pointer}
+    .folder-header{display:flex;align-items:center;gap:12px;padding:8px 0;transition:all 0.3s ease}
+    .folder-header:hover{transform:translateX(4px)}
+    .folder-icon-wrapper{position:relative;width:50px;height:40px;flex-shrink:0;transition:all 0.4s cubic-bezier(0.68,-0.55,0.265,1.55)}
+    .folder-back{position:absolute;width:100%;height:32px;background:var(--folder-gray);border-radius:4px;bottom:0;box-shadow:0 2px 8px var(--folder-shadow);transition:all 0.4s ease}
+    .folder-tab{position:absolute;width:40%;height:10px;background:var(--folder-gray);border-radius:3px 3px 0 0;top:0;left:0;box-shadow:0 -1px 4px var(--folder-shadow);transition:all 0.4s ease}
+    .folder-container.open .folder-back{transform:rotateX(-20deg);transform-origin:bottom;height:26px}
+    .folder-container.open .folder-tab{transform:translateY(-4px) rotateX(-15deg);transform-origin:bottom}
+    .folder-info{flex:1}
+    .folder-name{font-weight:700;font-size:17px;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+    .folder-count{color:var(--muted);font-size:12px;font-weight:500}
+    .folder-arrow{margin-left:auto;color:var(--muted);font-size:18px;transition:transform 0.3s ease}
+    .folder-container.open .folder-arrow{transform:rotate(90deg)}
+    .folder-projects{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);margin-top:8px;margin-left:0}
+    .folder-container.open .folder-projects{max-height:3000px}
+    .folder-projects .card{opacity:0;transform:translateY(10px);transition:all 0.4s ease}
+    .folder-container.open .folder-projects .card{opacity:1;transform:translateY(0)}
+    .folder-container.open .folder-projects .card:nth-child(1){transition-delay:0.1s}
+    .folder-container.open .folder-projects .card:nth-child(2){transition-delay:0.2s}
+    .folder-container.open .folder-projects .card:nth-child(3){transition-delay:0.3s}
+    .folder-container.open .folder-projects .card:nth-child(4){transition-delay:0.4s}
+    .folder-container.open .folder-projects .card:nth-child(5){transition-delay:0.5s}
+    .folder-container.open .folder-projects .card:nth-child(6){transition-delay:0.6s}
+    #proj-page .mini.crumb{text-align:left!important;margin-left:var(--content-indent)}
+    @media (max-width:768px){#proj-page{--wm-size:38px;--wm-gap:10px;--content-indent:16px}.wm-svg text{font-size:clamp(44px,14vw,84px);stroke-width:2.1;letter-spacing:.065em;word-spacing:.14em}.card{gap:8px}.folder-icon-wrapper{width:45px;height:36px}.folder-name{font-size:16px}.cd-links{flex-wrap:wrap}}
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="site-header">
     <a class="logo-link" aria-label="Home" href="index.html">
       <iframe src="fevicon.html" title="Animated M Logo" loading="eager" style="border:0;outline:0;background:transparent"></iframe>
@@ -112,94 +89,141 @@
 
   <main id="proj-page" class="container">
     <h1>Projects</h1>
-    <p class="mini">Projects that I care about and keep improving.</p>
+    <p class="mini">Cloud infrastructure, DevOps, and AI/ML projects.</p>
     <hr/>
 
-    <!-- ===== AI / ML ===== -->
+    <!-- Cloud & DevOps Section -->
     <section class="svg-section">
       <div class="wm-wrap" aria-hidden="true">
-        <svg class="wm-svg" viewBox="0 0 1400 120" preserveAspectRatio="xMinYMid meet">
-          <text x="0" y="88">AI / ML</text>
+        <svg class="wm-svg" viewBox="0 0 2200 120" preserveAspectRatio="xMinYMid meet">
+          <text x="0" y="88" style="font-size:68px;">Cloud & DevOps</text>
         </svg>
       </div>
 
-      <article class="card">
-        <div class="ico">N</div>
-        <div>
-          <span class="eyebrow">Platform</span>
-          <h3>NEXUS — AI-Powered Job Matching Platform</h3>
-          <p class="muted">Resume analysis, smart job recommendations, and auto-generated cover letters. Backend progress with Flask/FastAPI + PostgreSQL; RAG via LangChain.</p>
-          <!-- tech badges removed -->
+      <div class="folder-container" onclick="toggleFolder(this)">
+        <div class="folder-header">
+          <div class="folder-icon-wrapper">
+            <div class="folder-tab"></div>
+            <div class="folder-back"></div>
+          </div>
+          <div class="folder-info">
+            <div class="folder-name">Cloud Infrastructure & DevOps<span class="folder-arrow">›</span></div>
+            <div class="folder-count">6 projects</div>
+          </div>
         </div>
-      </article>
 
-      <article class="card">
-        <div class="ico">F</div>
-        <div>
-          <span class="eyebrow">Assistant</span>
-          <h3>AI-Powered Fitness Planner</h3>
-          <p class="muted">Python + Streamlit app using LangChain for plan generation and adaptive routines. Dashboards track progress and adapt programs from user feedback.</p>
-          <!-- tech badges removed -->
+        <div class="folder-projects">
+          <article class="card">
+            <div class="ico">λ</div>
+            <div>
+              <span class="eyebrow">Serverless</span>
+              <h3>Serverless Calculator API</h3>
+              <div class="cd-links">
+                <a href="https://github.com/Monesha-B/serverless-calculator-api" target="_blank" rel="noopener">GitHub</a>
+              </div>
+              <p class="muted">A serverless REST API built using AWS Lambda and API Gateway to demonstrate event-driven architecture. The project eliminates server management while providing a scalable, stateless backend service.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="ico">J</div>
+            <div>
+              <span class="eyebrow">CI/CD</span>
+              <h3>Docker CI/CD Pipeline (Jenkins + GitHub Actions)</h3>
+              <div class="cd-links">
+                <a href="https://github.com/Monesha-B/hello-jenkins-docker" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/Monesha-B/hello-jenkins-docker/actions" target="_blank" rel="noopener">GitHub Actions</a>
+                <a href="http://localhost:8080/" target="_blank" rel="noopener">Jenkins (Local)</a>
+              </div>
+              <p class="muted">A complete CI/CD pipeline for a Dockerized Python application. Jenkins is used locally to deeply understand pipeline stages and execution, while GitHub Actions provides a publicly visible CI workflow.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="ico">T</div>
+            <div>
+              <span class="eyebrow">Infrastructure</span>
+              <h3>Terraform AWS Infrastructure</h3>
+              <div class="cd-links">
+                <a href="https://github.com/Monesha-B/terraform-aws-infrastructure" target="_blank" rel="noopener">GitHub</a>
+              </div>
+              <p class="muted">Infrastructure-as-Code project using Terraform to provision AWS EC2 instances and security groups. Focuses on reproducible environments, version-controlled infrastructure, and automated provisioning through CI pipelines.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="ico">D</div>
+            <div>
+              <span class="eyebrow">Containerization</span>
+              <h3>Docker Job Scheduler</h3>
+              <div class="cd-links">
+                <a href="https://github.com/Monesha-B/docker-job-scheduler" target="_blank" rel="noopener">GitHub</a>
+              </div>
+              <p class="muted">A container-based job scheduling system that distributes compute tasks across multiple Docker workers, exploring distributed processing and orchestration concepts without using Kubernetes.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="ico">A</div>
+            <div>
+              <span class="eyebrow">Automation</span>
+              <h3>DevOps Automation Toolkit</h3>
+              <div class="cd-links">
+                <a href="https://github.com/Monesha-B/devops-automation" target="_blank" rel="noopener">GitHub</a>
+              </div>
+              <p class="muted">A DevOps-focused automation toolkit that includes CI/CD workflows, monitoring utilities, and AWS cost-optimization scripts built using Python and boto3 for operational efficiency.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="ico">E</div>
+            <div>
+              <span class="eyebrow">API</span>
+              <h3>Enterprise REST API</h3>
+              <p class="muted">A production-style REST API built with Flask, featuring JWT-based authentication, role-based access control, and CRUD operations. Designed to demonstrate backend service design, API security, and clean separation of concerns.</p>
+            </div>
+          </article>
         </div>
-      </article>
+      </div>
     </section>
 
-    <!-- ===== SQL / Backend (wide viewBox prevents clipping) ===== -->
+    <!-- AI / ML Section -->
     <section class="svg-section">
       <div class="wm-wrap" aria-hidden="true">
-        <svg class="wm-svg" viewBox="0 0 1600 120" preserveAspectRatio="xMinYMid meet">
-          <text x="0" y="88">SQL / Backend</text>
+        <svg class="wm-svg" viewBox="0 0 1800 120" preserveAspectRatio="xMinYMid meet">
+          <text x="0" y="88" style="font-size:68px;">AI / ML</text>
         </svg>
       </div>
 
-      <article class="card">
-        <div class="ico">E</div>
-        <div>
-          <span class="eyebrow">Web App</span>
-          <h3>On-Campus Event Management System</h3>
-          <p class="muted">Full-stack app for event registrations and approvals. Admin dashboard, email notifications, and SQL Server integration.</p>
-          <!-- tech badges removed -->
+      <div class="folder-container" onclick="toggleFolder(this)">
+        <div class="folder-header">
+          <div class="folder-icon-wrapper">
+            <div class="folder-tab"></div>
+            <div class="folder-back"></div>
+          </div>
+          <div class="folder-info">
+            <div class="folder-name">AI & Machine Learning<span class="folder-arrow">›</span></div>
+            <div class="folder-count">1 project</div>
+          </div>
         </div>
-      </article>
 
-      <article class="card">
-        <div class="ico">A</div>
-        <div>
-          <span class="eyebrow">API</span>
-          <h3>Attendance & Timesheet API</h3>
-          <p class="muted">JWT-secured REST API with role-based access. CSV import/export, audit logs, and Postman collection.</p>
-          <!-- tech badges removed -->
+        <div class="folder-projects">
+          <article class="card">
+            <div class="ico">F</div>
+            <div>
+              <span class="eyebrow">AI + DevOps</span>
+              <h3>AI Fitness Planner – Dockerized LLM App</h3>
+              <div class="cd-links">
+                <a href="https://github.com/Monesha-B/CoverFitness_App-Prompt-Engineering-Project-" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://hub.docker.com/r/moneshab/fitness-planner" target="_blank" rel="noopener">Docker Hub</a>
+                <a href="https://github.com/Monesha-B/CoverFitness_App-Prompt-Engineering-Project-/actions" target="_blank" rel="noopener">GitHub Actions</a>
+                <a href="http://localhost:8080/" target="_blank" rel="noopener">Jenkins (Local)</a>
+              </div>
+              <p class="muted">A Dockerized AI fitness planner built with Streamlit and LangChain. The application uses environment-based API keys for secure execution and is integrated with both Jenkins (local learning pipeline) and GitHub Actions for automated Docker builds and CI validation.</p>
+            </div>
+          </article>
         </div>
-      </article>
-    </section>
-
-    <!-- ===== Robotics ===== -->
-    <section class="svg-section">
-      <div class="wm-wrap" aria-hidden="true">
-        <svg class="wm-svg" viewBox="0 0 1400 120" preserveAspectRatio="xMinYMid meet">
-          <text x="0" y="88">Robotics</text>
-        </svg>
       </div>
-
-      <article class="card">
-        <div class="ico">B</div>
-        <div>
-          <span class="eyebrow">Prototype</span>
-          <h3>Enhanced Cardless ATM Transaction</h3>
-          <p class="muted">Raspberry Pi prototype with OpenCV: real-time face detection (Haar Cascade) + fingerprint template matching for two-factor biometric authentication and secure transactions.</p>
-          <!-- tech badges removed -->
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="ico">S</div>
-        <div>
-          <span class="eyebrow">Systems</span>
-          <h3>Swarmscape Robotics Project</h3>
-          <p class="muted">Swarm robotics for 24/7 greenhouse monitoring: multi-robot coordination for environment mapping and anomaly detection with ROS. Autonomous patrols, IoT sensors, and real-time telemetry.</p>
-          <!-- tech badges removed -->
-        </div>
-      </article>
     </section>
 
     <p class="mini crumb">&gt; <a href="index.html">cd ..</a></p>
@@ -210,5 +234,8 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    function toggleFolder(folderContainer){folderContainer.classList.toggle('open')}
+  </script>
 </body>
 </html>
