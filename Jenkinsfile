@@ -35,7 +35,7 @@ pipeline {
                     sh '''
                       echo "=== DEPLOYING TO S3 ==="
                       aws --version
-                      aws s3 sync . s3://www.moneshabalasambandam.me --delete
+                      aws s3 sync . s3://www.moneshabalasambandam.me 
                     '''
                 }
             }
