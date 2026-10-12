@@ -1,4 +1,3 @@
-/* deplyment check rom github to jenkins to s3 */
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -217,16 +216,16 @@
 
     /* Icon: thin, light; all bars start same left; top/bottom longer */
     .ham-btn{
-      width:26px; height:22px; padding:0; border:0; background:transparent;
+      width:22px; height:16px; padding:0; border:0; background:transparent;
       display:grid; justify-items:start; align-items:center;
       color:inherit;                       /* same color as page text */
-      opacity:.55;                         /* light until hover */
+      opacity:.35;                         /* light until hover */
       cursor:pointer; transition:opacity .18s var(--ease);
     }
     .ham-wrap:hover .ham-btn{ opacity:1; }
-    .ham-btn span{ width:16px; height:1.2px; margin:2px 0; border-radius:1px; background:currentColor; }
+    .ham-btn span{ width:14px; height:1px; margin:1px 0; border-radius:1px; background:currentColor; }
     .ham-btn span:nth-child(1),
-    .ham-btn span:nth-child(3){ width:20px; }
+    .ham-btn span:nth-child(3){ width:16px; }
 
     /* Slim text list UNDER the icon — same font & color as site */
     .ham-pop{

@@ -17,15 +17,6 @@
     #proj-page{--bg:#fff;--fg:#111;--muted:#666a6f;--pill:#f6f6f7;--border:#e8e8e8;--wm-size:clamp(32px,6.5vw,60px);--wm-gap:12px;--content-indent:24px;--wm-stroke:#b6b6b6;--folder-gray:#8b8b8b;--folder-shadow:rgba(0,0,0,0.12);background:var(--bg);color:var(--fg)}
     :root.dark #proj-page{--bg:#0b0b0f;--fg:#fff;--muted:#cfcfd3;--pill:transparent;--border:#2a2c34;--wm-stroke:#9aa0a6;--folder-gray:#6b6b6b;--folder-shadow:rgba(255,255,255,0.08)}
     .site-header{border-bottom:none!important}
-    .nav-link{text-decoration:none!important;font-size:14px!important;font-weight:400!important;opacity:0.7;transition:opacity 0.2s ease}
-    .nav-link:hover{opacity:1;text-decoration:none!important}
-    @media (max-width:768px){
-      .nav-link{font-size:0!important;width:32px;height:32px;display:inline-flex!important;align-items:center;justify-content:center;position:relative}
-      .nav-link::before{font-size:18px!important;position:absolute}
-      .nav-link[href="projects.html"]::before,.nav-link[href="/projects"]::before,.nav-link[href="./projects.html"]::before{content:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5'/%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3C/svg%3E")}
-      .nav-link[href="posts.html"]::before,.nav-link[href="/posts"]::before,.nav-link[href="./posts.html"]::before{content:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3Cpath d='M10 9H8'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3C/svg%3E")}
-      .nav-link[href="chat.html"]::before,.nav-link[href="/chat"]::before,.nav-link[href="./chat.html"]::before{content:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7.9 20A9 9 0 1 0 4 16.1L2 22Z'/%3E%3C/svg%3E")}
-    }
     .icon-link{opacity:0.7;transition:opacity 0.2s ease}
     .icon-link:hover{opacity:1}
     #proj-page h1{margin:0 0 6px;text-align:center;font-weight:800;font-size:clamp(28px,3vw,36px);line-height:1.1}
@@ -79,13 +70,14 @@
       <iframe src="fevicon.html" title="Animated M Logo" loading="eager" style="border:0;outline:0;background:transparent"></iframe>
     </a>
     <nav class="nav-right">
-      <a class="nav-link" href="projects.html">Projects</a>
-      <a class="nav-link" href="posts.html">Blog</a>
-      <a class="nav-link" href="chat.html">Chat</a>
-      <a class="icon-link" aria-label="GitHub" href="https://github.com/Monesha-B/">
+      <a class="nav-link" href="skills.html">Skills</a>
+      <a class="nav-link active" href="projects.html">Projects</a>
+      <a class="nav-link" href="experience.html">Experience</a>
+      <a class="nav-link" href="certifications.html">Certifications</a>
+      <a class="icon-link" aria-label="GitHub" href="https://github.com/Monesha-B/" target="_blank" rel="noopener">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.1-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.64 1.65.22 2.87.11 3.17.77.83 1.24 1.9 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
       </a>
-      <a class="icon-link" aria-label="LinkedIn" href="https://www.linkedin.com/in/moneshab">
+      <a class="icon-link" aria-label="LinkedIn" href="https://www.linkedin.com/in/moneshab" target="_blank" rel="noopener">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5.001zM3 8.98h3.96V21H3V8.98zM9.97 9h3.8v1.6h.05c.53-1.01 1.83-2.08 3.77-2.08 4.03 0 4.78 2.65 4.78 6.1V21h-3.96v-5.38c0-1.28-.02-2.93-1.79-2.93-1.8 0-2.07 1.4-2.07 2.84V21H9.97V9z"/></svg>
       </a>
       <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
