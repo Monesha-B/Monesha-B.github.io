@@ -3,77 +3,275 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="Selected software projects, case studies, and links to source code."/>
+  <meta name="description" content="Selected Machine Learning, AI Agents, and Intelligent Data Science projects."/>
   <title>Projects | Monesha</title>
 
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css?v=2"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
   <link rel="stylesheet" href="assets/transition/transitions.css"/>
   <script defer src="assets/transition/transitions.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    #proj-page{--bg:#fff;--fg:#111;--muted:#666a6f;--pill:#f6f6f7;--border:#e8e8e8;--wm-size:clamp(32px,6.5vw,60px);--wm-gap:12px;--content-indent:24px;--wm-stroke:#b6b6b6;--folder-gray:#8b8b8b;--folder-shadow:rgba(0,0,0,0.12);background:var(--bg);color:var(--fg)}
-    :root.dark #proj-page{--bg:#0b0b0f;--fg:#fff;--muted:#cfcfd3;--pill:transparent;--border:#2a2c34;--wm-stroke:#9aa0a6;--folder-gray:#6b6b6b;--folder-shadow:rgba(255,255,255,0.08)}
-    .site-header{border-bottom:none!important}
-    .icon-link{opacity:0.7;transition:opacity 0.2s ease}
-    .icon-link:hover{opacity:1}
-    #proj-page h1{margin:0 0 6px;text-align:center;font-weight:800;font-size:clamp(28px,3vw,36px);line-height:1.1}
-    #proj-page .mini{opacity:.9;text-align:center}
-    #proj-page hr{border:0;border-top:1px solid var(--border);max-width:100px;margin:10px auto 18px}
-    .svg-section{position:relative;padding-top:calc(var(--wm-size) + var(--wm-gap));margin:24px 0 16px}
-    .svg-section>:not(.wm-wrap){margin-left:var(--content-indent)!important}
-    .wm-wrap{position:absolute;left:0;top:0;pointer-events:none;user-select:none;width:auto;height:var(--wm-size);display:block}
-    .wm-svg{width:auto;height:100%;display:block;color:var(--muted);overflow:visible}
-    .wm-svg text{fill:none;stroke:var(--wm-stroke);stroke-width:2.2;stroke-linecap:butt;stroke-linejoin:miter;font-family:'Orbitron','Oxanium','Rajdhani','Russo One',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-weight:700;text-transform:uppercase;font-kerning:none;font-size:clamp(50px,9.8vw,90px);letter-spacing:.06em;word-spacing:.12em}
-    #proj-page .card,#proj-page .card::before,#proj-page .card::after{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
-    #proj-page .card{margin:0 0 18px!important}
-    .card{display:grid;grid-template-columns:auto 1fr;gap:10px}
-    .ico{width:30px;height:30px;border-radius:999px;display:grid;place-items:center;font-weight:700;color:var(--fg);background:var(--pill);border:1px solid var(--border);font-size:13px}
-    .eyebrow{display:inline-block;margin-bottom:3px;font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-    h3{margin:0 0 4px;font-weight:700;font-size:clamp(17px,1.8vw,20px);line-height:1.15}
-    .muted{margin:0 0 6px;color:var(--muted);font-size:14px;line-height:1.4}
-    .cd-links{display:flex;gap:10px;margin-top:6px;margin-bottom:6px}
-    .cd-links a{font-size:12px;color:var(--muted);text-decoration:none;padding:3px 8px;border:1px solid var(--border);border-radius:4px;transition:all 0.2s ease}
-    .cd-links a:hover{color:var(--fg);border-color:var(--fg)}
-    .folder-container{margin-left:var(--content-indent);margin-bottom:16px;cursor:pointer}
-    .folder-header{display:flex;align-items:center;gap:12px;padding:8px 0;transition:all 0.3s ease}
-    .folder-header:hover{transform:translateX(4px)}
-    .folder-icon-wrapper{position:relative;width:50px;height:40px;flex-shrink:0;transition:all 0.4s cubic-bezier(0.68,-0.55,0.265,1.55)}
-    .folder-back{position:absolute;width:100%;height:32px;background:var(--folder-gray);border-radius:4px;bottom:0;box-shadow:0 2px 8px var(--folder-shadow);transition:all 0.4s ease}
-    .folder-tab{position:absolute;width:40%;height:10px;background:var(--folder-gray);border-radius:3px 3px 0 0;top:0;left:0;box-shadow:0 -1px 4px var(--folder-shadow);transition:all 0.4s ease}
-    .folder-container.open .folder-back{transform:rotateX(-20deg);transform-origin:bottom;height:26px}
-    .folder-container.open .folder-tab{transform:translateY(-4px) rotateX(-15deg);transform-origin:bottom}
-    .folder-info{flex:1}
-    .folder-name{font-weight:700;font-size:17px;margin-bottom:2px;display:flex;align-items:center;gap:8px}
-    .folder-count{color:var(--muted);font-size:12px;font-weight:500}
-    .folder-arrow{margin-left:auto;color:var(--muted);font-size:18px;transition:transform 0.3s ease}
-    .folder-container.open .folder-arrow{transform:rotate(90deg)}
-    .folder-projects{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);margin-top:8px;margin-left:0}
-    .folder-container.open .folder-projects{max-height:3000px}
-    .folder-projects .card{opacity:0;transform:translateY(10px);transition:all 0.4s ease}
-    .folder-container.open .folder-projects .card{opacity:1;transform:translateY(0)}
-    .folder-container.open .folder-projects .card:nth-child(1){transition-delay:0.1s}
-    .folder-container.open .folder-projects .card:nth-child(2){transition-delay:0.2s}
-    .folder-container.open .folder-projects .card:nth-child(3){transition-delay:0.3s}
-    .folder-container.open .folder-projects .card:nth-child(4){transition-delay:0.4s}
-    .folder-container.open .folder-projects .card:nth-child(5){transition-delay:0.5s}
-    .folder-container.open .folder-projects .card:nth-child(6){transition-delay:0.6s}
-    #proj-page .mini.crumb{text-align:left!important;margin-left:var(--content-indent)}
-    @media (max-width:768px){#proj-page{--wm-size:38px;--wm-gap:10px;--content-indent:16px}.wm-svg text{font-size:clamp(44px,14vw,84px);stroke-width:2.1;letter-spacing:.065em;word-spacing:.14em}.card{gap:8px}.folder-icon-wrapper{width:45px;height:36px}.folder-name{font-size:16px}.cd-links{flex-wrap:wrap}}
+    /* Venki Vijay / Anthony Fu Projects Layout */
+    :root {
+      --proj-fg: #555;
+      --proj-fg-deep: #111;
+      --proj-muted: #888;
+      --proj-hover-bg: rgba(136, 136, 136, 0.08);
+      --proj-border: rgba(136, 136, 136, 0.27);
+      --proj-hr: rgba(125, 125, 125, 0.3);
+    }
+    :root.dark, html.dark, body.dark {
+      --proj-fg: #bbb;
+      --proj-fg-deep: #fff;
+      --proj-muted: #888;
+      --proj-hover-bg: rgba(255, 255, 255, 0.06);
+      --proj-border: rgba(136, 136, 136, 0.27);
+      --proj-hr: rgba(125, 125, 125, 0.3);
+    }
+
+    .projects-container {
+      width: min(1140px, 92%);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2.5rem 0 3.5rem;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    .projects-header {
+      text-align: center;
+      margin: 0 auto 0.5rem;
+      max-width: 65ch;
+    }
+    .projects-header h1 {
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 0 0 0.5rem;
+      color: var(--proj-fg-deep);
+      letter-spacing: -0.02em;
+    }
+    .projects-subtitle {
+      text-align: center;
+      margin: 0 auto 1.5rem;
+      opacity: 0.5;
+      font-size: 1.125rem;
+      font-style: italic;
+      color: var(--proj-fg);
+    }
+
+    /* GitHub Action Button */
+    .github-action-wrap {
+      text-align: center;
+      margin: 1.5rem auto 1.25rem;
+      display: flex;
+      justify-content: center;
+    }
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.28rem 0.75rem;
+      border: 1px solid var(--proj-border);
+      border-radius: 4px;
+      font-size: 0.95rem;
+      text-decoration: none !important;
+      color: inherit;
+      opacity: 0.55;
+      transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+      background: transparent;
+    }
+    .btn-github svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+    .btn-github:hover {
+      opacity: 1;
+      background-color: rgba(96, 165, 250, 0.1);
+      border-color: rgba(96, 165, 250, 0.4);
+      color: #3b82f6;
+    }
+    :root.dark .btn-github:hover,
+    html.dark .btn-github:hover,
+    body.dark .btn-github:hover {
+      color: #60a5fa;
+    }
+
+    .projects-hr {
+      width: 50px;
+      margin: 1.75rem auto 2.5rem;
+      border: 0;
+      border-top: 1px solid var(--proj-hr);
+    }
+
+    /* Project Grid Layout */
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.85rem 1rem;
+      max-width: 100%;
+      width: max-content;
+      margin: 0 auto;
+      padding: 0.5rem 0;
+    }
+    @media (min-width: 768px) {
+      .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 800px;
+      }
+    }
+    @media (min-width: 1060px) {
+      .project-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: 1120px;
+      }
+    }
+
+    /* Item Card */
+    .project-grid a.item {
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: transparent;
+      font-size: 1.1rem;
+      width: 350px;
+      max-width: 100%;
+      padding: 0.65rem 0.875rem 0.875rem;
+      border-radius: 6px;
+      text-decoration: none !important;
+      border-bottom: none !important;
+      opacity: 0.6;
+      color: inherit;
+      transition: all 0.2s ease-out;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .project-grid a.item:hover {
+      opacity: 1;
+      background: var(--proj-hover-bg);
+    }
+
+    .item-icon-box {
+      padding-top: 0.25rem;
+      padding-right: 1.15rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+    }
+    .item-icon-box svg {
+      width: 1.85rem;
+      height: 1.85rem;
+      display: block;
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
+    }
+    .project-grid a.item:hover .item-icon-box svg {
+      opacity: 0.9;
+    }
+
+    .item-content {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .text-normal {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--proj-fg-deep);
+      margin-bottom: 0.15rem;
+    }
+    .desc {
+      font-size: 0.875rem;
+      line-height: 1.4;
+      opacity: 0.5;
+      font-weight: 400;
+      color: var(--proj-fg);
+    }
+    .project-grid a.item:hover .desc {
+      opacity: 0.75;
+    }
+
+    /* Bottom Section */
+    .bottom-section {
+      width: min(1120px, 100%);
+      margin: 3.5rem auto 1rem;
+      box-sizing: border-box;
+    }
+    .cd-back {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.95rem;
+      opacity: 0.5;
+      margin-bottom: 2.5rem;
+    }
+    .cd-back a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cd-back a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .projects-footer {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      opacity: 0.5;
+      color: inherit;
+    }
+
+    /* Staggered slide-in animation */
+    @keyframes slideEnter {
+      0% { transform: translateY(12px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .slide-enter {
+      animation: slideEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .slide-enter-content > * {
+      animation: slideEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .slide-enter-content > *:nth-child(1) { animation-delay: 0.05s; }
+    .slide-enter-content > *:nth-child(2) { animation-delay: 0.1s; }
+    .slide-enter-content > *:nth-child(3) { animation-delay: 0.15s; }
+    .slide-enter-content > *:nth-child(4) { animation-delay: 0.2s; }
+    .slide-enter-content > *:nth-child(5) { animation-delay: 0.25s; }
+    .slide-enter-content > *:nth-child(6) { animation-delay: 0.3s; }
+    .slide-enter-content > *:nth-child(7) { animation-delay: 0.35s; }
+    .slide-enter-content > *:nth-child(8) { animation-delay: 0.4s; }
+    .slide-enter-content > *:nth-child(9) { animation-delay: 0.45s; }
+
+    @media (max-width: 600px) {
+      .projects-container {
+        padding: 1.5rem 0 2.5rem;
+      }
+      .project-grid a.item {
+        width: 100%;
+        padding: 0.65rem 0.5rem;
+      }
+      .item-icon-box {
+        padding-right: 0.9rem;
+      }
   </style>
 </head>
-<body>
+<body class="page-ready">
+  <!-- Header / Navigation -->
   <header class="site-header">
     <a class="logo-link" aria-label="Home" href="index.html">
       <iframe src="fevicon.html" title="Animated M Logo" loading="eager" style="border:0;outline:0;background:transparent"></iframe>
     </a>
     <nav class="nav-right">
-      <a class="nav-link" href="skills.html">Skills</a>
       <a class="nav-link active" href="projects.html">Projects</a>
-      <a class="nav-link" href="experience.html">Experience</a>
-      <a class="nav-link" href="certifications.html">Certifications</a>
+      <a class="nav-link" href="posts.html">Blog</a>
+      <a class="nav-link" href="chat.html">Chat</a>
       <a class="icon-link" aria-label="GitHub" href="https://github.com/Monesha-B/" target="_blank" rel="noopener">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.1-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.64 1.65.22 2.87.11 3.17.77.83 1.24 1.9 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
       </a>
@@ -86,166 +284,176 @@
     </nav>
   </header>
 
-  <main id="proj-page" class="container">
-    <h1>Projects</h1>
-    <p class="mini">Cloud infrastructure, DevOps, and AI/ML projects.</p>
-    <hr/>
+  <!-- Main Projects Layout -->
+  <main class="projects-container">
+    <div class="projects-header slide-enter">
+      <h1>Projects</h1>
+    </div>
 
-    <!-- Cloud & DevOps Section -->
-    <section class="svg-section">
-      <div class="wm-wrap" aria-hidden="true">
-        <svg class="wm-svg" viewBox="0 0 2200 120" preserveAspectRatio="xMinYMid meet">
-          <text x="0" y="88" style="font-size:68px;">Cloud & DevOps</text>
-        </svg>
-      </div>
+    <p class="projects-subtitle slide-enter">Projects that I created.</p>
 
-      <div class="folder-container" onclick="toggleFolder(this)">
-        <div class="folder-header">
-          <div class="folder-icon-wrapper">
-            <div class="folder-tab"></div>
-            <div class="folder-back"></div>
-          </div>
-          <div class="folder-info">
-            <div class="folder-name">Cloud Infrastructure & DevOps<span class="folder-arrow">›</span></div>
-            <div class="folder-count">7 projects</div>
-          </div>
+    <!-- GitHub Action Button -->
+    <div class="github-action-wrap slide-enter">
+      <a href="https://github.com/Monesha-B" target="_blank" rel="noopener" class="btn-github">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.1-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.64 1.65.22 2.87.11 3.17.77.83 1.24 1.9 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+        GitHub
+      </a>
+    </div>
+
+    <hr class="projects-hr slide-enter">
+
+    <!-- Unified Projects Grid (No topic headers, all ML & AI Agents focus) -->
+    <div class="project-grid slide-enter-content">
+
+      <!-- 1. Autonomous Multi-Agent System -->
+      <a class="item" href="#" title="Autonomous Multi-Agent System">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="5" r="3"></circle>
+            <circle cx="5" cy="18" r="3"></circle>
+            <circle cx="19" cy="18" r="3"></circle>
+            <line x1="12" y1="8" x2="5" y2="15"></line>
+            <line x1="12" y1="8" x2="19" y2="15"></line>
+            <line x1="8" y1="18" x2="16" y2="18"></line>
+          </svg>
         </div>
-
-        <div class="folder-projects">
-          <article class="card">
-            <div class="ico">λ</div>
-            <div>
-              <span class="eyebrow">Serverless</span>
-              <h3>Serverless Calculator API</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/serverless-calculator-api" target="_blank" rel="noopener">GitHub</a>
-              </div>
-              <p class="muted">A serverless REST API built using AWS Lambda and API Gateway to demonstrate event-driven architecture. The project eliminates server management while providing a scalable, stateless backend service.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="ico">J</div>
-            <div>
-              <span class="eyebrow">CI/CD</span>
-              <h3>Docker CI/CD Pipeline (Jenkins + GitHub Actions)</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/hello-jenkins-docker" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://github.com/Monesha-B/hello-jenkins-docker/actions" target="_blank" rel="noopener">GitHub Actions</a>
-                <a href="http://localhost:8080/" target="_blank" rel="noopener">Jenkins (Local)</a>
-              </div>
-              <p class="muted">A complete CI/CD pipeline for a Dockerized Python application. Jenkins is used locally to deeply understand pipeline stages and execution, while GitHub Actions provides a publicly visible CI workflow.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="ico">T</div>
-            <div>
-              <span class="eyebrow">Infrastructure</span>
-              <h3>Terraform AWS Infrastructure</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/terraform-aws-infrastructure" target="_blank" rel="noopener">GitHub</a>
-              </div>
-              <p class="muted">Infrastructure-as-Code project using Terraform to provision AWS EC2 instances and security groups. Focuses on reproducible environments, version-controlled infrastructure, and automated provisioning through CI pipelines.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="ico">D</div>
-            <div>
-              <span class="eyebrow">Containerization</span>
-              <h3>Docker Job Scheduler</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/docker-job-scheduler" target="_blank" rel="noopener">GitHub</a>
-              </div>
-              <p class="muted">A container-based job scheduling system that distributes compute tasks across multiple Docker workers, exploring distributed processing and orchestration concepts without using Kubernetes.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="ico">A</div>
-            <div>
-              <span class="eyebrow">Automation</span>
-              <h3>DevOps Automation Toolkit</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/devops-automation" target="_blank" rel="noopener">GitHub</a>
-              </div>
-              <p class="muted">A DevOps-focused automation toolkit that includes CI/CD workflows, monitoring utilities, and AWS cost-optimization scripts built using Python and boto3 for operational efficiency.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="ico">E</div>
-            <div>
-              <span class="eyebrow">API</span>
-              <h3>Enterprise REST API</h3>
-              <p class="muted">A production-style REST API built with Flask, featuring JWT-based authentication, role-based access control, and CRUD operations. Designed to demonstrate backend service design, API security, and clean separation of concerns.</p>
-            </div>
-          </article>
-          <article class="card">
-            <div class="ico">G</div>
-            <div>
-              <span class="eyebrow">GitOps</span>
-              <h3>GitOps Kubernetes Deployment with Argo CD & Monitoring</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/GitOps_with_ArgoCD" target="_blank" rel="noopener">GitHub</a>
-              </div>
-              <p class="muted">A GitOps-based deployment workflow using Kubernetes (Minikube), Argo CD, Prometheus, and Grafana. Git serves as the single source of truth with automatic reconciliation, self-healing drift correction, and real-time cluster monitoring dashboards.</p>
-            </div>
-          </article>
+        <div class="item-content">
+          <div class="text-normal">Autonomous Multi-Agent System</div>
+          <div class="desc">Collaborative agent workflows with tool use, task planning &amp; LangGraph</div>
         </div>
-      </div>
-    </section>
+      </a>
 
-    <!-- AI / ML Section -->
-    <section class="svg-section">
-      <div class="wm-wrap" aria-hidden="true">
-        <svg class="wm-svg" viewBox="0 0 1800 120" preserveAspectRatio="xMinYMid meet">
-          <text x="0" y="88" style="font-size:68px;">AI / ML</text>
-        </svg>
-      </div>
-
-      <div class="folder-container" onclick="toggleFolder(this)">
-        <div class="folder-header">
-          <div class="folder-icon-wrapper">
-            <div class="folder-tab"></div>
-            <div class="folder-back"></div>
-          </div>
-          <div class="folder-info">
-            <div class="folder-name">AI & Machine Learning<span class="folder-arrow">›</span></div>
-            <div class="folder-count">1 project</div>
-          </div>
+      <!-- 2. Agentic RAG Knowledge Engine -->
+      <a class="item" href="#" title="Agentic RAG Knowledge Engine">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            <circle cx="12" cy="10" r="2.5"></circle>
+            <path d="M12 12.5v3"></path>
+          </svg>
         </div>
-
-        <div class="folder-projects">
-          <article class="card">
-            <div class="ico">F</div>
-            <div>
-              <span class="eyebrow">AI + DevOps</span>
-              <h3>AI Fitness Planner – Dockerized LLM App</h3>
-              <div class="cd-links">
-                <a href="https://github.com/Monesha-B/CoverFitness_App-Prompt-Engineering-Project-" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://hub.docker.com/r/moneshab/fitness-planner" target="_blank" rel="noopener">Docker Hub</a>
-                <a href="https://github.com/Monesha-B/CoverFitness_App-Prompt-Engineering-Project-/actions" target="_blank" rel="noopener">GitHub Actions</a>
-                <a href="http://localhost:8080/" target="_blank" rel="noopener">Jenkins (Local)</a>
-              </div>
-              <p class="muted">A Dockerized AI fitness planner built with Streamlit and LangChain. The application uses environment-based API keys for secure execution and is integrated with both Jenkins (local learning pipeline) and GitHub Actions for automated Docker builds and CI validation.</p>
-            </div>
-          </article>
+        <div class="item-content">
+          <div class="text-normal">Agentic RAG Knowledge Engine</div>
+          <div class="desc">Self-reflective retrieval-augmented generation with vector search &amp; re-ranking</div>
         </div>
-      </div>
-    </section>
+      </a>
 
-    <p class="mini crumb">&gt; <a href="index.html">cd ..</a></p>
+      <!-- 3. Autonomous Tool-Calling Agent -->
+      <a class="item" href="#" title="Autonomous Tool-Calling Agent">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+            <circle cx="12" cy="5" r="2"></circle>
+            <path d="M12 7v4"></path>
+            <line x1="8" y1="16" x2="8.01" y2="16"></line>
+            <line x1="16" y1="16" x2="16.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">Autonomous Tool-Calling Agent</div>
+          <div class="desc">Function-calling AI agent executing API workflows with persistent memory</div>
+        </div>
+      </a>
+
+      <!-- 4. Predictive ML Inference Pipeline -->
+      <a class="item" href="#" title="Predictive ML Inference Pipeline">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">Predictive ML Inference Pipeline</div>
+          <div class="desc">End-to-end ensemble classification model with feature engineering &amp; serving</div>
+        </div>
+      </a>
+
+      <!-- 5. Real-Time NLP & Sentiment Agent -->
+      <a class="item" href="#" title="Real-Time NLP & Sentiment Agent">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            <path d="M8 10h.01"></path>
+            <path d="M12 10h.01"></path>
+            <path d="M16 10h.01"></path>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">Real-Time NLP &amp; Sentiment Agent</div>
+          <div class="desc">Text triage &amp; sentiment analysis engine using fine-tuned NLP models</div>
+        </div>
+      </a>
+
+      <!-- 6. PyTorch Deep Learning Lab -->
+      <a class="item" href="#" title="PyTorch Deep Learning Lab">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.8 2.2a.8.8 0 0 0-.6.3l-7.7 9a.8.8 0 0 0 .1 1.1l7.3 6.5a.8.8 0 0 0 1.2-.2l4.8-7.8a.8.8 0 0 0-.2-1.1L14.2 2.4a.8.8 0 0 0-.4-.2zm-.3 2.6l3.3 6.1-3.6 5.8-5.4-4.8 5.7-7.1z"/>
+            <circle cx="16.5" cy="5.5" r="1.5"/>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">PyTorch Deep Learning Lab</div>
+          <div class="desc">Deep neural networks, attention mechanisms &amp; tensor optimization in PyTorch</div>
+        </div>
+      </a>
+
+      <!-- 7. AI Algorithmic Matching Platform -->
+      <a class="item" href="#" title="AI Algorithmic Matching Platform">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">AI Algorithmic Matching Platform</div>
+          <div class="desc">Machine learning scoring model ranking candidate feature embeddings</div>
+        </div>
+      </a>
+
+      <!-- 8. Self-Healing Data Preprocessing Agent -->
+      <a class="item" href="#" title="Self-Healing Data Preprocessing Agent">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">Self-Healing Data Prep Agent</div>
+          <div class="desc">Automated schema validation, anomaly detection &amp; preprocessing for ML models</div>
+        </div>
+      </a>
+
+      <!-- 9. Streaming Anomaly Detection Agent -->
+      <a class="item" href="#" title="Streaming Anomaly Detection Agent">
+        <div class="item-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="text-normal">Streaming Anomaly Detection Agent</div>
+          <div class="desc">Real-time ML streaming engine detecting outliers across continuous data feeds</div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Bottom Navigation & Footer -->
+    <div class="bottom-section slide-enter">
+      <div class="cd-back">
+        <span>&gt; </span><a href="index.html">cd ..</a>
+      </div>
+      <div class="projects-footer">
+        <span>2021–Present © Monesha Balasambandam</span>
+      </div>
+    </div>
   </main>
 
-  <footer class="container footer">
-    <div>2021–Present © Monesha Balasambandam</div>
-  </footer>
-
   <script src="script.js"></script>
-  <script>
-    function toggleFolder(folderContainer){folderContainer.classList.toggle('open')}
-  </script>
 </body>
 </html>

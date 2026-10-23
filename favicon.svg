@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <style>
     .m-line {
-      stroke-width: 7.5;
+      stroke-width: 4.0;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -21,6 +21,6 @@
   <!-- First M line (Bright Red) -->
   <path class="m-line first" d="M10 170 L50 30 L90 170 L130 30 L170 170"/>
   
-  <!-- Second M line (Burgundy/Maroon, larger offset for bigger gaps) -->
-  <path class="m-line second" d="M10 170 L50 30 L90 170 L130 30 L170 170" transform="translate(16, 0)"/>
+  <!-- Second M line (Burgundy/Maroon, offset for visible gap) -->
+  <path class="m-line second" d="M10 170 L50 30 L90 170 L130 30 L170 170" transform="translate(10, 0)"/>
 </svg>

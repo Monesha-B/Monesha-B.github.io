@@ -7,7 +7,7 @@
 html,body{margin:0;padding:0;font:16px/1.65 ui-sans-serif,system-ui,Segoe UI,Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
 a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline}
-.container{width:min(800px,92%);margin-inline:auto}
+.container{width:min(880px,92%);margin-inline:auto}
 .brand{font-weight:700;color:var(--text)}
 nav a{margin-left:16px}
 main{padding:28px 0;margin-top:0}
@@ -413,7 +413,7 @@ main.container {
 /* Mobile responsive */
 @media (max-width: 768px) {
   .site-header {
-    padding: 10px 16px !important;
+    padding: 10px 8px 10px 16px !important;
   }
   
   .logo-link {
@@ -422,7 +422,9 @@ main.container {
   }
   
   .nav-right {
-    gap: 8px !important;
+    gap: 7px !important;
+    margin-left: auto !important;
+    justify-content: flex-end !important;
   }
 }
 
@@ -561,66 +563,56 @@ body.chat-page .cta-row a{
    force their dark variables via the toggle class. Safe to keep. */
 :root.dark #proj-page{ --bg:#0b0b0f; --fg:#ffffff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
 :root.dark #exp-page{  --bg:#0b0b0f; --fg:#ffffff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
-/* === APPEND: Bigger Globe on Index === */
+/* === GLOBE: Centered, balanced 560px height, zero clipping === */
 #skills-globe .globe-block,
-#about .globe-block{
-  justify-content:center !important;
+#about .globe-block,
+.globe-block {
+  width: 100%;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 #skills-globe .globe-container,
-#about .globe-container{
-  /* Wide + tall, but responsive */
-  width: min(1200px, 96vw) !important;
-  height: clamp(520px, 62vw, 760px) !important;
+#about .globe-container,
+.globe-container {
+  width: 100% !important;
+  max-width: 880px !important;
+  height: 560px !important;
   margin: 0 auto !important;
+  position: relative !important;
+  overflow: hidden !important;
   background: transparent !important;
   border: none !important;
-  border-radius: 0 !important;
+  border-radius: 12px !important;
   box-shadow: none !important;
 }
 
-@media (max-width: 900px){
-  #skills-globe .globe-container,
-  #about .globe-container{
-    height: clamp(440px, 80vw, 640px) !important;
-    width: 96vw !important;
-  }
-}
-
-@media (max-width: 560px){
-  #skills-globe .globe-container,
-  #about .globe-container{
-    height: clamp(380px, 95vw, 520px) !important;
-  }
-}
-  /* === GLOBE: centered + comfortable size === */
-#skills-globe .globe-block,
-#about .globe-block{
-  display: grid !important;
-  place-items: center !important;   /* perfectly centers the iframe */
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-#skills-globe .globe-container,
-#about .globe-container{
-  width: min(980px, 94vw) !important;
-  height: 520px !important;         /* desktop size */
-  margin: 0 auto !important;
+#skills-globe .globe-container iframe,
+#about .globe-container iframe,
+.globe-container iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  display: block !important;
+  overflow: hidden !important;
   background: transparent !important;
-  border: none !important;
 }
 
-@media (max-width: 900px){
+@media (max-width: 900px) {
   #skills-globe .globe-container,
-  #about .globe-container{
-    height: 440px !important;       /* laptop/tablet */
+  #about .globe-container,
+  .globe-container {
+    height: 460px !important;
   }
 }
-@media (max-width: 560px){
+
+@media (max-width: 560px) {
   #skills-globe .globe-container,
-  #about .globe-container{
-    height: 360px !important;       /* mobile */
+  #about .globe-container,
+  .globe-container {
+    height: 380px !important;
   }
 }
 /* === PROJECTS: remove black rectangle in dark mode === */
@@ -767,26 +759,9 @@ main#ach-page .slider button.nav {
   border-radius: 999px !important;
   box-shadow: none !important;
 }
-/* --- Globe iframe: fill area, never show scrollbars --- */
+/* --- Globe layout rhythm --- */
 #skills-globe { padding: 0; }
-
 .globe-block { margin: 0; }
-
-.globe-container {
-  position: relative;
-  width: min(1100px, 100%);
-  margin: 0 auto;
-  overflow: hidden;            /* hide any inner overflow */
-}
-
-/* Control the iframe’s size here (the globe will fit inside it) */
-.globe-container iframe {
-  display: block;
-  width: 100%;
-  height: clamp(540px, 78svh, 900px);   /* pick your preferred range */
-  border: 0;
-  overflow: hidden;                      /* prevent iframe scrollbars */
-}
 
 /* Prevent accidental horizontal scroll on the page */
 html, body { overflow-x: hidden; }
@@ -848,23 +823,21 @@ html, body { overflow-x: hidden; }
   text-decoration: none !important;
 }
 
-/* Mobile navbar - clean responsive text links */
-@media (max-width: 640px) {
-  .nav-right {
-    gap: 12px;
-  }
-}
+
 
 /* ============================================
    NAVBAR ALIGNMENT FIX - Replace in style.css
    ============================================ */
 
-/* Fix navbar alignment */
+/* Fix navbar alignment - 880px unified axis */
 .site-header {
+  max-width: 880px;
+  width: 92%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 20px 0;
   border-bottom: none !important;
 }
 
@@ -954,22 +927,25 @@ html, body { overflow-x: hidden; }
   display: block;
 }
 
-/* Clean Accessible Header Navigation */
+/* Clean Accessible Header Navigation - 880px unified axis */
 .site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 24px;
-  max-width: 1040px;
-  margin: 0 auto;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 20px 0 !important;
+  width: min(880px, 92%) !important;
+  max-width: 880px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
   position: relative;
-  z-index: 50;
+  z-index: 1000;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-left: auto;
 }
 
 .nav-link {
@@ -1006,15 +982,160 @@ html, body { overflow-x: hidden; }
   height: 20px;
 }
 
-@media (max-width: 640px) {
+/* Hamburger menu - hidden for now */
+.ham-wrap {
+  display: none !important;
+}
+
+/* Mobile navbar - show icons only, elegant spacing and moved to the right */
+@media (max-width: 768px) {
   .site-header {
-    padding: 12px 16px;
+    width: 92% !important;
+    padding: 12px 0 !important;
+    justify-content: space-between !important;
   }
+
   .nav-right {
-    gap: 10px;
+    gap: 7px !important;
+    margin-left: auto !important;
+    justify-content: flex-end !important;
+    padding-right: 0 !important;
   }
+
   .nav-link {
-    font-size: 13px;
+    font-size: 0 !important;
+    color: transparent !important;
+    line-height: 0 !important;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    opacity: 0.6 !important;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link:active,
+  .nav-link:focus,
+  .nav-link.active {
+    opacity: 1 !important;
+    transform: translateY(-1px);
+  }
+
+  .nav-link::before {
+    font-size: 18px !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.2s ease;
+  }
+
+  /* Turn dark on hover, click, focus, and active page in light mode */
+  .nav-link:hover::before,
+  .nav-link:active::before,
+  .nav-link:focus::before,
+  .nav-link.active::before {
+    filter: brightness(0);
+  }
+
+  /* In dark mode, turn crisp white like GitHub and LinkedIn */
+  :root.dark .nav-link:hover::before,
+  :root.dark .nav-link:active::before,
+  :root.dark .nav-link:focus::before,
+  :root.dark .nav-link.active::before,
+  html.dark .nav-link:hover::before,
+  html.dark .nav-link:active::before,
+  html.dark .nav-link:focus::before,
+  html.dark .nav-link.active::before {
+    filter: brightness(0) invert(1);
+  }
+
+  /* Projects icon */
+  .nav-link[href="projects.html"]::before,
+  .nav-link[href="/projects"]::before,
+  .nav-link[href="./projects.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5'/%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3C/svg%3E");
+  }
+
+  /* Blog icon */
+  .nav-link[href="posts.html"]::before,
+  .nav-link[href="/posts"]::before,
+  .nav-link[href="./posts.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3Cpath d='M10 9H8'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3C/svg%3E");
+  }
+
+  /* Chat icon */
+  .nav-link[href="chat.html"]::before,
+  .nav-link[href="/chat"]::before,
+  .nav-link[href="./chat.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7.9 20A9 9 0 1 0 4 16.1L2 22Z'/%3E%3C/svg%3E");
+  }
+
+  /* Skills icon */
+  .nav-link[href="skills.html"]::before,
+  .nav-link[href="/skills"]::before,
+  .nav-link[href="./skills.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'/%3E%3Cpolyline points='8 6 2 12 8 18'/%3E%3C/svg%3E");
+  }
+
+  /* Experience icon */
+  .nav-link[href="experience.html"]::before,
+  .nav-link[href="/experience"]::before,
+  .nav-link[href="./experience.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='14' x='2' y='7' rx='2' ry='2'/%3E%3Cpath d='M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'/%3E%3C/svg%3E");
+  }
+
+  /* Certifications icon */
+  .nav-link[href="certifications.html"]::before,
+  .nav-link[href="/certifications"]::before,
+  .nav-link[href="./certifications.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='M15.477 12.89 17 22l-5-3-5 3 1.523-9.11'/%3E%3C/svg%3E");
+  }
+
+  /* Home icon */
+  .nav-link[href="index.html"]::before,
+  .nav-link[href="/"]::before,
+  .nav-link[href="./index.html"]::before {
+    content: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpolyline points='9 22 9 12 15 12 15 22'/%3E%3C/svg%3E");
+  }
+
+  /* Keep icon links visible and compact */
+  .icon-link {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .icon-link svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .theme-toggle {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .theme-toggle svg {
+    width: 18px !important;
+    height: 18px !important;
   }
 }
 
