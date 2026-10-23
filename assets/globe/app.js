@@ -9,7 +9,7 @@ const WIDTH_CONST   = 0.40;  // constant sprite width in world units
 const PACK_DENSITY  = 1.0;   // 1.0 = exactly 89 unique tools (0 duplicates)
 const RELAX_ITERS   = 100;   // more = more even spacing
 const RELAX_STEP    = 0.14;  // relax step size (0.08–0.16)
-const VIEW_MARGIN   = 1.12;  // camera breathing room
+const VIEW_MARGIN   = 1.16;  // camera breathing room
 const EXTRA_PADDING = 0.50;  // label overhang beyond sphere
 const OP_FRONT      = 1.00;  // front opacity
 const OP_BACK       = 0.15;  // back opacity

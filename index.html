@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Monesha Balasambandam | Portfolio</title>
 <meta content="Portfolio of Monesha Balasambandam – I build innovative digital solutions. Information Systems & AI/ML graduate student at Northeastern University." name="description"/>
-<link href="style.css?v=2" rel="stylesheet"/>
+<link href="style.css?v=4" rel="stylesheet"/>
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
@@ -63,15 +63,18 @@
   [data-reveal-group] > *[data-reveal]{ --delay: calc(var(--i,0) * 80ms); }
 
   /* ===== About / Summary (grayscale) ===== */
-  .summary{ max-width:880px; margin:0 auto; padding:clamp(20px,4vw,40px) 0; }
-  .summary h1{ margin:0 0 .25rem; line-height:1.1; color:var(--text); }
-  .summary .sub{ margin:.1rem 0 1rem; font-size:1rem; font-weight:700; letter-spacing:.02em; color:var(--muted,#8A8A90); }
-  .summary .lead{ color:var(--muted,#8A8A90); font-size:clamp(16px,2.2vw,18px); line-height:1.65; margin:0 0 1rem; }
+  .summary{ max-width:980px; margin:0 auto; padding:clamp(14px,2.2vh,24px) 0 4px; }
+  .summary h1{ margin:0 0 .25rem; font-size:clamp(2.2rem, 3.8vw, 3.2rem); line-height:1.15; color:var(--text); }
+  .summary .sub{ margin:.1rem 0 .5rem; font-size:1.05rem; font-weight:700; letter-spacing:.02em; color:var(--muted,#8A8A90); }
+  .summary .lead{ color:var(--muted,#8A8A90); font-size:clamp(16px,1.8vw,19px); line-height:1.55; margin:0 0 .75rem; }
+  .summary p{ margin:0 0 .75rem; font-size:clamp(15px,1.3vw,17px); line-height:1.6; }
+  .summary .inline-cta{ margin:.5rem 0 .75rem; }
   .summary .inline-cta a{ color:#8A8A90; text-decoration-color:#BDBDC3; }
   .summary .inline-cta a:hover{ color:#5A5A60; text-decoration-color:#5A5A60; }
   :root.dark .summary .inline-cta a{ color:#BFC1C7; text-decoration-color:#8A8A90; }
   :root.dark .summary .inline-cta a:hover{ color:#E6E6E6; text-decoration-color:#E6E6E6; }
-  .summary .summary-rule{ border:0; height:1px; background:var(--border,#2A2A2F); margin:1rem 0; opacity:.6; }
+  .summary .summary-rule{ border:0; height:1px; background:var(--border,#2A2A2F); margin:.65rem 0; opacity:.6; }
+  .summary .mini{ margin:.25rem 0 0; font-size:.95rem; }
 
   /* CTA buttons – dark gray boxes (no blue) */
   .cta-row{ display:flex; gap:.75rem; flex-wrap:wrap; margin:.75rem 0 1.25rem; }
@@ -235,7 +238,7 @@
     <section class="section" id="skills-globe" data-reveal>
       <div class="globe-block">
         <div class="globe-container">
-          <iframe src="assets/globe/index.html" title="Interactive 3D globe" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          <iframe src="assets/globe/index.html?v=2" title="Interactive 3D globe" loading="lazy" referrerpolicy="no-referrer"></iframe>
         </div>
       </div>
     </section>
