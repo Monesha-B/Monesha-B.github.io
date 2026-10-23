@@ -4,13 +4,14 @@
   --card:#16161a;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font:16px/1.65 ui-sans-serif,system-ui,Segoe UI,Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+html{min-height:100%}
+body{margin:0;padding:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;font:16px/1.65 ui-sans-serif,system-ui,Segoe UI,Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
 a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline}
 .container{width:min(880px,92%);margin-inline:auto}
 .brand{font-weight:700;color:var(--text)}
 nav a{margin-left:16px}
-main{padding:28px 0;margin-top:0}
+main{padding:28px 0;margin-top:0;flex:1 0 auto}
 h1{font-size:2.1rem;margin:.25rem 0}
 h2{font-size:1.2rem;color:var(--muted);margin:.25rem 0 .75rem}
 hr{border:0;border-top:1px solid var(--border);margin:24px 0}
@@ -20,7 +21,7 @@ hr{border:0;border-top:1px solid var(--border);margin:24px 0}
 .small{color:var(--muted);font-size:.95rem}
 .cta-row a{display:inline-block;border:1px solid var(--border);padding:.5rem .7rem;border-radius:10px;margin-right:.5rem;background:#14151a}
 .card{border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--card)}
-.footer{border-top:1px solid var(--border);padding:20px 0;color:var(--muted);font-size:.95rem}
+.footer{border-top:1px solid var(--border);padding:20px 0;color:var(--muted);font-size:.95rem;margin-top:auto}
 .grid{display:grid;gap:12px}
 .list{list-style:none;margin:0;padding:0}
 .mini{font-size:.9rem;color:var(--muted)}

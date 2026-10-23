@@ -1,210 +1,284 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="description" content="Posts and notes on building pragmatic full-stack and cloud projects.">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Articles and engineering notes on AI/ML, Cloud Infrastructure, and Agentic Systems by Monesha Balasambandam."/>
   <title>Blog | Monesha</title>
-  <link rel="stylesheet" href="style.css?v=2">
- 
+
+  <link rel="stylesheet" href="style.css?v=2"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+  <link rel="stylesheet" href="assets/transition/transitions.css"/>
+  <script defer src="assets/transition/transitions.js"></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Page enter: slide up + fade in -->
-  <script>document.documentElement.classList.add('pt-init');</script>
   <style>
-    /* Initial hidden state before anything else loads */
-    html.pt-init body{ opacity:0; transform:translate3d(0,24px,0); }
-
-    /* Page transition settings */
-    :root{ --enter:520ms; --exit:360ms; --ease:cubic-bezier(.2,.8,.2,1); }
-    html body{
-      opacity:0; transform:translate3d(0,24px,0);
-      transition: opacity var(--enter) var(--ease), transform var(--enter) var(--ease);
-      will-change: opacity, transform;
+    :root {
+      --blog-fg: #555;
+      --blog-fg-deep: #111;
+      --blog-muted: #888;
+      --blog-hover-bg: rgba(136, 136, 136, 0.07);
+      --blog-border: rgba(136, 136, 136, 0.22);
+      --blog-tag-bg: rgba(136, 136, 136, 0.1);
     }
-    html body.page-ready{ opacity:1; transform:translate3d(0,0,0); }
-    html body.page-exiting{ opacity:0; transform:translate3d(0,-12px,0); transition-duration:var(--exit); }
-
-    /* Header anchors the under-line menu */
-    .site-header{ position:relative; }
-
-    /* === Under-header hamburger + vertical list (inherits site font & color) === */
-    .ham-wrap{
-      position:absolute;
-      top:100%;
-      margin-top:0.2cm;                   /* exact 0.2 cm below the line */
-      left:calc(var(--ham-left, 0px) + 0.2cm); /* horizontally aligned under logo with 0.2 cm nudge */
-      z-index:50;
-
-      display:inline-grid;
-      grid-template-rows:auto auto;       /* icon on top, list below */
-      justify-items:start;
-      row-gap:8px;                        /* SPACE between hamburger and menu */
+    :root.dark, html.dark, body.dark {
+      --blog-fg: #bbb;
+      --blog-fg-deep: #fff;
+      --blog-muted: #888;
+      --blog-hover-bg: rgba(255, 255, 255, 0.05);
+      --blog-border: rgba(136, 136, 136, 0.22);
+      --blog-tag-bg: rgba(255, 255, 255, 0.08);
     }
 
-    /* Icon: thin, light; all bars start same left; top/bottom longer */
-    .ham-btn{
-      width:22px; height:16px; padding:0; border:0; background:transparent;
-      display:grid; justify-items:start; align-items:center;
-      color:inherit;                       /* same color as page text */
-      opacity:.35;                         /* light until hover */
-      cursor:pointer; transition:opacity .18s var(--ease);
-    }
-    .ham-wrap:hover .ham-btn{ opacity:1; }
-    .ham-btn span{ width:14px; height:1px; margin:1px 0; border-radius:1px; background:currentColor; }
-    .ham-btn span:nth-child(1),
-    .ham-btn span:nth-child(3){ width:16px; }
-
-    /* Slim text list UNDER the icon — same font & color as site */
-    .ham-pop{
-      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
-      opacity:0; transform:translateY(0px) translateX(-16px) !important;
-      pointer-events:none;
-      transition:opacity .18s var(--ease), transform .18s var(--ease);
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* LIGHT THEME - Default State (Light Gray) */
-    .ham-pop a{
-      font: inherit;
-      font-size: 0.8rem;                               /* ← SMALLER font size */
-      color: #b8b8b8 !important;                      /* LIGHT GRAY default */
+    .blog-container {
+      width: min(880px, 92%);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2.5rem 0 3.5rem;
+      box-sizing: border-box;
+      flex: 1 0 auto;
+    }
+
+    .blog-header {
+      margin-bottom: 2.5rem;
+    }
+    .blog-header h1 {
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 0 0 0.5rem;
+      color: var(--blog-fg-deep);
+      letter-spacing: -0.02em;
+    }
+    .blog-subtitle {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--blog-muted);
+      margin: 0;
+      max-width: 65ch;
+    }
+
+    /* Article List */
+    .article-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .article-card {
+      display: block;
+      padding: 1.25rem 1.4rem;
+      border: 1px solid var(--blog-border);
+      border-radius: 10px;
+      text-decoration: none !important;
+      color: inherit;
+      background: transparent;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .article-card:hover {
+      background: var(--blog-hover-bg);
+      border-color: rgba(136, 136, 136, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.8rem;
+      color: var(--blog-muted);
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .article-tag {
+      padding: 0.18rem 0.55rem;
+      background: var(--blog-tag-bg);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--blog-fg-deep);
+    }
+    .article-date {
+      opacity: 0.85;
+    }
+    .article-dot {
+      opacity: 0.4;
+    }
+
+    .article-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--blog-fg-deep);
+      margin: 0 0 0.4rem;
+      line-height: 1.35;
+      transition: color 0.15s ease;
+    }
+    .article-card:hover .article-title {
+      color: var(--link);
+    }
+
+    .article-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--blog-fg);
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    /* Bottom Section */
+    .bottom-section {
+      width: min(880px, 92%);
+      margin: 3.5rem auto 1.5rem;
+      box-sizing: border-box;
+      margin-top: auto;
+    }
+    .cd-back {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.95rem;
+      opacity: 0.5;
+      margin-bottom: 2rem;
+    }
+    .cd-back a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cd-back a:hover {
       opacity: 1;
-      text-decoration:none;
-      padding-bottom:3px;
-      border-bottom:1px solid #b8b8b8 !important;    /* LIGHT GRAY underline */
-      transition:color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
+      text-decoration: underline;
+    }
+    .blog-footer {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      opacity: 0.5;
+      color: inherit;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
     }
 
-    /* LIGHT THEME - Hover State (Slightly Darker Gray) */
-    .ham-pop a:hover, .ham-pop a:focus{
-      color: #6a6a6a !important;                      /* BIT DARKER GRAY on hover */
-      outline:none; 
-      transform:translateX(1px);
-      border-bottom-color: #6a6a6a !important;       /* BIT DARKER GRAY underline on hover */
+    /* Staggered slide-in animation */
+    @keyframes slideEnter {
+      0% { transform: translateY(12px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
-
-    /* DARK THEME - Default State (Light Gray) */
-    :root.dark .ham-pop a{
-      color: #a0a0a0 !important;                      /* LIGHT GRAY in dark mode */
-      border-bottom-color: #a0a0a0 !important;        /* LIGHT GRAY underline in dark mode */
+    .slide-enter {
+      animation: slideEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-
-    /* DARK THEME - Hover State (Slightly Darker Gray) */
-    :root.dark .ham-pop a:hover, 
-    :root.dark .ham-pop a:focus{
-      color: #d0d0d0 !important;                      /* BIT LIGHTER GRAY on hover in dark mode */
-      border-bottom-color: #d0d0d0 !important;        /* BIT LIGHTER GRAY underline on hover in dark mode */
+    .slide-enter-content > * {
+      animation: slideEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-
-    /* Open the list on hover or keyboard focus */
-    .ham-wrap:hover .ham-pop,
-    .ham-wrap:focus-within .ham-pop{
-      opacity:1; transform:none; pointer-events:auto;
-    }
+    .slide-enter-content > *:nth-child(1) { animation-delay: 0.05s; }
+    .slide-enter-content > *:nth-child(2) { animation-delay: 0.1s; }
+    .slide-enter-content > *:nth-child(3) { animation-delay: 0.15s; }
+    .slide-enter-content > *:nth-child(4) { animation-delay: 0.2s; }
   </style>
-
-  <script>
-    (function(){
-      function onReady(fn){
-        if(document.readyState==="loading"){
-          document.addEventListener("DOMContentLoaded",fn,{once:true});
-        } else fn();
-      }
-      onReady(function(){
-        // page enter
-        document.body.classList.remove("page-ready","page-exiting");
-        void getComputedStyle(document.body).transform;
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
-          document.body.classList.add("page-ready");
-          document.documentElement.classList.remove("pt-init");
-        }));
-
-        // Exit animation on same-site links
-        document.addEventListener("click",function(e){
-          const a = e.target.closest && e.target.closest("a");
-          if(!a) return;
-          if(a.target==="_blank"||a.hasAttribute("download")||
-             e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
-          const href=a.getAttribute("href");
-          if(!href||href.startsWith("#")||href.startsWith("mailto:")||href.startsWith("tel:")) return;
-          let to; try{to=new URL(href,location.href);}catch{ return; }
-          if(to.origin!==location.origin) return;
-          if(to.pathname===location.pathname && to.hash) return;
-          e.preventDefault();
-          document.body.classList.add("page-exiting");
-          setTimeout(()=>{ location.href=to.href; }, 360);
-        });
-
-        // Align the stack precisely under the left edge of the logo
-        function placeHamburger(){
-          const header = document.querySelector('.site-header');
-          const logo   = header && header.querySelector('.logo-link');
-          if(!header || !logo) return;
-          const left = Math.max(0,
-            Math.round(logo.getBoundingClientRect().left - header.getBoundingClientRect().left)
-          );
-          document.documentElement.style.setProperty('--ham-left', left + 'px');
-        }
-        placeHamburger();
-        window.addEventListener('resize', placeHamburger);
-        window.addEventListener('load', placeHamburger);
-      });
-    })();
-  </script>
 </head>
-<body>
-<header class="site-header">
-  <!-- LEFT: fevicon.html as iframe -->
-  <a href="index.html" class="logo-link" aria-label="Home">
-    <iframe src="fevicon.html" title="Animated M Logo" loading="eager"></iframe>
-  </a>
-
-  <!-- RIGHT: Navigation (unchanged) -->
-  <nav class="nav-right">
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="posts.html" class="nav-link">Blog</a>
-    <a href="chat.html" class="nav-link">Chat</a>
-    <a href="https://github.com/Monesha-B/" class="icon-link" aria-label="GitHub">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+<body class="page-ready">
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <a class="logo-link" aria-label="Home" href="index.html">
+      <iframe src="fevicon.html" title="Animated M Logo" loading="eager" style="border:0;outline:0;background:transparent"></iframe>
     </a>
-    <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-  </nav>
-
-  <!-- Icon + lightweight vertical list under the header line & logo -->
-  <div class="ham-wrap">
-    <button class="ham-btn" aria-label="Menu"><span></span><span></span><span></span></button>
-    <nav class="ham-pop" aria-label="Quick links">
-      
-      
-      <a href="experience.html">Experience</a>
-      
-      
-      <a href="achievements.html">Achievements</a>
-      
-      
-      <a href="certifications.html">Certifications</a>
+    <nav class="nav-right">
+      <a class="nav-link" href="projects.html">Projects</a>
+      <a class="nav-link active" href="posts.html">Blog</a>
+      <a class="nav-link" href="chat.html">Chat</a>
+      <a class="icon-link" aria-label="GitHub" href="https://github.com/Monesha-B/" target="_blank" rel="noopener">
+        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"></path>
+        </svg>
+      </a>
+      <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
     </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="blog-container">
+    <div class="blog-header slide-enter">
+      <h1>Blog &amp; Insights</h1>
+      <p class="blog-subtitle">Writings on AI agents, machine learning pipelines, and cloud-native architecture.</p>
+    </div>
+
+    <div class="article-list slide-enter-content">
+      <!-- Article 1: GitOps with Argo CD -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">DevOps &amp; Cloud</span>
+          <span class="article-dot">•</span>
+          <span class="article-date">2026</span>
+          <span class="article-dot">•</span>
+          <span>7 min read</span>
+        </div>
+        <h2 class="article-title">GitOps Kubernetes Deployment with Argo CD &amp; Monitoring</h2>
+        <p class="article-desc">Implementing declarative GitOps pipelines on Kubernetes with automated drift correction, self-healing deployments, and Prometheus/Grafana real-time observability.</p>
+      </article>
+
+      <!-- Article 2: Autonomous Multi-Agent Systems -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">AI &amp; Agents</span>
+          <span class="article-dot">•</span>
+          <span class="article-date">2026</span>
+          <span class="article-dot">•</span>
+          <span>6 min read</span>
+        </div>
+        <h2 class="article-title">Architecting Autonomous Multi-Agent Workflows with LangGraph</h2>
+        <p class="article-desc">Designing resilient agentic graphs with cyclical decision loops, persistent memory, and deterministic tool-calling hierarchies for production systems.</p>
+      </article>
+
+      <!-- Article 3: Enterprise RAG Architecture -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Information Retrieval</span>
+          <span class="article-dot">•</span>
+          <span class="article-date">2026</span>
+          <span class="article-dot">•</span>
+          <span>8 min read</span>
+        </div>
+        <h2 class="article-title">Hybrid Search &amp; Cross-Encoder Re-Ranking in Production RAG</h2>
+        <p class="article-desc">Why pure vector search fails at edge cases and how pairing reciprocal rank fusion (RRF) with semantic re-rankers dramatically cuts LLM hallucination rates.</p>
+      </article>
+
+      <!-- Article 4: Streaming Anomaly Detection -->
+      <article class="article-card">
+        <div class="article-meta">
+          <span class="article-tag">Machine Learning</span>
+          <span class="article-dot">•</span>
+          <span class="article-date">2025</span>
+          <span class="article-dot">•</span>
+          <span>5 min read</span>
+        </div>
+        <h2 class="article-title">Real-Time ML Inference &amp; Anomaly Detection on Streaming Data</h2>
+        <p class="article-desc">Building sub-millisecond inference pipelines for real-time sensor streams using sliding-window feature engineering and automated model drift monitors.</p>
+      </article>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation & Footer -->
+  <div class="bottom-section slide-enter">
+    <div class="cd-back">
+      <span>&gt; </span><a href="index.html">cd ..</a>
+    </div>
+    <div class="blog-footer">
+      <span>2021–Present © Monesha Balasambandam</span>
+    </div>
   </div>
-</header>
 
-<main class="container">
-  <h1>Blog</h1>
-  <p class="mini">{ nothing here yet }</p>
-  <p class="mini">> <a href="index.html">cd ..</a></p>
-</main>
-
-<footer class="container footer">
-  <div>2021–Present © Monesha Balasambandam</div>
-</footer>
-
-<script src="script.js"></script>
-<script>
-  // page-enter helper
-  document.addEventListener("DOMContentLoaded",()=>document.body.classList.add("page-ready"));
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
