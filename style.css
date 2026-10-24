@@ -563,10 +563,121 @@ body.chat-page .cta-row a{
    If any page still flips based on OS instead of your toggle,
    force their dark variables via the toggle class. Safe to keep. */
 :root.dark #proj-page{ --bg:#0b0b0f; --fg:#ffffff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
-:root.dark #exp-page{  --bg:#0b0b0f; --fg:#ffffff; --muted:#cfcfd3; --pill:transparent; --border:#2a2c34; --wm-stroke:#9aa0a6; }
-/* === GLOBE: Centered, balanced 560px height, zero clipping === */
-#skills-globe .globe-block,
-#about .globe-block,
+/* === 2-COLUMN SPLIT HERO (DESKTOP FULL SCREEN) === */
+.hero-container {
+  width: min(1280px, 92%) !important;
+  max-width: 1280px !important;
+  margin-inline: auto !important;
+  padding: 0.5rem 0 0.5rem;
+}
+
+.hero-split {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 960px) {
+  .hero-split {
+    display: grid !important;
+    grid-template-columns: 1.05fr 1fr !important;
+    align-items: center !important;
+    gap: clamp(2rem, 3.5vw, 4rem) !important;
+    min-height: calc(100vh - 160px) !important;
+    padding: 0.25rem 0 !important;
+  }
+
+  .hero-left {
+    text-align: left !important;
+    max-width: 600px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hero-left h1 {
+    font-size: clamp(2.4rem, 3.6vw, 3.5rem) !important;
+    line-height: 1.15 !important;
+    margin: 0 0 0.5rem !important;
+    color: var(--text);
+  }
+
+  .hero-left .lead {
+    color: var(--muted, #8A8A90);
+    font-size: clamp(18px, 1.4vw, 22px) !important;
+    line-height: 1.45 !important;
+    margin: 0 0 0.85rem !important;
+  }
+
+  .hero-left p {
+    font-size: clamp(15px, 1.15vw, 17px) !important;
+    line-height: 1.6 !important;
+    margin: 0 0 0.75rem !important;
+  }
+
+  .hero-right {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .hero-right .globe-block {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .hero-right .globe-container {
+    width: 100% !important;
+    max-width: 620px !important;
+    height: clamp(460px, calc(100vh - 180px), 640px) !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .hero-socials {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 959px) {
+  .hero-left {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-left h1 {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    margin: 0 0 0.35rem;
+  }
+  .hero-right .globe-container {
+    width: 100% !important;
+    max-width: 500px !important;
+    height: 440px !important;
+    margin: 0 auto !important;
+  }
+  .hero-socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+}
+
 .globe-block {
   width: 100%;
   margin: 0 auto !important;
@@ -579,8 +690,6 @@ body.chat-page .cta-row a{
 #about .globe-container,
 .globe-container {
   width: 100% !important;
-  max-width: 1140px !important;
-  height: clamp(420px, calc(100vh - 310px), 620px) !important;
   margin: 0 auto !important;
   position: relative !important;
   overflow: hidden !important;
@@ -599,22 +708,6 @@ body.chat-page .cta-row a{
   display: block !important;
   overflow: hidden !important;
   background: transparent !important;
-}
-
-@media (max-width: 900px) {
-  #skills-globe .globe-container,
-  #about .globe-container,
-  .globe-container {
-    height: 460px !important;
-  }
-}
-
-@media (max-width: 560px) {
-  #skills-globe .globe-container,
-  #about .globe-container,
-  .globe-container {
-    height: 380px !important;
-  }
 }
 /* === PROJECTS: remove black rectangle in dark mode === */
 #proj-page,
