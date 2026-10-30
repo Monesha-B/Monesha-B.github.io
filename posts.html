@@ -1,192 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <meta http-equiv="Pragma" content="no-cache"/>
-  <meta http-equiv="Expires" content="0"/>
-  <meta name="description" content="Articles and engineering notes on AI/ML, Cloud Infrastructure, and Agentic Systems by Monesha Balasambandam."/>
+  <meta name="description" content="Posts and notes on building pragmatic full-stack and cloud projects.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Blog | Monesha</title>
-
-  <link rel="stylesheet" href="style.css?v=7"/>
+  <link rel="stylesheet" href="style.css?v=8">
+ 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
-  <link rel="stylesheet" href="assets/transition/transition.css"/>
+  <link rel="stylesheet" href="assets/transition/transition.css">
   <script defer src="assets/transition/transition.js"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --blog-fg: #555;
-      --blog-fg-deep: #111;
-      --blog-muted: #888;
-      --blog-hover-bg: rgba(136, 136, 136, 0.07);
-      --blog-border: rgba(136, 136, 136, 0.22);
-      --blog-tag-bg: rgba(136, 136, 136, 0.1);
-    }
-    :root.dark, html.dark, body.dark {
-      --blog-fg: #bbb;
-      --blog-fg-deep: #fff;
-      --blog-muted: #888;
-      --blog-hover-bg: rgba(255, 255, 255, 0.05);
-      --blog-border: rgba(136, 136, 136, 0.22);
-      --blog-tag-bg: rgba(255, 255, 255, 0.08);
-    }
-
     body {
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
     }
-
-    .blog-container {
-      width: min(880px, 92%);
-      margin-left: auto;
-      margin-right: auto;
-      padding: 2.5rem 0 3.5rem;
-      box-sizing: border-box;
+    .container {
+      width: min(1280px, 92%) !important;
+      max-width: 1280px !important;
+      margin-inline: auto !important;
+    }
+    main.container {
       flex: 1 0 auto;
+      padding-top: 2rem;
     }
-
-    .blog-header {
-      margin-bottom: 2.5rem;
-    }
-    .blog-header h1 {
-      font-size: clamp(2rem, 3.5vw, 2.5rem);
-      font-weight: 800;
-      line-height: 1.15;
-      margin: 0 0 0.5rem;
-      color: var(--blog-fg-deep);
-      letter-spacing: -0.02em;
-    }
-    .blog-subtitle {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: var(--blog-muted);
-      margin: 0;
-      max-width: 65ch;
-    }
-
-    /* Article List */
-    .article-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 2rem;
-    }
-
-    .article-card {
-      display: block;
-      padding: 1.25rem 1.4rem;
-      border: 1px solid var(--blog-border);
-      border-radius: 10px;
-      text-decoration: none !important;
-      color: inherit;
-      background: transparent;
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-    }
-    .article-card:hover {
-      background: var(--blog-hover-bg);
-      border-color: rgba(136, 136, 136, 0.4);
-      transform: translateY(-1px);
-    }
-
-    .article-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      font-size: 0.8rem;
-      color: var(--blog-muted);
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .article-tag {
-      padding: 0.18rem 0.55rem;
-      background: var(--blog-tag-bg);
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--blog-fg-deep);
-    }
-    .article-date {
-      opacity: 0.85;
-    }
-    .article-dot {
-      opacity: 0.4;
-    }
-
-    .article-title {
-      font-size: 1.15rem;
+    main.container h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.85rem;
       font-weight: 700;
-      color: var(--blog-fg-deep);
-      margin: 0 0 0.4rem;
-      line-height: 1.35;
-      transition: color 0.15s ease;
     }
-    .article-card:hover .article-title {
-      color: var(--link);
+    main.container p.mini {
+      color: var(--muted, #8A8A90);
+      font-size: 1rem;
+      margin: 0.4rem 0;
     }
-
-    .article-desc {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--blog-fg);
-      margin: 0;
-      opacity: 0.9;
-    }
-
-    /* Bottom Section */
-    .bottom-section {
-      width: min(880px, 92%);
-      margin: 3.5rem auto 1.5rem;
-      box-sizing: border-box;
-      margin-top: auto;
-    }
-    .cd-back {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.95rem;
-      opacity: 0.5;
-      margin-bottom: 2rem;
-    }
-    .cd-back a {
-      color: inherit;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .cd-back a:hover {
-      opacity: 1;
+    main.container p.mini a {
+      color: var(--muted, #8A8A90);
       text-decoration: underline;
     }
-    .blog-footer {
-      display: flex;
-      align-items: center;
-      font-size: 0.875rem;
-      opacity: 0.5;
-      color: inherit;
-      border-top: 1px solid var(--border);
-      padding-top: 1.5rem;
+    main.container p.mini a:hover {
+      color: var(--fg);
     }
-
-    /* Staggered slide-in animation */
-    @keyframes slideEnter {
-      0% { transform: translateY(12px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
+    footer.container {
+      width: min(1280px, 92%) !important;
+      max-width: 1280px !important;
+      margin-inline: auto !important;
+      padding-top: 1rem !important;
+      padding-bottom: 1.5rem !important;
     }
-    .slide-enter {
-      animation: slideEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-    .slide-enter-content > * {
-      animation: slideEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-    .slide-enter-content > *:nth-child(1) { animation-delay: 0.05s; }
-    .slide-enter-content > *:nth-child(2) { animation-delay: 0.1s; }
-    .slide-enter-content > *:nth-child(3) { animation-delay: 0.15s; }
-    .slide-enter-content > *:nth-child(4) { animation-delay: 0.2s; }
   </style>
 </head>
 <body class="page-ready">
@@ -215,77 +80,15 @@
     </nav>
   </header>
 
-  <!-- Main Content -->
-  <main class="blog-container">
-    <div class="blog-header slide-enter">
-      <h1>Blog &amp; Insights</h1>
-      <p class="blog-subtitle">Writings on AI agents, machine learning pipelines, and cloud-native architecture.</p>
-    </div>
-
-    <div class="article-list slide-enter-content">
-      <!-- Article 1: GitOps with Argo CD -->
-      <article class="article-card">
-        <div class="article-meta">
-          <span class="article-tag">DevOps &amp; Cloud</span>
-          <span class="article-dot">•</span>
-          <span class="article-date">2026</span>
-          <span class="article-dot">•</span>
-          <span>7 min read</span>
-        </div>
-        <h2 class="article-title">GitOps Kubernetes Deployment with Argo CD &amp; Monitoring</h2>
-        <p class="article-desc">Implementing declarative GitOps pipelines on Kubernetes with automated drift correction, self-healing deployments, and Prometheus/Grafana real-time observability.</p>
-      </article>
-
-      <!-- Article 2: Autonomous Multi-Agent Systems -->
-      <article class="article-card">
-        <div class="article-meta">
-          <span class="article-tag">AI &amp; Agents</span>
-          <span class="article-dot">•</span>
-          <span class="article-date">2026</span>
-          <span class="article-dot">•</span>
-          <span>6 min read</span>
-        </div>
-        <h2 class="article-title">Architecting Autonomous Multi-Agent Workflows with LangGraph</h2>
-        <p class="article-desc">Designing resilient agentic graphs with cyclical decision loops, persistent memory, and deterministic tool-calling hierarchies for production systems.</p>
-      </article>
-
-      <!-- Article 3: Enterprise RAG Architecture -->
-      <article class="article-card">
-        <div class="article-meta">
-          <span class="article-tag">Information Retrieval</span>
-          <span class="article-dot">•</span>
-          <span class="article-date">2026</span>
-          <span class="article-dot">•</span>
-          <span>8 min read</span>
-        </div>
-        <h2 class="article-title">Hybrid Search &amp; Cross-Encoder Re-Ranking in Production RAG</h2>
-        <p class="article-desc">Why pure vector search fails at edge cases and how pairing reciprocal rank fusion (RRF) with semantic re-rankers dramatically cuts LLM hallucination rates.</p>
-      </article>
-
-      <!-- Article 4: Streaming Anomaly Detection -->
-      <article class="article-card">
-        <div class="article-meta">
-          <span class="article-tag">Machine Learning</span>
-          <span class="article-dot">•</span>
-          <span class="article-date">2025</span>
-          <span class="article-dot">•</span>
-          <span>5 min read</span>
-        </div>
-        <h2 class="article-title">Real-Time ML Inference &amp; Anomaly Detection on Streaming Data</h2>
-        <p class="article-desc">Building sub-millisecond inference pipelines for real-time sensor streams using sliding-window feature engineering and automated model drift monitors.</p>
-      </article>
-    </div>
+  <main class="container">
+    <h1>Blog</h1>
+    <p class="mini">{ nothing here yet }</p>
+    <p class="mini">&gt; <a href="index.html">cd ..</a></p>
   </main>
 
-  <!-- Bottom Navigation & Footer -->
-  <div class="bottom-section slide-enter">
-    <div class="cd-back">
-      <span>&gt; </span><a href="index.html">cd ..</a>
-    </div>
-    <div class="blog-footer">
-      <span>2021–Present © Monesha Balasambandam</span>
-    </div>
-  </div>
+  <footer class="container footer">
+    <div>2021–Present © Monesha Balasambandam</div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
