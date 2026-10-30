@@ -356,19 +356,20 @@ html.dark #certifications .card {
    ANIMATED M LOGO - IFRAME INTEGRATION
    ======================================== */
 
-/* Header layout with logo on left - FIXED VERSION */
+/* Header layout with logo on left - Unified 1280px axis */
 .site-header {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 12px 24px !important;
-  margin: 0 !important;
-  background: var(--header-bg) !important;
-  border-bottom: 1px solid var(--border) !important;
-  position: sticky !important;
-  top: 0 !important;
+  padding: 20px 0 !important;
+  width: min(1280px, 92%) !important;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  position: relative !important;
   z-index: 1000 !important;
-  width: 100% !important;
+  background: transparent !important;
+  border-bottom: none !important;
 }
 
 /* Logo link container */
@@ -411,23 +412,7 @@ main.container {
   margin-top: 0 !important;
 }
 
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .site-header {
-    padding: 10px 8px 10px 16px !important;
-  }
-  
-  .logo-link {
-    width: 32px !important;
-    height: 32px !important;
-  }
-  
-  .nav-right {
-    gap: 7px !important;
-    margin-left: auto !important;
-    justify-content: flex-end !important;
-  }
-}
+
 
  /* === Auto-theme the SVG outline heading === */
   /* Use the page text color for the SVG strokes */
@@ -919,21 +904,7 @@ html, body { overflow-x: hidden; }
 
 
 
-/* ============================================
-   NAVBAR ALIGNMENT FIX - Replace in style.css
-   ============================================ */
 
-/* Fix navbar alignment - 880px unified axis */
-.site-header {
-  max-width: 880px;
-  width: 92%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0;
-  border-bottom: none !important;
-}
 
 .nav-right {
   display: flex;
@@ -1021,19 +992,7 @@ html, body { overflow-x: hidden; }
   display: block;
 }
 
-/* Clean Accessible Header Navigation - 880px unified axis */
-.site-header {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 20px 0 !important;
-  width: min(880px, 92%) !important;
-  max-width: 880px !important;
-  margin: 0 auto !important;
-  box-sizing: border-box !important;
-  position: relative;
-  z-index: 1000;
-}
+
 
 .nav-right {
   display: flex;
@@ -1089,11 +1048,30 @@ html, body { overflow-x: hidden; }
     justify-content: space-between !important;
   }
 
+  .logo-link {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
   .nav-right {
     gap: 7px !important;
     margin-left: auto !important;
     justify-content: flex-end !important;
     padding-right: 0 !important;
+  }
+
+  .icon-link,
+  .theme-toggle {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .icon-link svg,
+  .theme-toggle svg {
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .nav-link {

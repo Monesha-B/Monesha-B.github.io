@@ -7,7 +7,7 @@
   <title>Chat | Monesha</title>
 <!-- Site CSS + favicons -->
   <!-- Site CSS + favicons -->
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=7">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
 
@@ -66,28 +66,25 @@
 
 <body class="chat-page">
   <header class="site-header">
-    <!-- LEFT: animated M logo -->
     <a href="index.html" class="logo-link" aria-label="Home">
       <iframe src="fevicon.html" title="Animated M Logo" loading="eager"></iframe>
     </a>
-
-    <!-- RIGHT: Nav -->
     <nav class="nav-right">
       <a href="projects.html" class="nav-link">Projects</a>
       <a href="posts.html" class="nav-link">Blog</a>
-      <a href="chat.html" class="nav-link">Chat</a>
-      <a href="https://github.com/Monesha-B" class="icon-link" aria-label="GitHub" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
-          <path d="M12 .5A12 12 0 0 0 0 12.7a12 12 0 0 0 8.2 11.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1 .1.7 1.8 2.5 2.3.6-.4 1.1-.8 1.3-1.5-2.7-.3-5.6-1.4-5.6-6 0-1.3.5-2.4 1.3-3.3-.1-.3-.6-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.2-1.5 3.2-1.2 3.2-1.2.7 1.7.2 2.9.1 3.2.8.9 1.3 2 1.3 3.3 0 4.6-2.8 5.7-5.6 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/>
+      <a href="chat.html" class="nav-link active">Chat</a>
+      <a href="https://github.com/Monesha-B/" class="icon-link" aria-label="GitHub" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+          <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.35-1.75-1.35-1.75-1.1-.75.08-.73.08-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.22a11.4 11.4 0 0 1 6 0c2.29-1.54 3.3-1.22 3.3-1.22.66 1.65.24 2.87.12 3.17.77.83 1.24 1.89 1.24 3.19 0 4.58-2.81 5.6-5.49 5.9.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/>
         </svg>
       </a>
       <a href="https://www.linkedin.com/in/moneshab" class="icon-link" aria-label="LinkedIn" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
-          <path d="M4.98 3.5C4.98 4.9 3.9 6 2.5 6S0 4.9 0 3.5 1.1 1 2.5 1s2.48 1.1 2.48 2.5zM.4 8.9h4.2v13.5H.4V8.9zm7.2 0h4v1.8c.6-.9 1.8-1.9 3.4-1.9 2.4 0 4.1 1.8 4.1 4.6v9h-4v-8.2c0-2-.7-3.4-2.5-3.4-1.4 0-2.1.9-2.4 1.7-.1.2-.1.6-.1 1v8.9h-4V8.9z"/>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+          <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM14.5 9c-2.4 0-4 1.3-4 3.3V21h4v-6.3c0-1 .7-1.7 1.9-1.7 1.2 0 1.6.7 1.6 1.7V21h4v-6.9C22 10.8 20.3 9 17.9 9c-1.6 0-2.7.7-3.4 1.6V9h-4z"/>
         </svg>
       </a>
       <button class="icon-link theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
     </nav>
   </header>
