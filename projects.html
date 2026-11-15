@@ -94,14 +94,9 @@
     }
     .btn-github:hover {
       opacity: 1;
-      background-color: rgba(96, 165, 250, 0.1);
-      border-color: rgba(96, 165, 250, 0.4);
-      color: #3b82f6;
-    }
-    :root.dark .btn-github:hover,
-    html.dark .btn-github:hover,
-    body.dark .btn-github:hover {
-      color: #60a5fa;
+      background-color: var(--proj-hover-bg);
+      border-color: var(--proj-fg-deep);
+      color: var(--proj-fg-deep);
     }
 
     .projects-hr {
@@ -120,6 +115,7 @@
       width: max-content;
       margin: 0 auto;
       padding: 0.5rem 0;
+      align-items: start;
     }
     @media (min-width: 768px) {
       .project-grid {
@@ -134,10 +130,11 @@
       }
     }
 
-    /* Item Card */
-    .project-grid a.item {
+    /* Standard Item Card */
+    .project-grid a.item,
+    .project-grid .item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       position: relative;
       background: transparent;
       font-size: 1.1rem;
@@ -153,13 +150,14 @@
       box-sizing: border-box;
       cursor: pointer;
     }
-    .project-grid a.item:hover {
+    .project-grid a.item:hover,
+    .project-grid .item:hover {
       opacity: 1;
       background: var(--proj-hover-bg);
     }
 
     .item-icon-box {
-      padding-top: 0.25rem;
+      padding-top: 0.2rem;
       padding-right: 1.15rem;
       flex-shrink: 0;
       display: flex;
@@ -174,7 +172,8 @@
       opacity: 0.5;
       transition: opacity 0.2s ease;
     }
-    .project-grid a.item:hover .item-icon-box svg {
+    .project-grid a.item:hover .item-icon-box svg,
+    .project-grid .item:hover .item-icon-box svg {
       opacity: 0.9;
     }
 
@@ -191,13 +190,71 @@
     }
     .desc {
       font-size: 0.875rem;
-      line-height: 1.4;
-      opacity: 0.5;
+      line-height: 1.45;
+      opacity: 0.55;
       font-weight: 400;
       color: var(--proj-fg);
     }
-    .project-grid a.item:hover .desc {
+    .project-grid a.item:hover .desc,
+    .project-grid .item:hover .desc {
+      opacity: 0.85;
+    }
+
+    /* In-Grid Rich Feature Card Specifics (Knowledge Assistance, Demand Forecasting, etc.) */
+    .knowledge-card,
+    .feature-card {
+      display: flex;
+      flex-direction: column !important;
+      opacity: 0.82 !important;
+    }
+    .knowledge-card:hover,
+    .feature-card:hover {
+      opacity: 1 !important;
+    }
+    .knowledge-card-top,
+    .feature-card-top {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .knowledge-summary,
+    .feature-summary {
+      font-size: 0.86rem;
+      line-height: 1.5;
       opacity: 0.75;
+      color: var(--proj-fg);
+      margin: 0.45rem 0 0.6rem;
+      padding-left: 0.1rem;
+      transition: opacity 0.2s;
+    }
+    .project-grid .item:hover .knowledge-summary,
+    .project-grid .item:hover .feature-summary {
+      opacity: 0.95;
+    }
+    .knowledge-links,
+    .feature-links {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding-top: 0.45rem;
+      border-top: 1px dashed var(--proj-border);
+      font-size: 0.825rem;
+      margin-top: auto;
+    }
+    .knowledge-links a,
+    .feature-links a {
+      color: var(--proj-fg-deep);
+      text-decoration: none;
+      opacity: 0.75;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: opacity 0.2s;
+    }
+    .knowledge-links a:hover,
+    .feature-links a:hover {
+      opacity: 1;
+      text-decoration: underline;
     }
 
     /* Bottom Section */
@@ -249,18 +306,22 @@
     .slide-enter-content > *:nth-child(7) { animation-delay: 0.35s; }
     .slide-enter-content > *:nth-child(8) { animation-delay: 0.4s; }
     .slide-enter-content > *:nth-child(9) { animation-delay: 0.45s; }
+    .slide-enter-content > *:nth-child(10) { animation-delay: 0.5s; }
+    .slide-enter-content > *:nth-child(11) { animation-delay: 0.55s; }
 
     @media (max-width: 600px) {
       .projects-container {
         padding: 1.5rem 0 2.5rem;
       }
-      .project-grid a.item {
+      .project-grid a.item,
+      .project-grid .item {
         width: 100%;
         padding: 0.65rem 0.5rem;
       }
       .item-icon-box {
         padding-right: 0.9rem;
       }
+    }
   </style>
 </head>
 <body class="page-ready">
@@ -307,10 +368,84 @@
 
     <hr class="projects-hr slide-enter">
 
-    <!-- Unified Projects Grid (No topic headers, all ML & AI Agents focus) -->
+    <!-- Unified Projects Grid (10 Projects: Knowledge Assistance as #1 in Grid) -->
     <div class="project-grid slide-enter-content">
 
-      <!-- 1. Autonomous Multi-Agent System -->
+      <!-- 1. Knowledge Assistance (In-Grid Minimal with Proper Summary & Direct Links) -->
+      <div class="item knowledge-card" title="Knowledge Assistance — RAG-Powered AI Document Assistant">
+        <div class="knowledge-card-top">
+          <div class="item-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <circle cx="11.5" cy="14.5" r="2.5"></circle>
+              <line x1="13.5" y1="16.5" x2="16.5" y2="19.5"></line>
+            </svg>
+          </div>
+          <div class="item-content">
+            <div class="text-normal">
+              <a href="https://knowledge-assistance-demo.streamlit.app" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">Knowledge Assistance</a>
+            </div>
+            <div class="desc" style="font-style: italic; opacity: 0.65;">RAG-Powered AI Document Assistant</div>
+          </div>
+        </div>
+
+        <!-- Proper Verbatim Summary -->
+        <p class="knowledge-summary">
+          Developed and deployed an AI-powered document assistant combining Google Gemini, DistilBERT query classification, and Qdrant vector search to deliver context-aware answers with supporting document sources.
+        </p>
+
+        <!-- Direct Monochrome Action Links -->
+        <div class="knowledge-links">
+          <a href="https://knowledge-assistance-demo.streamlit.app" target="_blank" rel="noopener">
+            <span>Live Demo</span> ↗
+          </a>
+          <span style="opacity: 0.3;">·</span>
+          <a href="https://github.com/Monesha-B/knowledge-assistance" target="_blank" rel="noopener">
+            <span>GitHub</span> ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. MLOps Demand Forecasting Pipeline -->
+      <div class="item feature-card" title="MLOps Demand Forecasting Pipeline — End-to-End Retail ML &amp; Retraining Pipeline">
+        <div class="feature-card-top">
+          <div class="item-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"></path>
+              <path d="M7 15l4-5 4 3 6-7"></path>
+              <circle cx="7" cy="15" r="1.25"></circle>
+              <circle cx="11" cy="10" r="1.25"></circle>
+              <circle cx="15" cy="13" r="1.25"></circle>
+              <circle cx="21" cy="6" r="1.25"></circle>
+            </svg>
+          </div>
+          <div class="item-content">
+            <div class="text-normal">
+              <a href="https://mlops-demand-forecasting-demo.streamlit.app/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">MLOps Demand Forecasting Pipeline</a>
+            </div>
+            <div class="desc" style="font-style: italic; opacity: 0.65;">End-to-End Retail ML &amp; Retraining Pipeline</div>
+          </div>
+        </div>
+
+        <!-- Proper Verbatim Summary -->
+        <p class="feature-summary">
+          Developed an end-to-end demand forecasting pipeline using Random Forest, PostgreSQL, and MLflow, featuring automated Apache Airflow retraining, containerized FastAPI endpoints, and an interactive Streamlit dashboard.
+        </p>
+
+        <!-- Direct Monochrome Action Links -->
+        <div class="feature-links">
+          <a href="https://mlops-demand-forecasting-demo.streamlit.app/" target="_blank" rel="noopener">
+            <span>Live Demo</span> ↗
+          </a>
+          <span style="opacity: 0.3;">·</span>
+          <a href="https://github.com/Monesha-B/mlops-demand-forecasting" target="_blank" rel="noopener">
+            <span>GitHub</span> ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. Autonomous Multi-Agent System -->
       <a class="item" href="#" title="Autonomous Multi-Agent System">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -328,7 +463,7 @@
         </div>
       </a>
 
-      <!-- 2. Agentic RAG Knowledge Engine -->
+      <!-- 3. Agentic RAG Knowledge Engine -->
       <a class="item" href="#" title="Agentic RAG Knowledge Engine">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -344,7 +479,7 @@
         </div>
       </a>
 
-      <!-- 3. Autonomous Tool-Calling Agent -->
+      <!-- 4. Autonomous Tool-Calling Agent -->
       <a class="item" href="#" title="Autonomous Tool-Calling Agent">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -361,7 +496,7 @@
         </div>
       </a>
 
-      <!-- 4. Predictive ML Inference Pipeline -->
+      <!-- 5. Predictive ML Inference Pipeline -->
       <a class="item" href="#" title="Predictive ML Inference Pipeline">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -376,7 +511,7 @@
         </div>
       </a>
 
-      <!-- 5. Real-Time NLP & Sentiment Agent -->
+      <!-- 6. Real-Time NLP & Sentiment Agent -->
       <a class="item" href="#" title="Real-Time NLP & Sentiment Agent">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -392,7 +527,7 @@
         </div>
       </a>
 
-      <!-- 6. PyTorch Deep Learning Lab -->
+      <!-- 7. PyTorch Deep Learning Lab -->
       <a class="item" href="#" title="PyTorch Deep Learning Lab">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="currentColor">
@@ -406,7 +541,7 @@
         </div>
       </a>
 
-      <!-- 7. AI Algorithmic Matching Platform -->
+      <!-- 8. AI Algorithmic Matching Platform -->
       <a class="item" href="#" title="AI Algorithmic Matching Platform">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -420,7 +555,7 @@
         </div>
       </a>
 
-      <!-- 8. Self-Healing Data Preprocessing Agent -->
+      <!-- 9. Self-Healing Data Preprocessing Agent -->
       <a class="item" href="#" title="Self-Healing Data Preprocessing Agent">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -433,7 +568,7 @@
         </div>
       </a>
 
-      <!-- 9. Streaming Anomaly Detection Agent -->
+      <!-- 10. Streaming Anomaly Detection Agent -->
       <a class="item" href="#" title="Streaming Anomaly Detection Agent">
         <div class="item-icon-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
